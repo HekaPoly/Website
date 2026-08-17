@@ -1,4 +1,4 @@
-import {allProjects, currentProjects} from '../data/projects'
+import {allProjects} from '../data/projects'
 
 interface ProjectsProps {
   navigate: (page: string) => void
@@ -23,7 +23,7 @@ export default function Projects({ navigate }: ProjectsProps) {
           <div
               className="absolute inset-0 bg-cover bg-center"
               style={{
-                backgroundImage: "url('/images/genial.webp')",
+                backgroundImage: "url('public/images/projects/bira/att.Qr1e276Fz3eb8Xsh5VP6TMCCp6ooGYsYHFgDj97w03k.jpg')",
                 backgroundPosition: "center 35%",
               }}
           />

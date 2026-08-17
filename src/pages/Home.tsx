@@ -164,7 +164,7 @@ export default function Home({ navigate }: HomeProps) {
                     <h3 className="text-xl font-semibold text-charcoal mb-3">{project.challenge}</h3>
                     <p className="text-muted text-sm leading-relaxed mb-6">{project.problem}</p>
                     <p className="text-charcoal text-sm leading-relaxed mb-6">{project.shortDescription}</p>
-                    {project.showProjectPage && (
+                    {(
                       <button onClick={() => handleNav(`projet-${project.slug}`)}
                         className="inline-flex items-center gap-2 text-sm font-semibold hover:gap-3 transition-all"
                         style={{ color: t.accent }}>

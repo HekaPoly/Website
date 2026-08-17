@@ -58,6 +58,8 @@ export interface SocialMedia {
   instagram: string
   linkedin: string
   facebook: string
+  youtube: string
+  linktree: string
 }
 
 export interface SiteConfiguration {

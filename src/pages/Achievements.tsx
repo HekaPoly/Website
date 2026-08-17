@@ -15,17 +15,39 @@ export default function Achievements() {
 
   return (
     <div className="pt-16">
-      <section className="py-20 lg:py-28 bg-cream border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <section className="relative py-20 lg:py-28 border-b border-border overflow-hidden">
+        {/* Background image */}
+        <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('public/images/genial.webp')",
+              backgroundPosition: "center 20%",
+            }}
+        />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.82)_0%,rgba(15,23,42,0.65)_38%,rgba(15,23,42,0.28)_68%,transparent_100%)]" />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
           <div className="max-w-2xl">
-            <span className="text-xs font-medium text-muted uppercase tracking-widest" style={{ fontFamily: 'var(--font-mono)' }}>
-              Réalisations
-            </span>
-            <h1 className="text-4xl lg:text-6xl mt-4 mb-6 text-charcoal leading-tight" style={{ fontFamily: 'var(--font-display)' }}>
+      <span
+          className="text-xs font-medium text-heka-yellow uppercase tracking-widest"
+          style={{ fontFamily: "var(--font-mono)" }}
+      >
+        Réalisations
+      </span>
+
+            <h1
+                className="text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold"
+                style={{ fontFamily: "var(--font-display)" }}
+            >
               Notre parcours en chiffres et en faits.
             </h1>
-            <p className="text-muted leading-relaxed">
-              Compétitions, prototypes, événements, prix — voici l'historique des réalisations de Héka, du plus récent au plus ancien.
+
+            <p className="text-white/80 leading-relaxed max-w-xl">
+              Compétitions, prototypes, événements, prix — voici l&apos;historique
+              des réalisations de Héka, du plus récent au plus ancien.
             </p>
           </div>
         </div>

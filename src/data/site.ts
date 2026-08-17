@@ -30,9 +30,11 @@ export const site: SiteConfiguration = {
   address: 'Polytechnique Montréal\n2900 Boul. Édouard-Montpetit\nMontréal, QC H3T 1J4',
 
   socialMedia: {
-    instagram: '',
-    linkedin: '',
-    facebook: '',
+    instagram: 'https://www.instagram.com/heka.polymtl/',
+    linkedin: 'https://www.linkedin.com/company/haka-polymtl/',
+    facebook: 'https://www.facebook.com/HekaPolymtl/',
+    linktree: 'https://linktr.ee/heka.poly?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAac3KfBAUqxJgEbD2Cf9Jo0hvENhI9jwXzNNRtx6Xo3_hGJfn8qW7s3cFuz7lg_aem_P7CFymtCXTdBFRvCy7zNew',
+    youtube: 'https://www.youtube.com/@hekapolymtl'
   },
 
   mission: [

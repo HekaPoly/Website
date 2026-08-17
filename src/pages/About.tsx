@@ -1,4 +1,5 @@
 import { site } from '../data/site';
+import { asset } from '../utils/assets';
 
 interface AboutProps {
     navigate: (page: string) => void;
@@ -11,7 +12,7 @@ export default function About({ navigate }: AboutProps) {
             <section
                 className='relative py-20 lg:py-28 border-b border-border bg-cover bg-center overflow-hidden'
                 style={{
-                    backgroundImage: "url('/images/projects/podi/ACE2024-146-1.jpg')",
+                    backgroundImage: `url('${asset('/images/projects/podi/ACE2024-146-1.jpg')}')`,
                 }}
             >
                 {/* Overlay sombre pour la lisibilité */}
@@ -167,7 +168,7 @@ export default function About({ navigate }: AboutProps) {
                         <div
                             className='rounded-2xl h-72 lg:h-96 bg-cover bg-center bg-heka-light'
                             style={{
-                                backgroundImage: `url('public/images/projects/bira/TDB_20250806_Poly_083.jpg')`,
+                                backgroundImage: `url('${asset('public/images/projects/bira/TDB_20250806_Poly_083.jpg')}')`,
                             }}
                         />
                         <div>

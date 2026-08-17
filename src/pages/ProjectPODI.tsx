@@ -1,3 +1,5 @@
+import { asset } from '../utils/assets';
+
 interface Props {
     navigate: (page: string) => void;
 }
@@ -15,7 +17,7 @@ export default function ProjectPODI({ navigate }: Props) {
                 <div
                     className='absolute inset-0 bg-cover bg-center opacity-20'
                     style={{
-                        backgroundImage: `url('https://images.unsplash.com/photo-1504667290505-eee11f23905a?w=1600&h=900&fit=crop&auto=format')`,
+                        backgroundImage: `url('${asset('https://images.unsplash.com/photo-1504667290505-eee11f23905a?w=1600&h=900&fit=crop&auto=format')}')`,
                     }}
                 />
                 <div className='relative max-w-7xl mx-auto px-6 lg:px-10'>
@@ -115,7 +117,7 @@ export default function ProjectPODI({ navigate }: Props) {
                         <div
                             className='rounded-2xl h-72 lg:h-96 bg-cover bg-center bg-[#FEF0EF]'
                             style={{
-                                backgroundImage: `url('https://images.unsplash.com/photo-1575507371089-cd0a12c5aae9?w=800&h=800&fit=crop&auto=format')`,
+                                backgroundImage: `url('${asset('https://images.unsplash.com/photo-1575507371089-cd0a12c5aae9?w=800&h=800&fit=crop&auto=format')}')`,
                             }}
                         />
                         <div>

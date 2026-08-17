@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { site } from '../data/site';
 import { currentProjects } from '../data/projects';
 import { partners } from '../data/partners';
+import { asset } from '../utils/assets';
 import {
     getLatestAchievements,
     getAchievementStatusLabel,
@@ -191,7 +192,7 @@ export default function Home({ navigate }: HomeProps) {
                                         className='h-56 bg-cover bg-center'
                                         style={{
                                             backgroundColor: t.accent,
-                                            backgroundImage: `url('${project.images.hero}')`,
+                                            backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     >
                                         <div
@@ -381,7 +382,7 @@ export default function Home({ navigate }: HomeProps) {
                                         className='h-52 bg-cover bg-center'
                                         style={{
                                             backgroundColor: t.accentBg,
-                                            backgroundImage: `url('${project.images.hero}')`,
+                                            backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
                                     <div className='p-8'>
@@ -556,7 +557,7 @@ export default function Home({ navigate }: HomeProps) {
                         <div
                             className='rounded-2xl overflow-hidden h-80 lg:h-112.5 bg-cover bg-center bg-[#1B3D63]'
                             style={{
-                                backgroundImage: `url('public/images/projects/bira/IMG_0427.JPG')`,
+                                backgroundImage: `url('${asset('public/images/projects/bira/IMG_0427.JPG')}')`,
                             }}
                         />
                     </div>
@@ -597,7 +598,7 @@ export default function Home({ navigate }: HomeProps) {
                                 >
                                     {p.logo ? (
                                         <img
-                                            src={p.logo}
+                                            src={asset(p.logo)}
                                             alt={p.name}
                                             className='h-16 w-auto object-contain'
                                         />

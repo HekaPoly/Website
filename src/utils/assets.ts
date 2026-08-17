@@ -1,5 +1,5 @@
-export function asset(path: string): string {
-    const cleanPath = path.replace(/^\/+/, '');
+export function asset(path: string) {
+    if (/^(?:[a-z][a-z\d+.-]*:|\/\/|data:|#)/i.test(path)) return path;
 
-    return `${import.meta.env.BASE_URL}${cleanPath}`;
+    return `${import.meta.env.BASE_URL}${path.replace(/^(?:\/+|public\/)/, '')}`;
 }

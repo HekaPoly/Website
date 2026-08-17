@@ -1,4 +1,5 @@
 import { allProjects } from '../data/projects';
+import { asset } from '../utils/assets';
 
 interface ProjectsProps {
     navigate: (page: string) => void;
@@ -24,7 +25,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
                         backgroundImage:
-                            "url('public/images/projects/bira/att.Qr1e276Fz3eb8Xsh5VP6TMCCp6ooGYsYHFgDj97w03k.jpg')",
+                            `url('${asset('public/images/projects/bira/att.Qr1e276Fz3eb8Xsh5VP6TMCCp6ooGYsYHFgDj97w03k.jpg')}')`,
                         backgroundPosition: 'center 35%',
                     }}
                 />
@@ -73,7 +74,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                         className='h-72 lg:h-auto bg-cover bg-center min-h-64'
                                         style={{
                                             backgroundColor: t.accent,
-                                            backgroundImage: `url('${project.images.hero}')`,
+                                            backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
                                 )}
@@ -137,7 +138,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                         className='h-72 lg:h-auto bg-cover bg-center min-h-64 order-1 lg:order-2'
                                         style={{
                                             backgroundColor: t.accent,
-                                            backgroundImage: `url('${project.images.hero}')`,
+                                            backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
                                 )}

@@ -2,6 +2,7 @@ import { team } from '../data/team';
 import { getTeamMembersByGroup, getMemberInitials } from '../utils/content';
 import type { TeamMember } from '../types/content';
 import { useState } from 'react';
+import { asset } from '../utils/assets';
 
 function MemberCard({ member }: { member: TeamMember }) {
     const [flipped, setFlipped] = useState(false);
@@ -44,7 +45,7 @@ function MemberCard({ member }: { member: TeamMember }) {
                 >
                     {member.photo ? (
                         <img
-                            src={member.photo}
+                            src={asset(member.photo)}
                             alt={member.name}
                             className='
                             absolute inset-0
@@ -199,7 +200,7 @@ export default function Team() {
                 <div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
-                        backgroundImage: "url('public/images/team/team_photo.JPG')",
+                        backgroundImage: `url('${asset('public/images/team/team_photo.JPG')}')`,
                         backgroundPosition: 'center 40%',
                     }}
                 />

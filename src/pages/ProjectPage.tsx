@@ -1,5 +1,6 @@
 import { getAchievementsByProject, getTeamMembersByProject, getMemberInitials } from '../utils/content';
 import type { Project } from '../types/content';
+import { asset } from '../utils/assets';
 
 const THEME_MAP = {
     podi: {
@@ -58,7 +59,7 @@ export default function ProjectPage({ project, navigate }: Props) {
             >
                 <div
                     className='absolute inset-0 bg-cover bg-center opacity-20'
-                    style={{ backgroundImage: `url('${project.images.hero}')` }}
+                    style={{ backgroundImage: `url('${asset(project.images.hero)}')` }}
                 />
                 <div className='relative max-w-7xl mx-auto px-6 lg:px-10'>
                     <button
@@ -147,7 +148,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='rounded-2xl overflow-hidden h-64 bg-cover bg-center'
                                 style={{
                                     backgroundColor: t.accentBg,
-                                    backgroundImage: `url('${project.images.hero}')`,
+                                    backgroundImage: `url('${asset(project.images.hero)}')`,
                                 }}
                             />
                         )}
@@ -163,7 +164,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                             className='rounded-2xl overflow-hidden h-80 bg-cover bg-center'
                             style={{
                                 backgroundColor: t.accentBg,
-                                backgroundImage: `url('${project.images.solution}')`,
+                                backgroundImage: `url('${asset(project.images.solution)}')`,
                             }}
                         />
                         <div>
@@ -519,7 +520,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                                     >
                                         {m.photo ? (
                                             <img
-                                                src={m.photo}
+                                                src={asset(m.photo)}
                                                 alt={m.name}
                                                 className='w-full h-full object-cover'
                                             />

@@ -1,3 +1,5 @@
+import { asset } from '../utils/assets';
+
 interface Props {
     navigate: (page: string) => void;
 }
@@ -15,7 +17,7 @@ export default function ProjectBIRA({ navigate }: Props) {
                 <div
                     className='absolute inset-0 bg-cover bg-center opacity-25'
                     style={{
-                        backgroundImage: `url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1600&h=900&fit=crop&auto=format')`,
+                        backgroundImage: `url('${asset('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1600&h=900&fit=crop&auto=format')}')`,
                     }}
                 />
                 <div className='relative max-w-7xl mx-auto px-6 lg:px-10'>
@@ -153,7 +155,7 @@ export default function ProjectBIRA({ navigate }: Props) {
                         <div
                             className='rounded-2xl h-72 lg:h-96 bg-cover bg-center bg-[#E8F0F7]'
                             style={{
-                                backgroundImage: `url('https://images.unsplash.com/photo-1563968559507-d87412ef19d6?w=800&h=800&fit=crop&auto=format')`,
+                                backgroundImage: `url('${asset('https://images.unsplash.com/photo-1563968559507-d87412ef19d6?w=800&h=800&fit=crop&auto=format')}')`,
                             }}
                         />
                     </div>

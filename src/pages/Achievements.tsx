@@ -7,6 +7,7 @@ import {
     getAchievementStatusStyle,
     getProjectBadgeStyle,
 } from '../utils/content';
+import { asset } from '../utils/assets';
 
 export default function Achievements() {
     const [active, setActive] = useState('Tous');
@@ -25,7 +26,7 @@ export default function Achievements() {
                 <div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
-                        backgroundImage: "url('public/images/genial.webp')",
+                        backgroundImage: `url('${asset('public/images/genial.webp')}')`,
                         backgroundPosition: 'center 20%',
                     }}
                 />

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { partners } from '../data/partners';
 import { partnershipForm } from '../data/forms';
 import { site } from '../data/site';
+import { asset } from '../utils/assets';
 
 export default function Partners() {
     const [form, setForm] = useState<Record<string, string>>({});
@@ -22,7 +23,7 @@ export default function Partners() {
                 <div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
-                        backgroundImage: "url('public/images/team/4cc53130-ecc2-4901-9329-c58d022b59fa.jpg')",
+                        backgroundImage: `url('${asset('public/images/team/4cc53130-ecc2-4901-9329-c58d022b59fa.jpg')}')`,
                         backgroundPosition: 'center 45%',
                     }}
                 />
@@ -148,7 +149,7 @@ export default function Partners() {
                                 >
                                     {p.logo ? (
                                         <img
-                                            src={p.logo}
+                                            src={asset(p.logo)}
                                             alt={p.name}
                                             className='max-h-12 max-w-full object-contain'
                                         />

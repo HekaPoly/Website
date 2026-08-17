@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { navigation } from '../data/navigation';
+import { asset } from '../utils/assets';
 
 interface NavProps {
     current: string;
@@ -36,7 +37,7 @@ export default function Nav({ current, navigate }: NavProps) {
                         aria-label='Héka — Accueil'
                     >
                         <img
-                            src='public/images/Heka_2025_LogoComplet-CouleurNoir.svg'
+                            src={asset('public/images/Heka_2025_LogoComplet-CouleurNoir.svg')}
                             alt='Héka'
                             className='h-10 w-auto object-contain'
                         />

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { recruitmentForm, contactForm } from '../data/forms';
 import { site } from '../data/site';
+import { asset } from '../utils/assets';
 
 export default function Contact() {
     const [tab, setTab] = useState<'recrutement' | 'general'>('recrutement');
@@ -69,7 +70,7 @@ export default function Contact() {
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
                         backgroundImage:
-                            "url('public/images/team/380406934_305135572284172_3382824170791790552_n-scaled.jpg')",
+                            `url('${asset('public/images/team/380406934_305135572284172_3382824170791790552_n-scaled.jpg')}')`,
                         backgroundPosition: 'center 45%',
                     }}
                 />

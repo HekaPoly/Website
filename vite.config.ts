@@ -2,6 +2,8 @@ import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
+import { asset } from "@/utils/assets";
+
 
 import siteConfiguration from './.figma/make/site.json'
 
@@ -9,38 +11,68 @@ import siteConfiguration from './.figma/make/site.json'
 export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
+  /*
+   * Base URL priority:
+   *
+   * 1. Figma Make preview
+   * 2. Explicit deployment base (GitHub Pages repository URL)
+   * 3. "/" for localhost and custom domains
+   *
+   * Examples:
+   *
+   * Custom domain:
+   * https://heka.polymtl.ca
+   * VITE_BASE_PATH=/
+   *
+   * GitHub Pages:
+   * https://USERNAME.github.io/HekaPoly/
+   * VITE_BASE_PATH=/HekaPoly/
+   */
+  const base =
+      process.env.FIGMA_PUBLIC_URL
+          ? `${process.env.FIGMA_PUBLIC_URL}/`
+          : process.env.VITE_BASE_PATH || "/";
 
   return {
-    base: process.env.FIGMA_PUBLIC_URL ? `${process.env.FIGMA_PUBLIC_URL}/` : '/',
+    base,
+
     build: {
-      sourcemap: emitSourcemaps ? 'inline' : false,
+      sourcemap: emitSourcemaps ? "inline" : false,
       minify: !emitSourcemaps,
     },
+
     plugins: [
       react(),
       tailwindcss(),
       figmaSiteConfiguration(siteConfiguration),
       figmaErrorOverlayReplay(),
       figmaReactRefreshBoundaryFallback(),
-      figmaMakeKitPlugin({ storiesGlob: '/src/**/*.stories.{ts,tsx,js,jsx}' }),
+      figmaMakeKitPlugin({
+        storiesGlob: "/src/**/*.stories.{ts,tsx,js,jsx}",
+      }),
     ],
+
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        "@": path.resolve(__dirname, "./src"),
       },
     },
+
     server: {
-      host: '0.0.0.0',
-      port: parseInt(process.env.PORT || '8443'),
+      host: "0.0.0.0",
+      port: parseInt(process.env.PORT || "8443"),
       strictPort: true,
-      watch: { ignored: ['**/.figma/**'] },
+      watch: {
+        ignored: ["**/.figma/**"],
+      },
     },
+
     preview: {
-      host: '0.0.0.0',
-      port: parseInt(process.env.PORT || '8443'),
+      host: "0.0.0.0",
+      port: parseInt(process.env.PORT || "8443"),
     },
-  }
-})
+  };
+});
 
 type FigmaSiteConfiguration = {
   title?: string

@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --color-cream: #F8F7F3;
+  --color-charcoal: #111110;
+  --color-heka: #41699d;
+  --color-heka-light: #EAF0F8;
+  --color-heka-mid: #B8CDDF;
+  --color-heka-yellow: #f2c664;
+  --color-podi: #C8281A;
+  --color-podi-light: #FEF0EF;
+  --color-bira: #1B4F72;
+  --color-bira-light: #E8F0F7;
+  --color-muted: #7A7269;
+  --color-border: #E2DDD5;
+  --color-card: #000000;
+
+  --font-display: "Montserrat", sans-serif;
+  --font-sans: "Montserrat", sans-serif;
+  --font-mono: "DM Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F8F7F3;
+  color: #111110;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8C3BB;
+  border-radius: 3px;
+}
+
+::selection {
+  background: #B8CDDF;
+  color: #111110;
+}

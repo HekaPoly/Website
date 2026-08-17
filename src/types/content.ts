@@ -22,11 +22,10 @@ export type MemberGroup =
   | 'other'
 
 export type PartnerCategory =
-  | 'principal'
-  | 'financial'
-  | 'technical'
-  | 'institutional'
-  | 'material'
+  | 'Platinum'
+  | 'Gold'
+  | 'Silver'
+  | 'Bronze'
 
 // ─── Site ────────────────────────────────────────────────────────────────────
 

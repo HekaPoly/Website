@@ -113,7 +113,7 @@ export default function Home({ navigate }: HomeProps) {
                         playsInline
                     >
                         <source
-                            src='/videos/heka-hero.mp4'
+                            src={asset('/videos/heka-hero.mp4')}
                             type='video/mp4'
                         />
                     </video>

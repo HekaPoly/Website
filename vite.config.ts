@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
 
 export default defineConfig(() => {
-    const base = process.env.VITE_BASE_PATH || '/';
+    const base = process.env.VITE_BASE_PATH || '/Website/';
 
     return {
         base,

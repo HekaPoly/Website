@@ -1,168 +1,336 @@
-import { team } from '../data/team'
-import { getTeamMembersByGroup, getMemberInitials, getProjectBadgeStyle } from '../utils/content'
-import type { TeamMember } from '../types/content'
+import { team } from '../data/team';
+import { getTeamMembersByGroup, getMemberInitials } from '../utils/content';
+import type { TeamMember } from '../types/content';
+import { useState } from 'react';
 
 function MemberCard({ member }: { member: TeamMember }) {
-  const initials = member.photo ? null : getMemberInitials(member.name)
+    const [flipped, setFlipped] = useState(false);
+    const initials = member.photo ? null : getMemberInitials(member.name);
+    const getMessageSize = (message?: string) => {
+        const length = message?.length ?? 0;
 
-  return (
-    <div className="p-6 rounded-2xl border border-border bg-white hover:border-heka-mid transition-colors group">
-      <div className="w-14 h-14 rounded-full bg-heka-light flex items-center justify-center mb-4 overflow-hidden">
-        {member.photo ? (
-          <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
-        ) : initials ? (
-          <span className="text-lg font-semibold text-heka" style={{ fontFamily: 'var(--font-mono)' }}>{initials}</span>
-        ) : (
-          <svg className="w-7 h-7 text-heka opacity-40" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-          </svg>
-        )}
-      </div>
-      <div className="text-xs font-medium text-muted mb-1" style={{ fontFamily: 'var(--font-mono)' }}>
-        {member.role}
-      </div>
-      <h3 className="font-semibold text-charcoal text-sm mb-2">{member.name}</h3>
-      <div className="flex flex-wrap gap-1.5 mb-3">
-        {member.program && member.program !== 'À confirmer' && (
-          <span className="text-xs text-muted bg-[#F2EEE8] px-2 py-0.5 rounded">{member.program}</span>
-        )}
-        {member.project && (
-          <span className={`text-xs px-2 py-0.5 rounded ${getProjectBadgeStyle(member.project)}`} style={{ fontFamily: 'var(--font-mono)' }}>
-            {member.project.toUpperCase()}
-          </span>
-        )}
-        {(!member.program || member.program === 'À confirmer') && (
-          <span className="text-xs text-[#C8C3BB] bg-cream px-2 py-0.5 rounded" style={{ fontFamily: 'var(--font-mono)' }}>
-            [À confirmer]
-          </span>
-        )}
-      </div>
-      {(member.linkedin || member.email) && (
-        <div className="flex gap-3 mt-2">
-          {member.linkedin && (
-            <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-xs text-heka hover:underline">
-              LinkedIn
-            </a>
-          )}
-          {member.email && (
-            <a href={`mailto:${member.email}`} className="text-xs text-heka hover:underline">
-              Courriel
-            </a>
-          )}
-        </div>
-      )}
-    </div>
-  )
-}
+        if (length > 300) return 'text-xs leading-relaxed';
+        if (length > 220) return 'text-sm leading-relaxed';
+        if (length > 150) return 'text-base leading-relaxed';
+        if (length > 90) return 'text-lg leading-relaxed';
 
-export default function Team() {
-  const exec = getTeamMembersByGroup('direction')
-  const podi = getTeamMembersByGroup('podi')
-  const bira = getTeamMembersByGroup('bira')
+        return 'text-xl leading-relaxed';
+    };
 
-  return (
-    <div className="pt-16">
-        <section className="relative py-20 lg:py-28 border-b border-border overflow-hidden">
-            {/* Background image */}
+    return (
+        <button
+            type='button'
+            onClick={() => setFlipped((value) => !value)}
+            className='group relative w-full aspect-3/4 text-left perspective-distant'
+            aria-pressed={flipped}
+        >
             <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                    backgroundImage: "url('public/images/team/team_photo.JPG')",
-                    backgroundPosition: "center 40%",
-                }}
-            />
+                className={`
+                  relative w-full h-full
+                  transition-transform duration-500
+                  transform-3d
+                  ${flipped ? 'transform-[rotateY(180deg)]' : ''}
+                `}
+            >
+                {/* RECTO */}
+                <div
+                    className='
+                    absolute inset-0
+                    overflow-hidden
+                    rounded-2xl
+                    bg-charcoal
+                    backface-hidden
+                  '
+                >
+                    {member.photo ? (
+                        <img
+                            src={member.photo}
+                            alt={member.name}
+                            className='
+                            absolute inset-0
+                            w-full h-full
+                            object-cover
+                            transition-transform duration-500
+                            group-hover:scale-[1.03]
+                          '
+                        />
+                    ) : (
+                        <div className='absolute inset-0 bg-heka-light flex items-center justify-center'>
+                            <span
+                                className='text-4xl font-semibold text-heka'
+                                style={{ fontFamily: 'var(--font-mono)' }}
+                            >
+                                {initials}
+                            </span>
+                        </div>
+                    )}
 
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.82)_0%,rgba(15,23,42,0.65)_38%,rgba(15,23,42,0.28)_68%,transparent_100%)]" />
+                    <div className='absolute inset-0 bg-linear-to-t from-black/85 via-black/15 to-transparent' />
 
-            {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
-                <div className="max-w-2xl">
-      <span
-          className="text-xs font-medium text-heka-yellow uppercase tracking-widest"
-          style={{ fontFamily: "var(--font-mono)" }}
-      >
-        Équipe
-      </span>
+                    {/* Infos */}
+                    <div className='absolute inset-x-0 bottom-0 p-6 text-white'>
+                        <h3
+                            className='text-2xl font-semibold mb-1'
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            {member.name}
+                        </h3>
 
-                    <h1
-                        className="text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold"
-                        style={{ fontFamily: "var(--font-display)" }}
+                        <p className='text-sm text-white/90'>{member.role}</p>
+
+                        <div className='flex flex-wrap gap-2 mt-3'>
+                            {member.program && member.program !== 'À confirmer' && (
+                                <span className='text-[11px] px-2 py-1 rounded-full bg-white/15 backdrop-blur-sm'>
+                                    {member.program}
+                                </span>
+                            )}
+
+                            {member.project && (
+                                <span
+                                    className='text-[11px] px-2 py-1 rounded-full bg-white/15 backdrop-blur-sm'
+                                    style={{ fontFamily: 'var(--font-mono)' }}
+                                >
+                                    {member.project.toUpperCase()}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Bouton + */}
+                    <div
+                        className='
+                          absolute bottom-5 right-5
+                          w-9 h-9
+                          rounded-full
+                          border border-white/80
+                          flex items-center justify-center
+                          text-white
+                          text-2xl
+                          font-light
+                          transition-all duration-300
+                          group-hover:bg-white
+                          group-hover:text-charcoal
+                        '
                     >
-                        Des étudiants de toutes les disciplines.
-                    </h1>
+                        +
+                    </div>
+                </div>
 
-                    <p className="text-white/80 leading-relaxed max-w-xl">
-                        Héka réunit des membres issus du génie mécanique, logiciel, électrique,
-                        biomédical, logiciel, physique, médecine et plus encore autour de projets concrets.
-                    </p>
+                {/* VERSO */}
+                <div
+                    className='
+                        absolute
+                        inset-0
+                        rounded-2xl
+                        bg-heka-light
+                        text-charcoal
+                        p-7
+                        flex flex-col
+                        justify-between
+                        transform-[rotateY(180deg)]
+                        backface-hidden
+                    '
+                >
+                    <div>
+                        <span
+                            className='text-xs  text-gray-900 uppercase tracking-widest'
+                            style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                            Un mot de {member.name.split(' ')[0]}
+                        </span>
+
+                        <p
+                            className={`mt-6 ${getMessageSize(member.message)}`}
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            “{member.message || 'Un petit mot du membre sera bientôt ajouté.'}”
+                        </p>
+                    </div>
+
+                    <div>
+                        {(member.linkedin || member.email) && (
+                            <div className='flex gap-4 mb-5'>
+                                {member.linkedin && (
+                                    <a
+                                        href={member.linkedin}
+                                        target='_blank'
+                                        rel='noopener noreferrer'
+                                        onClick={(e) => e.stopPropagation()}
+                                        className='text-sm hover:text-heka-yellow transition-colors'
+                                    >
+                                        LinkedIn ↗
+                                    </a>
+                                )}
+
+                                {member.email && (
+                                    <a
+                                        href={`mailto:${member.email}`}
+                                        onClick={(e) => e.stopPropagation()}
+                                        className='text-sm hover:text-heka-yellow transition-colors'
+                                    >
+                                        Courriel ↗
+                                    </a>
+                                )}
+                            </div>
+                        )}
+
+                        <div className='flex items-center justify-between'>
+                            <span className='text-xs text-charcoal'>Cliquer pour revenir</span>
+
+                            <div className='w-9 h-9 rounded-full border border-charcoal/70 flex items-center justify-center text-xl'>
+                                ×
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </button>
+    );
+}
+export default function Team() {
+    const exec = getTeamMembersByGroup('direction');
+    const podi = getTeamMembersByGroup('podi');
+    const bira = getTeamMembersByGroup('bira');
 
-      {exec.length > 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="mb-10">
-              <span className="text-xs font-medium text-muted uppercase tracking-widest" style={{ fontFamily: 'var(--font-mono)' }}>
-                Conseil exécutif
-              </span>
-              <h2 className="text-2xl lg:text-3xl mt-2 text-charcoal" style={{ fontFamily: 'var(--font-display)' }}>
-                Direction de l'organisation
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {exec.map((m) => <MemberCard key={m.id} member={m} />)}
-            </div>
-          </div>
-        </section>
-      )}
+    return (
+        <div className='pt-16'>
+            <section className='relative py-20 lg:py-28 border-b border-border overflow-hidden'>
+                {/* Background image */}
+                <div
+                    className='absolute inset-0 bg-cover bg-center'
+                    style={{
+                        backgroundImage: "url('public/images/team/team_photo.JPG')",
+                        backgroundPosition: 'center 40%',
+                    }}
+                />
 
-      {podi.length > 0 && (
-        <section className="py-16 bg-podi-light">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="mb-10">
-              <span className="text-xs font-medium text-podi uppercase tracking-widest" style={{ fontFamily: 'var(--font-mono)' }}>
-                Équipe PODI
-              </span>
-              <h2 className="text-2xl lg:text-3xl mt-2 text-charcoal" style={{ fontFamily: 'var(--font-display)' }}>
-                Exosquelette passif
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {podi.map((m) => <MemberCard key={m.id} member={m} />)}
-            </div>
-          </div>
-        </section>
-      )}
+                {/* Overlay */}
+                <div className='absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.82)_0%,rgba(15,23,42,0.65)_38%,rgba(15,23,42,0.28)_68%,transparent_100%)]' />
 
-      {bira.length > 0 && (
-        <section className="py-16 bg-bira-light">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10">
-            <div className="mb-10">
-              <span className="text-xs font-medium text-bira uppercase tracking-widest" style={{ fontFamily: 'var(--font-mono)' }}>
-                Équipe BIRA
-              </span>
-              <h2 className="text-2xl lg:text-3xl mt-2 text-charcoal" style={{ fontFamily: 'var(--font-display)' }}>
-                Bras robotique intelligent
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {bira.map((m) => <MemberCard key={m.id} member={m} />)}
-            </div>
-          </div>
-        </section>
-      )}
+                {/* Content */}
+                <div className='relative z-10 max-w-7xl mx-auto px-6 lg:px-10'>
+                    <div className='max-w-2xl'>
+                        <span
+                            className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
+                            style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                            Équipe
+                        </span>
 
-      {team.length === 0 && (
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
-            <p className="text-[#C8C3BB]" style={{ fontFamily: 'var(--font-mono)' }}>
-              Ajoutez les membres de l'équipe dans src/data/team.ts.
-            </p>
-          </div>
-        </section>
-      )}
-    </div>
-  )
+                        <h1
+                            className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            Des étudiants de toutes les disciplines.
+                        </h1>
+
+                        <p className='text-white/80 leading-relaxed max-w-xl'>
+                            Héka réunit des membres issus du génie mécanique, logiciel, électrique, biomédical,
+                            logiciel, physique, médecine et plus encore autour de projets concrets.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            {exec.length > 0 && (
+                <section className='py-20 bg-white'>
+                    <div className='max-w-7xl mx-auto px-6 lg:px-10'>
+                        <div className='mb-10'>
+                            <span
+                                className='text-xs font-medium text-muted uppercase tracking-widest'
+                                style={{ fontFamily: 'var(--font-mono)' }}
+                            >
+                                Conseil exécutif
+                            </span>
+                            <h2
+                                className='text-2xl lg:text-3xl mt-2 text-charcoal'
+                                style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                                Direction de l'organisation
+                            </h2>
+                        </div>
+                        <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+                            {exec.map((m) => (
+                                <MemberCard
+                                    key={m.id}
+                                    member={m}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {podi.length > 0 && (
+                <section className='py-16 bg-podi-light'>
+                    <div className='max-w-7xl mx-auto px-6 lg:px-10'>
+                        <div className='mb-10'>
+                            <span
+                                className='text-xs font-medium text-podi uppercase tracking-widest'
+                                style={{ fontFamily: 'var(--font-mono)' }}
+                            >
+                                Équipe PODI
+                            </span>
+                            <h2
+                                className='text-2xl lg:text-3xl mt-2 text-charcoal'
+                                style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                                Exosquelette passif
+                            </h2>
+                        </div>
+                        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                            {podi.map((m) => (
+                                <MemberCard
+                                    key={m.id}
+                                    member={m}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {bira.length > 0 && (
+                <section className='py-16 bg-bira-light'>
+                    <div className='max-w-7xl mx-auto px-6 lg:px-10'>
+                        <div className='mb-10'>
+                            <span
+                                className='text-xs font-medium text-bira uppercase tracking-widest'
+                                style={{ fontFamily: 'var(--font-mono)' }}
+                            >
+                                Équipe BIRA
+                            </span>
+                            <h2
+                                className='text-2xl lg:text-3xl mt-2 text-charcoal'
+                                style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                                Bras robotique intelligent
+                            </h2>
+                        </div>
+                        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                            {bira.map((m) => (
+                                <MemberCard
+                                    key={m.id}
+                                    member={m}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {team.length === 0 && (
+                <section className='py-20 bg-white'>
+                    <div className='max-w-7xl mx-auto px-6 lg:px-10 text-center'>
+                        <p
+                            className='text-[#C8C3BB]'
+                            style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                            Ajoutez les membres de l'équipe dans src/data/team.ts.
+                        </p>
+                    </div>
+                </section>
+            )}
+        </div>
+    );
 }

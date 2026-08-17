@@ -1,6 +1,7 @@
 # Site Héka — React + TypeScript
 
-Cette version a été reconstruite à partir du fichier Figma Make fourni afin de rendre le site plus facile à maintenir et à faire évoluer.
+Cette version a été reconstruite à partir du fichier Figma Make fourni afin de rendre le site plus
+facile à maintenir et à faire évoluer.
 
 ## Objectifs de l'architecture
 
@@ -54,7 +55,8 @@ src/data/
 
 La règle à retenir :
 
-> **Le contenu va dans `src/data/`. Le fonctionnement du site va dans `src/components/` et `src/pages/`.**
+> **Le contenu va dans `src/data/`. Le fonctionnement du site va dans `src/components/` et
+> `src/pages/`.**
 
 ## Modifier les textes généraux
 
@@ -242,9 +244,11 @@ src/
 
 ## Pourquoi une seule `ProjectDetail.tsx` ?
 
-L'ancienne version avait des pages séparées pour PODI et BIRA. Cette version utilise une seule page dynamique qui lit `projects.ts`.
+L'ancienne version avait des pages séparées pour PODI et BIRA. Cette version utilise une seule page
+dynamique qui lit `projects.ts`.
 
-C'est important pour la passation : si Héka crée un troisième projet, il suffit d'ajouter ses données.
+C'est important pour la passation : si Héka crée un troisième projet, il suffit d'ajouter ses
+données.
 
 ---
 
@@ -263,7 +267,8 @@ Publish directory: dist
 
 ## Vercel
 
-Le projet contient déjà `vercel.json` pour que React Router fonctionne lorsque quelqu'un ouvre directement une URL comme `/projets/podi`.
+Le projet contient déjà `vercel.json` pour que React Router fonctionne lorsque quelqu'un ouvre
+directement une URL comme `/projets/podi`.
 
 ---
 
@@ -282,4 +287,6 @@ Le projet contient déjà `vercel.json` pour que React Router fonctionne lorsque
 
 ## Note sur le backend
 
-Cette version n'en nécessite pas. Si Héka veut plus tard une interface d'administration où les membres peuvent ajouter du contenu sans modifier les fichiers, `src/data/` pourra être remplacé progressivement par un CMS ou une API sans refaire toute l'interface React.
+Cette version n'en nécessite pas. Si Héka veut plus tard une interface d'administration où les
+membres peuvent ajouter du contenu sans modifier les fichiers, `src/data/` pourra être remplacé
+progressivement par un CMS ou une API sans refaire toute l'interface React.

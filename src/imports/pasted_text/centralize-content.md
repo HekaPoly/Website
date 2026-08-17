@@ -1,10 +1,13 @@
 # Prompt Figma Make — Centraliser le contenu dans des fichiers `data`
 
-Refactor the existing Héka website so that **all editable website content is centralized into simple TypeScript data files**, separate from the React components and page layout.
+Refactor the existing Héka website so that **all editable website content is centralized into simple
+TypeScript data files**, separate from the React components and page layout.
 
-The goal is to make the website extremely easy to maintain for future Héka members, including people with little or no programming experience.
+The goal is to make the website extremely easy to maintain for future Héka members, including people
+with little or no programming experience.
 
-Do **not** redesign the website unless necessary. Preserve the existing visual identity, layout, components, responsive behavior, colors, typography, and animations.
+Do **not** redesign the website unless necessary. Preserve the existing visual identity, layout,
+components, responsive behavior, colors, typography, and animations.
 
 The main objective is to improve the architecture and content management.
 
@@ -18,11 +21,14 @@ Editable information should live inside:
 src/data/
 ```
 
-The website should read the data from these files and automatically render the corresponding content.
+The website should read the data from these files and automatically render the corresponding
+content.
 
-For example, adding a new team member should only require editing `team.ts`, not modifying `Team.tsx`.
+For example, adding a new team member should only require editing `team.ts`, not modifying
+`Team.tsx`.
 
-Adding a new project should only require editing `projects.ts`, not creating a completely new page manually.
+Adding a new project should only require editing `projects.ts`, not creating a completely new page
+manually.
 
 ---
 
@@ -61,50 +67,47 @@ It should contain information such as:
 
 ```ts
 export const site = {
-  name: "Héka",
-  organization: "Polytechnique Montréal",
+    name: 'Héka',
+    organization: 'Polytechnique Montréal',
 
-  tagline: "L’ingénierie au service de la santé et de l’humain.",
+    tagline: 'L’ingénierie au service de la santé et de l’humain.',
 
-  description:
-    "Héka est une société technique de Polytechnique Montréal qui développe des solutions technologiques répondant à des enjeux humains concrets.",
+    description:
+        'Héka est une société technique de Polytechnique Montréal qui développe des solutions technologiques répondant à des enjeux humains concrets.',
 
-  email: "heka@polymtl.ca",
+    email: 'heka@polymtl.ca',
 
-  socialMedia: {
-    instagram: "",
-    linkedin: "",
-    facebook: "",
-  },
-
-  mission: [
-    {
-      title: "Concevoir",
-      description:
-        "Développer des solutions d’ingénierie adaptées à des besoins humains réels.",
+    socialMedia: {
+        instagram: '',
+        linkedin: '',
+        facebook: '',
     },
-    {
-      title: "Former",
-      description:
-        "Offrir aux étudiants une expérience pratique et multidisciplinaire.",
-    },
-    {
-      title: "Sensibiliser",
-      description:
-        "Faire connaître les enjeux biomédicaux auprès de la communauté.",
-    },
-  ],
 
-  statistics: [
-    {
-      value: "XX",
-      label: "Membres",
-    },
-    {
-      value: "2",
-      label: "Projets actifs",
-    },
-  ],
+    mission: [
+        {
+            title: 'Concevoir',
+            description: 'Développer des solutions d’ingénierie adaptées à des besoins humains réels.',
+        },
+        {
+            title: 'Former',
+            description: 'Offrir aux étudiants une expérience pratique et multidisciplinaire.',
+        },
+        {
+            title: 'Sensibiliser',
+            description: 'Faire connaître les enjeux biomédicaux auprès de la communauté.',
+        },
+    ],
+
+    statistics: [
+        {
+            value: 'XX',
+            label: 'Membres',
+        },
+        {
+            value: '2',
+            label: 'Projets actifs',
+        },
+    ],
 };
 ```
 
@@ -122,115 +125,89 @@ Example:
 
 ```ts
 export const projects = [
-  {
-    slug: "podi",
+    {
+        slug: 'podi',
 
-    name: "PODI",
+        name: 'PODI',
 
-    shortName: "PODI",
+        shortName: 'PODI',
 
-    category: "Exosquelette passif",
+        category: 'Exosquelette passif',
 
-    challenge: "Soutenir les premiers répondants",
+        challenge: 'Soutenir les premiers répondants',
 
-    title:
-      "Réduire les contraintes physiques vécues par les pompiers.",
+        title: 'Réduire les contraintes physiques vécues par les pompiers.',
 
-    shortDescription:
-      "Un exosquelette mécanique passif destiné à assister les pompiers pendant certaines tâches physiquement exigeantes.",
+        shortDescription:
+            'Un exosquelette mécanique passif destiné à assister les pompiers pendant certaines tâches physiquement exigeantes.',
 
-    description:
-      "Description plus complète du projet.",
+        description: 'Description plus complète du projet.',
 
-    status: "En développement",
+        status: 'En développement',
 
-    theme: "podi",
+        theme: 'podi',
 
-    disciplines: [
-      "Génie mécanique",
-      "Ergonomie",
-      "Prototypage",
-      "Sécurité",
-    ],
+        disciplines: ['Génie mécanique', 'Ergonomie', 'Prototypage', 'Sécurité'],
 
-    problem:
-      "Description du problème auquel répond le projet.",
+        problem: 'Description du problème auquel répond le projet.',
 
-    objective:
-      "Description de l’objectif technique.",
+        objective: 'Description de l’objectif technique.',
 
-    currentWork: [
-      "Amélioration du prototype",
-      "Réduction du poids",
-      "Tests mécaniques",
-    ],
+        currentWork: ['Amélioration du prototype', 'Réduction du poids', 'Tests mécaniques'],
 
-    nextSteps: [
-      "Définir les critères de performance",
-      "Effectuer de nouveaux essais",
-    ],
+        nextSteps: ['Définir les critères de performance', 'Effectuer de nouveaux essais'],
 
-    achievements: [
-      "ace-2026",
-    ],
+        achievements: ['ace-2026'],
 
-    teamMembers: [
-      "member-id-example",
-    ],
+        teamMembers: ['member-id-example'],
 
-    partners: [],
+        partners: [],
 
-    images: {
-      hero: "",
-      gallery: [],
+        images: {
+            hero: '',
+            gallery: [],
+        },
     },
-  },
 
-  {
-    slug: "bira",
+    {
+        slug: 'bira',
 
-    name: "BIRA",
+        name: 'BIRA',
 
-    category: "Bras robotique intelligent",
+        category: 'Bras robotique intelligent',
 
-    challenge: "Favoriser l’autonomie",
+        challenge: 'Favoriser l’autonomie',
 
-    title:
-      "Rendre l’assistance robotique plus intuitive.",
+        title: 'Rendre l’assistance robotique plus intuitive.',
 
-    shortDescription:
-      "Un bras robotique intelligent utilisant l’intelligence artificielle et le traitement automatique du langage naturel.",
+        shortDescription:
+            'Un bras robotique intelligent utilisant l’intelligence artificielle et le traitement automatique du langage naturel.',
 
-    status: "En développement",
+        status: 'En développement',
 
-    theme: "bira",
+        theme: 'bira',
 
-    disciplines: [
-      "Robotique",
-      "Intelligence artificielle",
-      "NLP",
-      "Génie logiciel",
-    ],
+        disciplines: ['Robotique', 'Intelligence artificielle', 'NLP', 'Génie logiciel'],
 
-    problem: "",
+        problem: '',
 
-    objective: "",
+        objective: '',
 
-    currentWork: [],
+        currentWork: [],
 
-    nextSteps: [],
+        nextSteps: [],
 
-    achievements: [],
+        achievements: [],
 
-    teamMembers: [],
+        teamMembers: [],
 
-    partners: [],
+        partners: [],
 
-    images: {
-      hero: "",
-      gallery: [],
+        images: {
+            hero: '',
+            gallery: [],
+        },
     },
-  },
 ];
 ```
 
@@ -273,45 +250,45 @@ Example:
 
 ```ts
 export const team = [
-  {
-    id: "phi-dan-nguyen",
+    {
+        id: 'phi-dan-nguyen',
 
-    name: "Phi-Dan Nguyen",
+        name: 'Phi-Dan Nguyen',
 
-    role: "Direction générale",
+        role: 'Direction générale',
 
-    program: "Génie logiciel",
+        program: 'Génie logiciel',
 
-    project: null,
+        project: null,
 
-    group: "direction",
+        group: 'direction',
 
-    photo: "",
+        photo: '',
 
-    linkedin: "",
+        linkedin: '',
 
-    email: "",
-  },
+        email: '',
+    },
 
-  {
-    id: "member-example",
+    {
+        id: 'member-example',
 
-    name: "Nom du membre",
+        name: 'Nom du membre',
 
-    role: "Direction mécanique",
+        role: 'Direction mécanique',
 
-    program: "Génie mécanique",
+        program: 'Génie mécanique',
 
-    project: "podi",
+        project: 'podi',
 
-    group: "project-leadership",
+        group: 'project-leadership',
 
-    photo: "",
+        photo: '',
 
-    linkedin: "",
+        linkedin: '',
 
-    email: "",
-  },
+        email: '',
+    },
 ];
 ```
 
@@ -341,19 +318,19 @@ Example:
 
 ```ts
 export const partners = [
-  {
-    id: "partner-name",
+    {
+        id: 'partner-name',
 
-    name: "Nom partenaire",
+        name: 'Nom partenaire',
 
-    logo: "/images/partners/partner.svg",
+        logo: '/images/partners/partner.svg',
 
-    website: "https://example.com",
+        website: 'https://example.com',
 
-    category: "principal",
+        category: 'principal',
 
-    description: "",
-  },
+        description: '',
+    },
 ];
 ```
 
@@ -377,42 +354,41 @@ but do not require every category to be displayed if it is empty.
 
 Use one file for:
 
-* competitions;
-* awards;
-* conferences;
-* events;
-* media appearances;
-* demonstrations;
-* important project milestones.
+- competitions;
+- awards;
+- conferences;
+- events;
+- media appearances;
+- demonstrations;
+- important project milestones.
 
 Example:
 
 ```ts
 export const achievements = [
-  {
-    id: "ace-2026",
+    {
+        id: 'ace-2026',
 
-    date: "2026-05-01",
+        date: '2026-05-01',
 
-    type: "competition",
+        type: 'competition',
 
-    title: "ACE 2026",
+        title: 'ACE 2026',
 
-    project: "podi",
+        project: 'podi',
 
-    status: "completed",
+        status: 'completed',
 
-    location: "Hamilton, Ontario",
+        location: 'Hamilton, Ontario',
 
-    description:
-      "Description de la compétition.",
+        description: 'Description de la compétition.',
 
-    result: "1re place",
+        result: '1re place',
 
-    image: "",
+        image: '',
 
-    link: "",
-  },
+        link: '',
+    },
 ];
 ```
 
@@ -423,12 +399,12 @@ Create filters based on `type`.
 Possible types:
 
 ```ts
-"competition"
-"award"
-"event"
-"conference"
-"media"
-"milestone"
+'competition';
+'award';
+'event';
+'conference';
+'media';
+'milestone';
 ```
 
 Do not hard-code filters that are not present in the data.
@@ -445,41 +421,35 @@ Example:
 
 ```ts
 export const forms = {
-  recruitment: {
-    title: "Rejoindre Héka",
+    recruitment: {
+        title: 'Rejoindre Héka',
 
-    description:
-      "Vous souhaitez rejoindre PODI, BIRA ou contribuer à Héka?",
+        description: 'Vous souhaitez rejoindre PODI, BIRA ou contribuer à Héka?',
 
-    url: "",
+        url: '',
 
-    buttonLabel:
-      "Ouvrir le formulaire de recrutement",
-  },
+        buttonLabel: 'Ouvrir le formulaire de recrutement',
+    },
 
-  partnership: {
-    title: "Devenir partenaire",
+    partnership: {
+        title: 'Devenir partenaire',
 
-    description:
-      "Vous souhaitez soutenir ou collaborer avec Héka?",
+        description: 'Vous souhaitez soutenir ou collaborer avec Héka?',
 
-    url: "",
+        url: '',
 
-    buttonLabel:
-      "Nous contacter",
-  },
+        buttonLabel: 'Nous contacter',
+    },
 
-  contact: {
-    title: "Nous joindre",
+    contact: {
+        title: 'Nous joindre',
 
-    description:
-      "Compétition, média, conférence ou demande générale.",
+        description: 'Compétition, média, conférence ou demande générale.',
 
-    url: "",
+        url: '',
 
-    buttonLabel:
-      "Ouvrir le formulaire",
-  },
+        buttonLabel: 'Ouvrir le formulaire',
+    },
 };
 ```
 
@@ -501,34 +471,34 @@ Example:
 
 ```ts
 export const navigation = [
-  {
-    label: "Accueil",
-    href: "/",
-  },
-  {
-    label: "À propos",
-    href: "/a-propos",
-  },
-  {
-    label: "Projets",
-    href: "/projets",
-  },
-  {
-    label: "Réalisations",
-    href: "/realisations",
-  },
-  {
-    label: "Équipe",
-    href: "/equipe",
-  },
-  {
-    label: "Partenaires",
-    href: "/partenaires",
-  },
-  {
-    label: "Nous joindre",
-    href: "/nous-joindre",
-  },
+    {
+        label: 'Accueil',
+        href: '/',
+    },
+    {
+        label: 'À propos',
+        href: '/a-propos',
+    },
+    {
+        label: 'Projets',
+        href: '/projets',
+    },
+    {
+        label: 'Réalisations',
+        href: '/realisations',
+    },
+    {
+        label: 'Équipe',
+        href: '/equipe',
+    },
+    {
+        label: 'Partenaires',
+        href: '/partenaires',
+    },
+    {
+        label: 'Nous joindre',
+        href: '/nous-joindre',
+    },
 ];
 ```
 
@@ -549,40 +519,40 @@ src/types/content.ts
 Define reusable types for:
 
 ```ts
-Project
-TeamMember
-Partner
-Achievement
-FormConfiguration
-NavigationItem
-SiteConfiguration
+Project;
+TeamMember;
+Partner;
+Achievement;
+FormConfiguration;
+NavigationItem;
+SiteConfiguration;
 ```
 
 Example:
 
 ```ts
 export interface Project {
-  slug: string;
-  name: string;
-  category: string;
-  challenge: string;
-  title: string;
-  shortDescription: string;
-  description?: string;
-  status: string;
-  theme: "podi" | "bira" | "default";
-  disciplines: string[];
-  problem: string;
-  objective: string;
-  currentWork: string[];
-  nextSteps: string[];
-  achievements: string[];
-  teamMembers: string[];
-  partners: string[];
-  images: {
-    hero: string;
-    gallery: string[];
-  };
+    slug: string;
+    name: string;
+    category: string;
+    challenge: string;
+    title: string;
+    shortDescription: string;
+    description?: string;
+    status: string;
+    theme: 'podi' | 'bira' | 'default';
+    disciplines: string[];
+    problem: string;
+    objective: string;
+    currentWork: string[];
+    nextSteps: string[];
+    achievements: string[];
+    teamMembers: string[];
+    partners: string[];
+    images: {
+        hero: string;
+        gallery: string[];
+    };
 }
 ```
 
@@ -603,10 +573,7 @@ For example:
 A project should reference team members using:
 
 ```ts
-teamMembers: [
-  "phi-dan-nguyen",
-  "member-example",
-]
+teamMembers: ['phi-dan-nguyen', 'member-example'];
 ```
 
 instead of duplicating their full name and job information.
@@ -614,7 +581,7 @@ instead of duplicating their full name and job information.
 An achievement should reference:
 
 ```ts
-project: "podi"
+project: 'podi';
 ```
 
 instead of copying the entire PODI project.
@@ -622,9 +589,7 @@ instead of copying the entire PODI project.
 A project can reference achievements:
 
 ```ts
-achievements: [
-  "ace-2026"
-]
+achievements: ['ace-2026'];
 ```
 
 The React components can resolve these relationships.
@@ -644,15 +609,15 @@ src/utils/content.ts
 Functions could include:
 
 ```ts
-getProjectBySlug(slug)
+getProjectBySlug(slug);
 
-getTeamMembersByProject(projectSlug)
+getTeamMembersByProject(projectSlug);
 
-getAchievementsByProject(projectSlug)
+getAchievementsByProject(projectSlug);
 
-getPartnersByProject(projectSlug)
+getPartnersByProject(projectSlug);
 
-getLatestAchievements(limit)
+getLatestAchievements(limit);
 ```
 
 Pages should use these helpers instead of repeatedly writing filter logic.
@@ -680,7 +645,7 @@ Data files should only contain paths.
 Example:
 
 ```ts
-photo: "/images/team/phi-dan.jpg"
+photo: '/images/team/phi-dan.jpg';
 ```
 
 Do not import every image manually inside React components unless technically necessary.
@@ -750,16 +715,16 @@ Do not display an empty achievements section.
 
 Do NOT add:
 
-* Redux;
-* backend;
-* database;
-* authentication;
-* CMS;
-* complex state management;
-* unnecessary context providers;
-* APIs;
-* Docker;
-* server-side rendering;
+- Redux;
+- backend;
+- database;
+- authentication;
+- CMS;
+- complex state management;
+- unnecessary context providers;
+- APIs;
+- Docker;
+- server-side rendering;
 
 unless already required elsewhere in the project.
 
@@ -839,4 +804,5 @@ src/data/projects.ts
 
 The React components should automatically adapt.
 
-The final architecture should prioritize **maintainability, simplicity, and handoff between student teams** over technical sophistication.
+The final architecture should prioritize **maintainability, simplicity, and handoff between student
+teams** over technical sophistication.

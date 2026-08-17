@@ -11,14 +11,14 @@
   L'ordre des items ici détermine l'ordre dans la navigation.
 */
 
-import type { NavigationItem } from '../types/content'
+import type { NavigationItem } from '../types/content';
 
 export const navigation: NavigationItem[] = [
-  { label: 'Accueil',      pageId: 'accueil' },
-  { label: 'À propos',     pageId: 'apropos' },
-  { label: 'Projets',      pageId: 'projets' },
-  { label: 'Réalisations', pageId: 'realisations' },
-  { label: 'Équipe',       pageId: 'equipe' },
-  { label: 'Partenaires',  pageId: 'partenaires' },
-  { label: 'Nous joindre', pageId: 'contact' },
-]
+    { label: 'Accueil', pageId: 'accueil' },
+    { label: 'À propos', pageId: 'apropos' },
+    { label: 'Projets', pageId: 'projets' },
+    { label: 'Réalisations', pageId: 'realisations' },
+    { label: 'Équipe', pageId: 'equipe' },
+    { label: 'Partenaires', pageId: 'partenaires' },
+    { label: 'Nous joindre', pageId: 'contact' },
+];

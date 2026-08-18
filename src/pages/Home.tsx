@@ -101,64 +101,74 @@ export default function Home({ navigate }: HomeProps) {
         <div>
             {/* Hero */}
             <section className='relative min-h-screen flex items-center pt-16 overflow-hidden'>
-                <div className='absolute inset-0 bg-cream' />
-                <div className='absolute inset-0 bg-white' />
+                {/* Video background */}
+                <video
+                    className='absolute inset-0 h-full w-full object-cover'
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                >
+                    <source
+                        src={asset('/videos/heka-hero.mp4')}
+                        type='video/mp4'
+                    />
+                </video>
 
-                <div className='absolute inset-0 overflow-hidden'>
-                    <video
-                        className='absolute inset-0 h-full w-full object-cover'
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                    >
-                        <source
-                            src={asset('/videos/heka-hero.mp4')}
-                            type='video/mp4'
-                        />
-                    </video>
+                {/* Uniform overlay */}
+                <div className='absolute inset-0 bg-black/45' />
 
-                    <div className='absolute inset-0 bg-[linear-gradient(to_right,#ffffff_0%,#ffffff_28%,rgba(255,255,255,0.92)_38%,rgba(255,255,255,0.55)_55%,transparent_75%)]' />
-                </div>
+                {/* Optional subtle blue tint */}
+                <div className='absolute inset-0 bg-heka/10' />
 
-                <div className='relative px-6 lg:px-20 py-24 lg:py-32'>
-                    <div className='max-w-xl'>
-                        <div className='inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-heka-light border border-heka-mid mb-8'>
-                            <span className='w-1.5 h-1.5 rounded-full bg-heka' />
+                {/* Content */}
+                <div className='relative z-10 w-full px-6 lg:px-20 py-24 lg:py-32'>
+                    <div className='max-w-3xl'>
+                        <div className='inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8'>
+                            <span className='w-1.5 h-1.5 rounded-full bg-white' />
+
                             <span
-                                className='text-xs font-medium text-heka'
+                                className='text-xs font-medium text-white/90'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
                                 Société technique — {site.organization}
                             </span>
                         </div>
+
                         <h1
-                            className='text-5xl lg:text-6xl xl:text-7xl leading-tight text-charcoal mb-6 font-bold'
+                            className='text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] tracking-tight text-white mb-7 font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
                             {site.tagline}
                         </h1>
-                        <p className='text-lg text-muted leading-relaxed mb-10 max-w-lg'>{site.description}</p>
+
+                        <p className='text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed mb-10 max-w-2xl'>
+                            {site.description}
+                        </p>
+
                         <div className='flex flex-col sm:flex-row gap-3'>
                             <button
                                 onClick={() => handleNav('projets')}
-                                className='px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
+                                className='px-7 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] hover:-translate-y-0.5 transition-all'
                             >
                                 Découvrir nos projets
                             </button>
+
                             <button
                                 onClick={() => handleNav('contact')}
-                                className='px-6 py-3.5 rounded-xl border border-border text-charcoal font-semibold text-sm hover:bg-[#F2EEE8] transition-colors'
+                                className='px-7 py-3.5 rounded-xl bg-white text-charcoal font-semibold text-sm hover:bg-white/90 hover:-translate-y-0.5 transition-all'
                             >
                                 Rejoindre Héka
                             </button>
-                            <button
-                                onClick={() => handleNav('partenaires')}
-                                className='px-6 py-3.5 text-muted font-medium text-sm hover:text-charcoal transition-colors underline underline-offset-4'
-                            >
-                                Collaborer avec nous
-                            </button>
                         </div>
+
+                        <button
+                            onClick={() => handleNav('partenaires')}
+                            className='mt-7 text-sm text-white/65 hover:text-white transition-colors'
+                        >
+                            Vous êtes une organisation ?{' '}
+                            <span className='underline underline-offset-4'>Collaborer avec nous</span>
+                        </button>
                     </div>
                 </div>
             </section>

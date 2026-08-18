@@ -62,77 +62,134 @@ export default function Achievements() {
             <section className='py-16 bg-white'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     {/* Filters */}
-                    <div className='flex flex-wrap gap-2 mb-12'>
-                        {['Tous', ...types.map((t) => ACHIEVEMENT_TYPE_LABELS[t] ?? t)].map((label) => (
-                            <button
-                                key={label}
-                                onClick={() => setActive(label)}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                                    active === label
-                                        ? 'bg-heka text-white'
-                                        : 'bg-[#F2EEE8] text-muted hover:bg-[#E8E3DC] hover:text-charcoal'
-                                }`}
-                            >
-                                {label}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Items */}
-                    {sorted.length > 0 ? (
-                        <div className='space-y-5'>
-                            {sorted.map((item) => (
-                                <div
-                                    key={item.id}
-                                    className='flex flex-col sm:flex-row gap-4 sm:gap-8 items-start p-7 rounded-2xl bg-cream border border-border hover:border-heka-mid transition-colors group'
+                    <div className='max-w-6xl mx-auto'>
+                        <div className='flex flex-wrap gap-2 mb-12'>
+                            {['Tous', ...types.map((t) => ACHIEVEMENT_TYPE_LABELS[t] ?? t)].map((label) => (
+                                <button
+                                    key={label}
+                                    onClick={() => setActive(label)}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        active === label
+                                            ? 'bg-heka text-white'
+                                            : 'bg-[#F2EEE8] text-muted hover:bg-[#E8E3DC] hover:text-charcoal'
+                                    }`}
                                 >
-                                    <div className='shrink-0 w-32'>
-                                        <div
-                                            className='text-xs text-muted'
-                                            style={{ fontFamily: 'var(--font-mono)' }}
-                                        >
-                                            {item.date}
-                                        </div>
-                                        <span
-                                            className={`inline-block mt-1.5 px-2 py-0.5 rounded text-xs font-medium ${getAchievementStatusStyle(item.status)}`}
-                                            style={{ fontFamily: 'var(--font-mono)' }}
-                                        >
-                                            {item.result ?? getAchievementStatusLabel(item.status)}
-                                        </span>
-                                    </div>
-                                    <div className='flex-1'>
-                                        <div className='flex flex-wrap items-center gap-2 mb-2'>
-                                            <span
-                                                className='text-xs font-medium text-muted uppercase tracking-wider'
-                                                style={{ fontFamily: 'var(--font-mono)' }}
-                                            >
-                                                {ACHIEVEMENT_TYPE_LABELS[item.type] ?? item.type}
-                                            </span>
-                                            {item.project && (
-                                                <span
-                                                    className={`px-2 py-0.5 rounded text-xs font-medium ${getProjectBadgeStyle(item.project)}`}
-                                                    style={{ fontFamily: 'var(--font-mono)' }}
-                                                >
-                                                    {item.project.toUpperCase()}
-                                                </span>
-                                            )}
-                                        </div>
-                                        <h3 className='text-base font-semibold text-charcoal mb-2 group-hover:text-heka transition-colors'>
-                                            {item.title}
-                                        </h3>
-                                        <p className='text-sm text-muted leading-relaxed'>{item.description}</p>
-                                    </div>
-                                </div>
+                                    {label}
+                                </button>
                             ))}
                         </div>
-                    ) : (
-                        <div
-                            className='text-center py-20 text-[#C8C3BB]'
-                            style={{ fontFamily: 'var(--font-mono)' }}
-                        >
-                            Aucune réalisation dans cette catégorie pour le moment.
-                        </div>
-                    )}
+
+                        {/* Timeline */}
+                        {sorted.length > 0 ? (
+                            <div className='relative'>
+                                <div className='space-y-8'>
+                                    {sorted.map((item, index) => {
+                                        const previousItem = sorted[index - 1];
+                                        const showDate = !previousItem || previousItem.date !== item.date;
+                                        const isLast = index === sorted.length - 1;
+
+                                        return (
+                                            <div
+                                                key={item.id}
+                                                className='relative grid grid-cols-[60px_32px_1fr] sm:grid-cols-[80px_40px_1fr] lg:grid-cols-[90px_44px_1fr]'
+                                            >
+                                                {/* Year */}
+                                                <div className='pr-4 pt-[12px] text-right'>
+                                                    {showDate && (
+                                                        <span
+                                                            className='text-xs text-muted'
+                                                            style={{
+                                                                fontFamily: 'var(--font-mono)',
+                                                            }}
+                                                        >
+                                                            {item.date}
+                                                        </span>
+                                                    )}
+                                                </div>
+
+                                                {/* Timeline */}
+                                                <div className='relative flex justify-center'>
+                                                    {/* Vertical line */}
+                                                    {!isLast && (
+                                                        <div className='absolute top-[18px] bottom-[-32px] left-1/2 -translate-x-1/2 w-px bg-border' />
+                                                    )}
+
+                                                    {/* Line continuing upward for same year */}
+                                                    {!showDate && (
+                                                        <div className='absolute -top-8 top-0 left-1/2 -translate-x-1/2 w-px bg-border' />
+                                                    )}
+
+                                                    {/* Dot */}
+                                                    <div className='relative z-10 mt-[12px] w-3 h-3 rounded-full bg-white border-2 border-heka group-hover:bg-heka transition-colors' />
+
+                                                    {/* Horizontal connector */}
+                                                    <div className='absolute top-[17px] left-1/2 w-[calc(50%+1rem)] border-t border-border' />
+                                                </div>
+
+                                                {/* Card */}
+                                                <div className='pl-4 pb-1 group w-full max-w-4xl'>
+                                                    <div className='rounded-2xl border border-border bg-cream px-7 py-6 transition-all hover:border-heka-mid'>
+                                                        {/* Metadata */}
+                                                        <div className='flex flex-wrap items-center gap-2 mb-3'>
+                                                            <span
+                                                                className='text-xs font-medium text-muted uppercase tracking-wider'
+                                                                style={{
+                                                                    fontFamily: 'var(--font-mono)',
+                                                                }}
+                                                            >
+                                                                {ACHIEVEMENT_TYPE_LABELS[item.type] ?? item.type}
+                                                            </span>
+
+                                                            {item.project && (
+                                                                <span
+                                                                    className={`px-2 py-0.5 rounded text-xs font-medium ${getProjectBadgeStyle(
+                                                                        item.project,
+                                                                    )}`}
+                                                                    style={{
+                                                                        fontFamily: 'var(--font-mono)',
+                                                                    }}
+                                                                >
+                                                                    {item.project.toUpperCase()}
+                                                                </span>
+                                                            )}
+
+                                                            <span
+                                                                className={`px-2 py-0.5 rounded text-xs font-medium ${getAchievementStatusStyle(
+                                                                    item.status,
+                                                                )}`}
+                                                                style={{
+                                                                    fontFamily: 'var(--font-mono)',
+                                                                }}
+                                                            >
+                                                                {item.result ?? getAchievementStatusLabel(item.status)}
+                                                            </span>
+                                                        </div>
+
+                                                        {/* Title */}
+                                                        <h3 className='text-base font-semibold text-charcoal mb-2 group-hover:text-heka transition-colors'>
+                                                            {item.title}
+                                                        </h3>
+
+                                                        {/* Description */}
+                                                        <p className='text-sm text-muted leading-relaxed max-w-4xl'>
+                                                            {item.description}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                className='text-center py-20 text-[#C8C3BB]'
+                                style={{ fontFamily: 'var(--font-mono)' }}
+                            >
+                                Aucune réalisation dans cette catégorie pour le moment.
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
         </div>

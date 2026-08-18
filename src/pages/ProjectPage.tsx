@@ -64,7 +64,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                 <div className='relative max-w-7xl mx-auto px-6 lg:px-10'>
                     <button
                         onClick={() => handleNav('projets')}
-                        className='inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-10 transition-colors'
+                        className='flex items-center gap-2 text-white/60 hover:text-white text-sm mb-10 transition-colors'
                     >
                         ← Retour aux projets
                     </button>
@@ -164,7 +164,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                             className='rounded-2xl overflow-hidden h-80 bg-cover bg-center'
                             style={{
                                 backgroundColor: t.accentBg,
-                                backgroundImage: `url('${asset(project.images.solution)}')`,
+                                backgroundImage: `url('${asset(project.images.solution ?? project.images.hero)}')`,
                             }}
                         />
                         <div>

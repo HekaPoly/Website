@@ -189,7 +189,14 @@ function MemberCard({ member }: { member: TeamMember }) {
     );
 }
 export default function Team() {
-    const exec = getTeamMembersByGroup('direction');
+    const exec = getTeamMembersByGroup('direction').sort((a, b) => {
+        const aIsDirecteur = a.id.includes('directeur');
+        const bIsDirecteur = b.id.includes('directeur');
+
+        if (aIsDirecteur === bIsDirecteur) return 0;
+
+        return aIsDirecteur ? -1 : 1;
+    });
     const podi = getTeamMembersByGroup('podi');
     const bira = getTeamMembersByGroup('bira');
 
@@ -250,12 +257,14 @@ export default function Team() {
                                 Direction de l'organisation
                             </h2>
                         </div>
-                        <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+                        <div className='flex flex-wrap justify-center gap-4'>
                             {exec.map((m) => (
-                                <MemberCard
+                                <div
                                     key={m.id}
-                                    member={m}
-                                />
+                                    className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]'
+                                >
+                                    <MemberCard member={m} />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -279,12 +288,14 @@ export default function Team() {
                                 Exosquelette passif
                             </h2>
                         </div>
-                        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                        <div className='flex flex-wrap justify-center gap-4'>
                             {podi.map((m) => (
-                                <MemberCard
+                                <div
                                     key={m.id}
-                                    member={m}
-                                />
+                                    className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
+                                >
+                                    <MemberCard member={m} />
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -308,12 +319,14 @@ export default function Team() {
                                 Bras robotique intelligent
                             </h2>
                         </div>
-                        <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4'>
+                        <div className='flex flex-wrap justify-center gap-4'>
                             {bira.map((m) => (
-                                <MemberCard
+                                <div
                                     key={m.id}
-                                    member={m}
-                                />
+                                    className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
+                                >
+                                    <MemberCard member={m} />
+                                </div>
                             ))}
                         </div>
                     </div>

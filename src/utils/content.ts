@@ -5,7 +5,7 @@ import { currentProjects } from '../data/projects';
 import { team } from '../data/team';
 import { partners } from '../data/partners';
 import { achievements } from '../data/achievements';
-import type { Project, TeamMember, Partner, Achievement, AchievementType } from '../types/content';
+import type { Project, TeamMember, Partner, Achievement, AchievementType, MemberGroup } from '../types/content';
 
 // ─── Projects ─────────────────────────────────────────────────────────────────
 
@@ -23,8 +23,8 @@ export function getTeamMembersByProject(projectSlug: string): TeamMember[] {
     return team.filter((m) => m.project === projectSlug);
 }
 
-export function getTeamMembersByGroup(group: string): TeamMember[] {
-    return team.filter((m) => m.group === group);
+export function getTeamMembersByGroup(group: MemberGroup): TeamMember[] {
+    return team.filter((m) => m.group.includes(group));
 }
 
 export function getMemberInitials(name: string): string {

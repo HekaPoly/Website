@@ -38,7 +38,7 @@ export const currentProjects: Project[] = [
             'PODI est un exosquelette mécanique passif — sans moteur ni batterie — conçu pour redistribuer les charges et réduire la fatigue des pompiers sans limiter leur mobilité opérationnelle.',
         status: 'Prototypage en cours',
         theme: 'podi',
-        showProjectPage: false,
+        showProjectPage: true,
 
         disciplines: [
             'Génie mécanique',
@@ -152,7 +152,7 @@ export const currentProjects: Project[] = [
             "BIRA interprète des commandes exprimées en langage naturel et les traduit en mouvements du bras robotique, rendant l'assistance accessible sans apprentissage technique.",
         status: 'Développement actif',
         theme: 'bira',
-        showProjectPage: false,
+        showProjectPage: true,
 
         disciplines: [
             'Intelligence artificielle',

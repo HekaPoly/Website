@@ -136,7 +136,7 @@ export interface TeamMember {
     role: string;
     program: string;
     project: string | null; // project slug or null
-    group: MemberGroup;
+    group: MemberGroup[];
     photo: string; // path like /images/team/name.jpg or '' for initials
     linkedin: string;
     email: string;

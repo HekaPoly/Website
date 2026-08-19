@@ -1,18 +1,18 @@
 /*
-  PARTENAIRES DE HÉKA
+  HÉKA PARTNERS
   --------------------
-  Ce fichier contient la liste des partenaires.
+  This file contains the list of partners.
 
   HOW TO ADD A PARTNER:
-  1. Copiez un bloc { ... } ci-dessous.
-  2. Collez-le à la fin de la liste (avant le crochet fermant ]).
-  3. Remplissez les informations entre guillemets.
-  4. Placez le logo dans : public/images/partners/nom-du-partenaire.svg
-  5. Sauvegardez le fichier.
+  1. Copy a { ​​... } block from below.
+  2. Paste it at the end of the list (before the closing bracket ]).
+  3. Fill in the information within the quotation marks.
+  4. Place the logo in: public/images/partners/partner-name.svg
+  5. Save the file.
 
-  Catégories disponibles : "principal" | "financial" | "technical" | "institutional" | "material"
+  Available categories: "platinum" | "gold" | "silver" | "bronze"
 
-  Si le logo n'est pas encore disponible, laissez logo: "" — le nom sera affiché à la place.
+  If the logo is not yet available, leave logo: "" — the name will be displayed instead.
 */
 
 import type { Partner } from '../types/content';
@@ -24,6 +24,22 @@ export const partners: Partner[] = [
         logo: 'public/images/partners/logo-exception-noir2x.png',
         website: 'https://polymtl.ca/',
         category: 'Platinum',
+        description: 'Description courte du partenariat.',
+    },
+    {
+        id: 'polyfab',
+        name: 'Polyfab',
+        logo: '',
+        website: 'https://polyfab.polymtl.ca/',
+        category: 'Platinum',
+        description: 'Description courte du partenariat.',
+    },
+    {
+        id: 'ferique',
+        name: 'Férique',
+        logo: '',
+        website: 'https://www.ferique.com/',
+        category: 'Gold',
         description: 'Description courte du partenariat.',
     },
     {
@@ -78,11 +94,42 @@ export const partners: Partner[] = [
     },
 
     {
-        id: 'mecademic',
-        name: 'Mecademic',
-        logo: 'public/images/partners/Mab robotics.png',
-        website: 'https://mecademic.com/',
+        id: 'mab-robotics',
+        name: 'MAB Robotics',
+        logo: '',
+        website: 'https://www.mabrobotics.com/',
         category: 'Bronze',
-        description: 'Partenaire spécialisé en robotique industrielle compacte et de haute précision.',
+        description: 'Partenaire spécialisé en robotique et en automatisation.',
+    },
+    {
+        id: 'cubemars',
+        name: 'CubeMars',
+        logo: '',
+        website: 'https://cubemars.com/',
+        category: 'Bronze',
+        description: 'Partenaire spécialisé en robotique et en exploration spatiale.',
+    }
+];
+
+export const PARTNERSHIP_REASONS : { title: string; desc: string }[] = [
+    {
+        title: 'Soutenir la formation',
+        desc: "Permettre à des étudiants talentueux d'acquérir une expérience pratique sur des problèmes industriels réels.",
+    },
+    {
+        title: 'Accéder à une relève qualifiée',
+        desc: "Rencontrer des étudiants multidisciplinaires avant qu'ils terminent leurs études.",
+    },
+    {
+        title: "Contribuer à l'innovation",
+        desc: "Participer activement au développement de technologies d'assistance à fort potentiel.",
+    },
+    {
+        title: "Offrir de l'expertise",
+        desc: 'Partager vos connaissances techniques avec des équipes motivées et rigoureuses.',
+    },
+    {
+        title: 'Fournir du matériel',
+        desc: 'Soutenir concrètement nos projets avec les ressources nécessaires à la fabrication et aux tests.',
     },
 ];

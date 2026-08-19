@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { partners } from '../data/partners';
+import { partners, PARTNERSHIP_REASONS } from '../data/partners';
 import { partnershipForm } from '../data/forms';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
+
 
 export default function Partners() {
     const [form, setForm] = useState<Record<string, string>>({});
@@ -74,32 +75,7 @@ export default function Partners() {
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                        {[
-                            {
-                                title: 'Soutenir la formation',
-                                desc: "Permettre à des étudiants talentueux d'acquérir une expérience pratique sur des problèmes industriels réels.",
-                            },
-                            {
-                                title: 'Accéder à une relève qualifiée',
-                                desc: "Rencontrer des étudiants multidisciplinaires avant qu'ils terminent leurs études.",
-                            },
-                            {
-                                title: "Contribuer à l'innovation",
-                                desc: "Participer activement au développement de technologies d'assistance à fort potentiel.",
-                            },
-                            {
-                                title: "Offrir de l'expertise",
-                                desc: 'Partager vos connaissances techniques avec des équipes motivées et rigoureuses.',
-                            },
-                            {
-                                title: 'Fournir du matériel',
-                                desc: 'Soutenir concrètement nos projets avec les ressources nécessaires à la fabrication et aux tests.',
-                            },
-                            {
-                                title: 'Visibilité et réseautage',
-                                desc: "Associer votre organisation à des projets innovants présentés lors de compétitions et d'événements.",
-                            },
-                        ].map((item, i) => (
+                        {PARTNERSHIP_REASONS.map((item, i) => (
                             <div
                                 key={i}
                                 className='p-7 rounded-2xl border border-border hover:border-heka-mid transition-colors'

@@ -172,7 +172,7 @@ export default function Home({ navigate }: HomeProps) {
                     </div>
                 </div>
             </section>
-
+        
             {/* Défis */}
             <section className='py-24 bg-white'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
@@ -181,7 +181,7 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            02 — Les défis auxquels nous répondons
+                            Les défis auxquels nous répondons
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-charcoal'
@@ -253,7 +253,7 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-xs font-medium text-white/40 uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            03 — Notre mission
+                            Notre mission
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-white'
@@ -296,7 +296,7 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                04 — Notre approche
+                                Notre approche
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
@@ -364,7 +364,7 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                05 — Projets vedettes
+                                Projets vedettes
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 text-charcoal'
@@ -457,7 +457,7 @@ export default function Home({ navigate }: HomeProps) {
                                     className='text-xs font-medium text-muted uppercase tracking-widest'
                                     style={{ fontFamily: 'var(--font-mono)' }}
                                 >
-                                    06 — Réalisations récentes
+                                    Réalisations récentes
                                 </span>
                                 <h2
                                     className='text-3xl lg:text-4xl mt-3 text-charcoal'
@@ -531,7 +531,7 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-white/60 uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                07 — Rejoindre Héka
+                                Rejoindre Héka
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-white'
@@ -582,7 +582,7 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            08 — Partenaires
+                            Partenaires
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 mb-4 text-charcoal'

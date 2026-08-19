@@ -1,30 +1,31 @@
 /*
-  RÉALISATIONS DE HÉKA
+  HÉKA ACHIEVEMENTS
   ---------------------
-  Ce fichier contient toutes les réalisations : compétitions, prix, événements, etc.
+  This file contains all achievements: competitions, awards, events, etc.
 
   HOW TO ADD AN ACHIEVEMENT:
-  1. Copiez un bloc { ... }, ci-dessous.
-  2. Collez-le au bon endroit dans la liste (ordre chronologique décroissant).
-  3. Remplissez les informations :
-     - id          : identifiant unique sans espaces (ex: "ace-2027")
-     - date        : année ou date ISO (ex: "2027" ou "2027-05-15")
+  1. Copy a { ​​... } block from below.
+  2. Paste it in the correct place in the list (reverse chronological order).
+  3. Fill in the information:
+     - id          : unique identifier without spaces (e.g., "ace-2027")
+     - date        : year or ISO date (e.g., "2027" or "2027-05-15")
      - type        : "competition" | "award" | "event" | "conference" | "media" | "milestone"
-     - title       : titre de la réalisation
-     - project     : "podi", "bira", ou null si aucun projet spécifique
+     - title       : title of the achievement
+     - project     : "podi", "bira", or null if no specific project
      - status      : "completed" | "upcoming" | "cancelled"
-     - location    : lieu (facultatif)
-     - description : texte explicatif
-     - result      : résultat obtenu (ex: "1re place") — facultatif
-     - image       : chemin vers une image ou "" (ex: "/images/achievements/ace-2027.jpg")
-     - link        : lien externe ou ""
-  4. Sauvegardez le fichier.
+     - location    : location (optional)
+     - description : explanatory text
+     - result      : result achieved (e.g., "1st place") — optional
+     - image       : path to an image or "" (e.g., "/images/achievements/ace-2027.jpg")
+     - link        : external link or ""
+  4. Save the file.
 
-  Les réalisations sont triées automatiquement du plus récent au plus ancien.
-  Les filtres s'adaptent automatiquement aux types présents dans la liste.
+  Achievements are automatically sorted from newest to oldest.
+  Filters automatically adapt to the types present in the list.
 */
 
 import type { Achievement } from '../types/content';
+
 
 export const achievements: Achievement[] = [
     {

@@ -1,14 +1,14 @@
 /*
-  NAVIGATION DU SITE
+ SITE NAVIGATION
   ------------------
-  Ce fichier définit les liens de la barre de navigation.
+  This file defines the navigation bar links.
 
   HOW TO ADD A PAGE:
-  1. Ajoutez un objet { label: "Nom affiché", pageId: "identifiant-interne" }.
-  2. Assurez-vous que le pageId correspond à un cas dans App.tsx.
-  3. Sauvegardez le fichier.
+  1. Add an object { label: "Display Name", pageId: "internal-id" }.
+  2. Ensure the pageId corresponds to a case in App.tsx.
+  3. Save the file.
 
-  L'ordre des items ici détermine l'ordre dans la navigation.
+  The order of items here determines the navigation order.
 */
 
 import type { NavigationItem } from '../types/content';

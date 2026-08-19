@@ -1,15 +1,15 @@
 /*
-  FICHIER DE CONFIGURATION GÉNÉRAL DU SITE HÉKA
+  HÉKA SITE GENERAL CONFIGURATION FILE
   ------------------------------------------------
-  Ce fichier contient les informations générales de l'organisation.
-  Modifiez les valeurs entre guillemets pour mettre à jour le site.
+  This file contains general information about the organization.
+  Modify the values ​​within the quotation marks to update the site.
 
   HOW TO EDIT:
-  1. Trouvez la propriété à modifier.
-  2. Changez le texte entre guillemets.
-  3. Sauvegardez le fichier.
+  1. Find the property to modify.
+  2. Change the text within the quotation marks.
+  3. Save the file.
 
-  Ne modifiez pas les noms des propriétés (avant les deux-points).
+  Do not modify the property names (before the colon).
 */
 
 import type { SiteConfiguration } from '../types/content';
@@ -58,19 +58,19 @@ export const site: SiteConfiguration = {
 
     statistics: [
         { value: '30+', label: 'Membres actifs' },
-        { value: '5', label: 'Disciplines représentées' },
+        { value: '5+', label: 'Disciplines représentées' },
         { value: '2', label: 'Projets actifs' },
         { value: '3+', label: 'Prototypes réalisés' },
     ],
 
     processSteps: [
         { label: 'Comprendre un besoin réel', image: '' },
-        { label: 'Effectuer la recherche' },
-        { label: 'Définir les exigences' },
-        { label: 'Concevoir une solution' },
-        { label: 'Prototyper' },
-        { label: 'Tester et améliorer' },
-        { label: 'Présenter & valider' },
+        { label: 'Effectuer la recherche', image: '' },
+        { label: 'Définir les exigences', image: '' },
+        { label: 'Concevoir une solution', image: '' },
+        { label: 'Prototyper', image: '' },
+        { label: 'Tester et améliorer', image: '' },
+        { label: 'Présenter & valider', image: '' },
     ],
 
     values: [
@@ -80,7 +80,7 @@ export const site: SiteConfiguration = {
         },
         {
             title: 'Collaboration',
-            desc: 'La diversité des disciplines est notre force. Nos équipes réunissent des géniuses mécaniques, logiciels, électriques et des spécialistes en ergonomie.',
+            desc: 'La diversité des disciplines est notre force. Nos équipes réunissent des géniuses mécaniques, logiciels, électriques et des spécialistes en ergothérapie.',
         },
         {
             title: 'Rigueur',

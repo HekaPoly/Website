@@ -1,26 +1,26 @@
 /*
-  MEMBRES DE L'ÉQUIPE HÉKA
+  HÉKA TEAM MEMBERS
   -------------------------
-  Ce fichier contient tous les membres affichés sur la page Équipe.
+  This file contains all members displayed on the Team page.
 
   HOW TO ADD A MEMBER:
-  1. Copiez un bloc { ... }, ci-dessous.
-  2. Collez-le à la fin de la liste (avant le crochet ] final).
-  3. Remplissez les informations :
-     - id        : identifiant unique sans espaces (ex: "prenom-nom")
-     - name      : nom complet affiché
-     - role      : titre du poste
-     - program   : programme d'études
-     - project   : "podi", "bira", ou null si aucun projet spécifique
+  1. Copy a { ​​... } block below.
+  2. Paste it at the end of the list (before the final ] bracket).
+  3. Fill in the information:
+     - id        : unique identifier without spaces (e.g., "firstname-lastname")
+     - name      : full name to display
+     - role      : job title
+     - program   : study program
+     - project   : "podi", "bira", or null if no specific project
      - group     : "direction" | "administration" | "podi" | "bira" | "other"
-     - photo     : chemin vers la photo (ex: "/images/team/prenom-nom.jpg")
-                   Laissez "" pour afficher les initiales automatiquement.
-     - linkedin  : URL LinkedIn complète ou ""
-     - email     : adresse courriel ou ""
-  4. Placez la photo dans public/images/team/
-  5. Sauvegardez le fichier.
+     - photo     : path to the photo (e.g., "/images/team/firstname-lastname.jpg")
+                   Leave as "" to display initials automatically.
+     - linkedin  : full LinkedIn URL or ""
+     - email     : email address or ""
+  4. Place the photo in public/images/team/
+  5. Save the file.
 
-  Les membres sont regroupés automatiquement par la propriété "group".
+  Members are automatically grouped by the "group" property.
 */
 
 import type { TeamMember } from '../types/content';
@@ -158,7 +158,7 @@ export const team: TeamMember[] = [
         id: 'directeur-bira',
         name: 'Nicolas Petrule',
         role: 'Directeur de projet',
-        program: 'Génie logiciel',
+        program: 'Génie biomédical',
         project: 'bira',
         group: ['bira', 'direction'],
         photo: 'images/team/members/CLUB-2.jpg',

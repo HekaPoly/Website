@@ -29,7 +29,7 @@ export const partners: Partner[] = [
     {
         id: 'polyfab',
         name: 'Polyfab',
-        logo: '',
+        logo: 'public/images/partners/logo-PolyFab-white-600x278.png',
         website: 'https://polyfab.polymtl.ca/',
         category: 'Platinum',
         description: 'Description courte du partenariat.',
@@ -37,7 +37,7 @@ export const partners: Partner[] = [
     {
         id: 'ferique',
         name: 'Férique',
-        logo: '',
+        logo: 'public/images/partners/ferique-logo-png_seeklogo-397697.png',
         website: 'https://www.ferique.com/',
         category: 'Gold',
         description: 'Description courte du partenariat.',
@@ -96,7 +96,7 @@ export const partners: Partner[] = [
     {
         id: 'mab-robotics',
         name: 'MAB Robotics',
-        logo: '',
+        logo: 'public/images/partners/MAB-Robotics_logo.jpg',
         website: 'https://www.mabrobotics.com/',
         category: 'Bronze',
         description: 'Partenaire spécialisé en robotique et en automatisation.',
@@ -104,7 +104,7 @@ export const partners: Partner[] = [
     {
         id: 'cubemars',
         name: 'CubeMars',
-        logo: '',
+        logo: 'public/images/partners/cubemars.jpg',
         website: 'https://cubemars.com/',
         category: 'Bronze',
         description: 'Partenaire spécialisé en robotique et en exploration spatiale.',

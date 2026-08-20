@@ -28,7 +28,7 @@ export default function Nav({ current, navigate }: NavProps) {
             <header
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                     scrolled ? 'bg-cream/95 backdrop-blur-md border-b border-border shadow-sm' : 'bg-transparent'
-                }`}
+                } group hover:bg-charcoal`}
             >
                 <div className='max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16'>
                     <button
@@ -102,7 +102,7 @@ export default function Nav({ current, navigate }: NavProps) {
                                 className={`w-full text-left px-4 py-3 rounded-xl text-base font-medium transition-all ${
                                     current === link.pageId
                                         ? 'text-heka bg-heka-light'
-                                        : 'text-charcoal hover:bg-[#F2EEE8]'
+                                        : 'text-charcoal hover:text-white hover:bg-charcoal'
                                 }`}
                             >
                                 {link.label}

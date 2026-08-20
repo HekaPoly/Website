@@ -18,7 +18,7 @@ export const site: SiteConfiguration = {
     name: 'Héka',
     organization: 'Polytechnique Montréal',
 
-    tagline: "L'ingénierie au service de la santé.",
+    tagline: "Entre génie et médecine",
 
     description:
         'Héka est une société technique de Polytechnique Montréal qui réunit des étudiants de différentes disciplines afin de concevoir des solutions technologiques répondant à des enjeux concrets en santé, en assistance humaine et en sécurité physique.',

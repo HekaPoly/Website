@@ -1,194 +1,188 @@
 import { team } from '../data/team';
 import { getTeamMembersByGroup, getMemberInitials } from '../utils/content';
 import type { TeamMember } from '../types/content';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { asset } from '../utils/assets';
 
-function MemberCard({ member }: { member: TeamMember }) {
-    const [flipped, setFlipped] = useState(false);
+function MemberCard({ member, onOpen }: { member: TeamMember; onOpen: () => void }) {
     const initials = member.photo ? null : getMemberInitials(member.name);
-    const getMessageSize = (message?: string) => {
-        const length = message?.length ?? 0;
-
-        if (length > 300) return 'text-xs leading-relaxed';
-        if (length > 220) return 'text-sm leading-relaxed';
-        if (length > 150) return 'text-base leading-relaxed';
-        if (length > 90) return 'text-lg leading-relaxed';
-
-        return 'text-xl leading-relaxed';
-    };
 
     return (
         <button
             type='button'
-            onClick={() => setFlipped((value) => !value)}
-            className='group relative w-full aspect-3/4 text-left perspective-distant'
-            aria-pressed={flipped}
+            onClick={onOpen}
+            className='group relative w-full aspect-3/4 overflow-hidden rounded-2xl bg-charcoal text-left'
         >
-            <div
-                className={`
-                  relative w-full h-full
-                  transition-transform duration-500
-                  transform-3d
-                  ${flipped ? 'transform-[rotateY(180deg)]' : ''}
-                `}
-            >
-                {/* RECTO */}
-                <div
-                    className='
-                    absolute inset-0
-                    overflow-hidden
-                    rounded-2xl
-                    bg-charcoal
-                    backface-hidden
-                  '
+            {member.photo ? (
+                <img
+                    src={asset(member.photo)}
+                    alt={member.name}
+                    className='absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]'
+                />
+            ) : (
+                <div className='absolute inset-0 flex items-center justify-center bg-heka-light'>
+                    <span
+                        className='text-4xl font-semibold text-heka'
+                        style={{ fontFamily: 'var(--font-mono)' }}
+                    >
+                        {initials}
+                    </span>
+                </div>
+            )}
+
+            <div className='absolute inset-0 bg-linear-to-t from-black/85 via-black/15 to-transparent' />
+            <div className='absolute inset-x-0 bottom-0 p-6 text-white'>
+                <h3
+                    className='mb-1 text-2xl font-semibold'
+                    style={{ fontFamily: 'var(--font-display)' }}
                 >
+                    {member.name}
+                </h3>
+                <p className='text-sm text-white/90'>{member.role}</p>
+                <div className='mt-3 flex flex-wrap gap-2'>
+                    {member.program && member.program !== 'À confirmer' && (
+                        <span className='rounded-full bg-white/15 px-2 py-1 text-[11px] backdrop-blur-sm'>
+                            {member.program}
+                        </span>
+                    )}
+                    {member.project && (
+                        <span
+                            className='rounded-full bg-white/15 px-2 py-1 text-[11px] backdrop-blur-sm'
+                            style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                            {member.project.toUpperCase()}
+                        </span>
+                    )}
+                </div>
+            </div>
+            <span className='absolute bottom-5 right-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/80 text-2xl font-light text-white transition-all duration-300 group-hover:bg-white group-hover:text-charcoal'>
+                +
+            </span>
+        </button>
+    );
+}
+
+function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => void }) {
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose();
+        };
+
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('keydown', handleKeyDown);
+        requestAnimationFrame(() => setVisible(true));
+
+        return () => {
+            document.body.style.overflow = '';
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onClose]);
+
+    return (
+        <div
+            className={`fixed inset-0 z-[60] flex bg-heka transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}
+            role='dialog'
+            aria-modal='true'
+            aria-label={`Détails de ${member.name}`}
+            onMouseDown={(event) => {
+                if (event.target === event.currentTarget) onClose();
+            }}
+        >
+            <div className={`flex h-full w-full flex-col overflow-y-auto transition-transform duration-500 lg:flex-row ${visible ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className='relative min-h-[42vh] shrink-0 bg-charcoal lg:min-h-0 lg:w-[43%]'>
                     {member.photo ? (
                         <img
                             src={asset(member.photo)}
                             alt={member.name}
-                            className='
-                            absolute inset-0
-                            w-full h-full
-                            object-cover
-                            transition-transform duration-500
-                            group-hover:scale-[1.03]
-                          '
+                            className='absolute inset-0 h-full w-full object-cover'
                         />
                     ) : (
-                        <div className='absolute inset-0 bg-heka-light flex items-center justify-center'>
+                        <div className='absolute inset-0 flex items-center justify-center bg-heka-light'>
                             <span
-                                className='text-4xl font-semibold text-heka'
+                                className='text-7xl font-semibold text-heka'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                {initials}
+                                {getMemberInitials(member.name)}
                             </span>
                         </div>
                     )}
+                    <div className='absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-black/10' />
+                </div>
 
-                    <div className='absolute inset-0 bg-linear-to-t from-black/85 via-black/15 to-transparent' />
+                <div className='relative min-h-[58vh] flex-1 overflow-y-auto px-5 py-8 text-white sm:px-8 sm:py-10 lg:min-h-0 lg:px-[6vw] lg:py-[6vh]'>
+                    <button
+                        type='button'
+                        onClick={onClose}
+                        className='absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-3xl font-light leading-none text-heka transition-transform hover:scale-105 sm:right-8 sm:top-8'
+                        aria-label='Fermer les détails'
+                    >
+                        ×
+                    </button>
 
-                    {/* Infos */}
-                    <div className='absolute inset-x-0 bottom-0 p-6 text-white'>
-                        <h3
-                            className='text-2xl font-semibold mb-1'
-                            style={{ fontFamily: 'var(--font-display)' }}
-                        >
-                            {member.name}
-                        </h3>
-
-                        <p className='text-sm text-white/90'>{member.role}</p>
-
-                        <div className='flex flex-wrap gap-2 mt-3'>
-                            {member.program && member.program !== 'À confirmer' && (
-                                <span className='text-[11px] px-2 py-1 rounded-full bg-white/15 backdrop-blur-sm'>
-                                    {member.program}
-                                </span>
-                            )}
-
+                    <div className='max-w-3xl'>
+                        <div className='flex flex-wrap items-center gap-3 pr-16'>
+                            <h2
+                                className='text-3xl leading-tight sm:text-4xl lg:text-5xl'
+                                style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                                {member.name}
+                            </h2>
                             {member.project && (
-                                <span
-                                    className='text-[11px] px-2 py-1 rounded-full bg-white/15 backdrop-blur-sm'
-                                    style={{ fontFamily: 'var(--font-mono)' }}
-                                >
-                                    {member.project.toUpperCase()}
+                                <span className='rounded-full border border-white/70 px-3 py-1 text-xs uppercase tracking-widest'>
+                                    {member.project}
                                 </span>
                             )}
                         </div>
-                    </div>
+                        <p className='mt-4 text-base font-semibold leading-relaxed sm:text-lg'>{member.role}</p>
 
-                    {/* Bouton + */}
-                    <div
-                        className='
-                          absolute bottom-5 right-5
-                          w-9 h-9
-                          rounded-full
-                          border border-white/80
-                          flex items-center justify-center
-                          text-white
-                          text-2xl
-                          font-light
-                          transition-all duration-300
-                          group-hover:bg-white
-                          group-hover:text-charcoal
-                        '
-                    >
-                        +
-                    </div>
-                </div>
+                        <div className='mt-7 space-y-1.5 text-sm sm:text-base'>
+                            {member.program && <p>Programme : {member.program}</p>}
+                            {member.email && (
+                                <a className='block transition-colors hover:text-heka-yellow' href={`mailto:${member.email}`}>
+                                    Courriel : {member.email}
+                                </a>
+                            )}
+                        </div>
 
-                {/* VERSO */}
-                <div
-                    className='
-                        absolute
-                        inset-0
-                        rounded-2xl
-                        bg-heka-light
-                        text-charcoal
-                        p-7
-                        flex flex-col
-                        justify-between
-                        transform-[rotateY(180deg)]
-                        backface-hidden
-                    '
-                >
-                    <div>
-                        <span
-                            className='text-xs  text-gray-900 uppercase tracking-widest'
-                            style={{ fontFamily: 'var(--font-mono)' }}
-                        >
-                            Un mot de {member.name.split(' ')[0]}
-                        </span>
+                        <div className='mt-6 flex gap-3'>
+                            {member.email && (
+                                <a
+                                    href={`mailto:${member.email}`}
+                                    aria-label={`Courriel de ${member.name}`}
+                                    className='flex h-11 w-11 items-center justify-center rounded-full border border-white/80 text-lg transition-colors hover:bg-white hover:text-heka'
+                                >
+                                    @
+                                </a>
+                            )}
+                            {member.linkedin && (
+                                <a
+                                    href={member.linkedin}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
+                                    aria-label={`LinkedIn de ${member.name}`}
+                                    className='flex h-11 w-11 items-center justify-center rounded-full border border-white/80 text-sm font-semibold transition-colors hover:bg-white hover:text-heka'
+                                >
+                                    in
+                                </a>
+                            )}
+                        </div>
 
-                        <p
-                            className={`mt-6 ${getMessageSize(member.message)}`}
-                            style={{ fontFamily: 'var(--font-display)' }}
-                        >
-                            “{member.message || 'Un petit mot du membre sera bientôt ajouté.'}”
-                        </p>
-                    </div>
-
-                    <div>
-                        {(member.linkedin || member.email) && (
-                            <div className='flex gap-4 mb-5'>
-                                {member.linkedin && (
-                                    <a
-                                        href={member.linkedin}
-                                        target='_blank'
-                                        rel='noopener noreferrer'
-                                        onClick={(e) => e.stopPropagation()}
-                                        className='text-sm hover:text-heka-yellow transition-colors'
-                                    >
-                                        LinkedIn ↗
-                                    </a>
-                                )}
-
-                                {member.email && (
-                                    <a
-                                        href={`mailto:${member.email}`}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className='text-sm hover:text-heka-yellow transition-colors'
-                                    >
-                                        Courriel ↗
-                                    </a>
-                                )}
-                            </div>
-                        )}
-
-                        <div className='flex items-center justify-between'>
-                            <span className='text-xs text-charcoal'>Cliquer pour revenir</span>
-
-                            <div className='w-9 h-9 rounded-full border border-charcoal/70 flex items-center justify-center text-xl'>
-                                ×
-                            </div>
+                        <div className='mt-12 border-t border-white/30 pt-6'>
+                            <p className='text-lg leading-relaxed sm:text-xl' style={{ fontFamily: 'var(--font-display)' }}>
+                                “{member.message || 'Un petit mot du membre sera bientôt ajouté.'}”
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        </button>
+        </div>
     );
 }
+
 export default function Team() {
+    const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
     const exec = getTeamMembersByGroup('direction').sort((a, b) => {
         const aIsDirecteur = a.id.includes('directeur');
         const bIsDirecteur = b.id.includes('directeur');
@@ -263,7 +257,7 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]'
                                 >
-                                    <MemberCard member={m} />
+                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
                                 </div>
                             ))}
                         </div>
@@ -294,7 +288,7 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
                                 >
-                                    <MemberCard member={m} />
+                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
                                 </div>
                             ))}
                         </div>
@@ -325,7 +319,7 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
                                 >
-                                    <MemberCard member={m} />
+                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
                                 </div>
                             ))}
                         </div>
@@ -344,6 +338,13 @@ export default function Team() {
                         </p>
                     </div>
                 </section>
+            )}
+
+            {selectedMember && (
+                <MemberModal
+                    member={selectedMember}
+                    onClose={() => setSelectedMember(null)}
+                />
             )}
         </div>
     );

@@ -43,7 +43,7 @@ export const team: TeamMember[] = [
     {
         id: 'vp-tresorerie',
         name: 'Monika Luksza',
-        role: 'Vice-présidence finances',
+        role: 'Trésorière',
         program: 'Génie informatique',
         project: null,
         group: ['direction'],
@@ -54,7 +54,7 @@ export const team: TeamMember[] = [
     {
         id: 'vp-organisation-logistique',
         name: 'Alexandria Nguyen',
-        role: 'Vice-présidence organisation et logistique',
+        role: 'VP Organisation et logistique',
         program: 'Matrise en ergothérapie',
         project: null,
         group: ['direction'],
@@ -65,7 +65,7 @@ export const team: TeamMember[] = [
     {
         id: 'vp-competitions',
         name: 'Maya Khaoua',
-        role: 'Vice-présidence compétitions',
+        role: 'VP Compétitions',
         program: 'Génie mécanique',
         project: null,
         group: ['direction'],
@@ -76,12 +76,14 @@ export const team: TeamMember[] = [
     {
         id: 'vp-partenariats',
         name: 'Rayan Ajakane',
-        role: 'Vice-présidence partenariats',
-        program: 'médecine',
+        role: 'VP Partenariats',
+        program: 'Médecine',
         project: null,
         group: ['direction'],
         photo: 'images/team/members/CLUB-33.jpg',
-        linkedin: '',
+        message:
+            "Rayan est un gradué de Polytechnique Montréal en génie logiciel et un étudiant en médecine à l'Université de Montréal. Rayan souhaite combiner ses connaissances en ingénierie et en médecine pour développer des solutions innovantes qui améliorent la santé et le bien-être des patients. Rayan croit fermement que la collaboration avec tous les acteurs du domaine de la santé est essentielle pour créer des solutions efficaces et durables. Il est toujours à la recherche de nouvelles opportunités de collaboration et de partenariats pour faire avancer la mission d'Héka.",
+        linkedin: 'https://www.linkedin.com/in/rayan-ajakane',
         email: 'partenariats@heka.polymtl.ca',
     },
 

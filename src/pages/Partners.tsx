@@ -17,7 +17,7 @@ export default function Partners() {
         setError('');
 
         try {
-            const response = await fetch('/api/partnership', {
+            const response = await fetch('/api/forms', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(form),

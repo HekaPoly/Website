@@ -71,7 +71,7 @@ export const recruitmentForm: FormConfiguration = {
             label: 'Courriel',
             type: 'email',
             required: true,
-            placeholder: 'prenom.nom@polymtl.ca',
+            placeholder: 'prenom.nom@etud.polymtl.ca',
         },
         {
             id: 'programme',

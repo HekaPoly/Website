@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'node:path';
-import partnershipHandler from './api/partnership.ts';
+import formsHandler from './api/forms.ts';
 
 function localApiPlugin(): Plugin {
     return {
         name: 'local-api',
         configureServer(server) {
-            server.middlewares.use('/api/partnership', async (req, res, next) => {
+            server.middlewares.use('/api/forms', async (req, res, next) => {
                 if (req.method !== 'POST') {
                     next();
                     return;
@@ -23,7 +23,7 @@ function localApiPlugin(): Plugin {
                 const request = req as IncomingMessage & { body?: unknown };
                 request.body = Buffer.concat(chunks).toString('utf8');
 
-                const response = res as unknown as Parameters<typeof partnershipHandler>[1];
+                const response = res as unknown as Parameters<typeof formsHandler>[1];
                 response.status = (code) => {
                     res.statusCode = code;
                     return response;
@@ -33,7 +33,7 @@ function localApiPlugin(): Plugin {
                     res.end(JSON.stringify(body));
                 };
 
-                await partnershipHandler(request, response);
+                await formsHandler(request, response);
             });
         },
     };

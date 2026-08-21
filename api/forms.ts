@@ -6,28 +6,61 @@ type ApiResponse = ServerResponse & {
     json: (body: unknown) => void;
 };
 
-type PartnershipForm = {
+type FormPayload = {
+    formType?: unknown;
     name?: unknown;
     org?: unknown;
     email?: unknown;
     type?: unknown;
     message?: unknown;
+    programme?: unknown;
+    annee?: unknown;
+    projet?: unknown;
+    competences?: unknown;
+    motivation?: unknown;
+    sujet?: unknown;
+};
+
+type FormType = 'partnership' | 'recruitment' | 'general';
+
+const defaultRecipients: Record<FormType, string> = {
+    partnership: 'partenariats@heka.polymtl.ca',
+    recruitment: 'heka@astp.polymtl.ca',
+    general: 'heka@astp.polymtl.ca',
+};
+
+const subjects: Record<FormType, string> = {
+    partnership: 'Nouvelle demande de partenariat',
+    recruitment: 'Nouvelle candidature',
+    general: 'Nouveau message de contact',
+};
+
+const confirmationSubjects: Record<FormType, string> = {
+    partnership: 'Votre demande de partenariat a bien été reçue',
+    recruitment: 'Votre candidature a bien été reçue',
+    general: 'Votre message a bien été reçu',
+};
+
+const confirmationDescriptions: Record<FormType, string> = {
+    partnership: 'votre demande de partenariat',
+    recruitment: 'votre candidature',
+    general: 'votre message',
 };
 
 function isValidEmail(value: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-function getBody(body: unknown): PartnershipForm {
+function getBody(body: unknown): FormPayload {
     if (typeof body === 'string') {
         try {
-            return JSON.parse(body) as PartnershipForm;
+            return JSON.parse(body) as FormPayload;
         } catch {
             return {};
         }
     }
 
-    return body && typeof body === 'object' ? (body as PartnershipForm) : {};
+    return body && typeof body === 'object' ? (body as FormPayload) : {};
 }
 
 async function sendEmail(payload: { to: string; subject: string; text: string; reply_to?: string }) {
@@ -60,45 +93,49 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     const body = getBody(req.body);
+    const formType: FormType =
+        body.formType === 'recruitment' || body.formType === 'general' ? body.formType : 'partnership';
     const name = typeof body.name === 'string' ? body.name.trim() : '';
     const org = typeof body.org === 'string' ? body.org.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim() : '';
     const type = typeof body.type === 'string' ? body.type.trim() : '';
-    const message = typeof body.message === 'string' ? body.message.trim() : '';
 
-    if (!name || !org || !email || !type || !isValidEmail(email)) {
+    if (!name || !email || !isValidEmail(email)) {
         return res.status(400).json({ error: 'Veuillez remplir les champs obligatoires correctement.' });
     }
 
-    const details = [
-        `Nom: ${name}`,
-        `Organisation: ${org}`,
-        `Courriel: ${email}`,
-        `Type de collaboration: ${type}`,
-        '',
-        'Message:',
-        message || '(Aucun message fourni)',
-    ].join('\n');
+    if (formType === 'partnership' && (!org || !type)) {
+        return res.status(400).json({ error: 'Veuillez remplir les champs obligatoires correctement.' });
+    }
+
+    const details = Object.entries(body)
+        .filter(([key, value]) => key !== 'formType' && typeof value === 'string' && value.trim())
+        .map(([key, value]) => `${key}: ${(value as string).trim()}`)
+        .join('\n');
 
     try {
-        const recipient = process.env.PARTNERSHIP_RECIPIENT || 'partenariats@heka.polymtl.ca';
+        const recipient =
+            process.env.RESEND_TEST_RECIPIENT ||
+            (process.env.RESEND_FROM_EMAIL === 'onboarding@resend.dev' && process.env.PARTNERSHIP_RECIPIENT) ||
+            (formType === 'partnership' && process.env.PARTNERSHIP_RECIPIENT) ||
+            defaultRecipients[formType];
 
         await sendEmail({
             to: recipient,
-            subject: `Nouvelle demande de partenariat - ${org}`,
+            subject: `${subjects[formType]}${formType === 'partnership' && org ? ` - ${org}` : ` - ${name}`}`,
             text: details,
             reply_to: email,
         });
 
         await sendEmail({
             to: email,
-            subject: 'Votre demande de partenariat a bien été reçue',
-            text: `Bonjour ${name},\n\nNous avons bien reçu votre demande de partenariat pour Héka. Notre équipe vous répondra dans les meilleurs délais.\n\nCordialement,\nHéka`,
+            subject: confirmationSubjects[formType],
+            text: `Bonjour ${name},\n\nNous avons bien reçu ${confirmationDescriptions[formType]} pour Héka. Notre équipe vous répondra dans les meilleurs délais.\n\nCordialement,\nHéka`,
         });
 
         return res.status(200).json({ ok: true });
     } catch (error) {
-        console.error('Partnership email failed', error);
+        console.error('Form email failed', error);
         const message = error instanceof Error ? error.message : '';
         const isSenderConfigurationError = /domain|sender|from|not authorized|forbidden/i.test(message);
         const isSandboxRecipientError = /only send|recipient|test mode|onboarding@resend.dev/i.test(message);

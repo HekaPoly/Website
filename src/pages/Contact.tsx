@@ -9,6 +9,46 @@ export default function Contact() {
     const [genForm, setGenForm] = useState<Record<string, string>>({});
     const [recSent, setRecSent] = useState(false);
     const [genSent, setGenSent] = useState(false);
+    const [recSending, setRecSending] = useState(false);
+    const [genSending, setGenSending] = useState(false);
+    const [recError, setRecError] = useState('');
+    const [genError, setGenError] = useState('');
+
+    const submitForm = async (
+        formType: 'recruitment' | 'general',
+        form: Record<string, string>,
+        setSending: (value: boolean) => void,
+        setError: (value: string) => void,
+        setSent: (value: boolean) => void,
+    ) => {
+        setSending(true);
+        setError('');
+
+        try {
+            const response = await fetch('/api/forms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...form, formType }),
+            });
+            const contentType = response.headers.get('content-type') ?? '';
+            const result = contentType.includes('application/json')
+                ? ((await response.json()) as { error?: string })
+                : { error: `Le serveur local n'a pas chargé l'API (HTTP ${response.status}).` };
+
+            if (!response.ok) {
+                throw new Error(result.error || "L'envoi a échoué.");
+            }
+            setSent(true);
+        } catch (submissionError) {
+            setError(
+                submissionError instanceof Error
+                    ? submissionError.message
+                    : "L'envoi a échoué. Veuillez réessayer.",
+            );
+        } finally {
+            setSending(false);
+        }
+    };
 
     const inputClass =
         'w-full px-4 py-3 rounded-xl border border-[#E2DDD5] bg-[#F8F7F3] text-sm focus:outline-none focus:border-[#41699d] transition-colors';
@@ -201,7 +241,7 @@ export default function Contact() {
                                 <form
                                     onSubmit={(e) => {
                                         e.preventDefault();
-                                        setRecSent(true);
+                                        void submitForm('recruitment', recForm, setRecSending, setRecError, setRecSent);
                                     }}
                                     className='space-y-5'
                                 >
@@ -216,11 +256,13 @@ export default function Contact() {
                                             .map((f) => renderField(f, recForm, setRecForm))}
                                     </div>
                                     {recruitmentForm.fields.slice(4).map((f) => renderField(f, recForm, setRecForm))}
+                                    {recError && <p role='alert' className='text-sm text-red-700'>{recError}</p>}
                                     <button
                                         type='submit'
+                                        disabled={recSending}
                                         className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
                                     >
-                                        {recruitmentForm.submitLabel}
+                                        {recSending ? 'Envoi en cours...' : recruitmentForm.submitLabel}
                                     </button>
                                 </form>
                             )}
@@ -325,7 +367,7 @@ export default function Contact() {
                                 <form
                                     onSubmit={(e) => {
                                         e.preventDefault();
-                                        setGenSent(true);
+                                        void submitForm('general', genForm, setGenSending, setGenError, setGenSent);
                                     }}
                                     className='space-y-5'
                                 >
@@ -333,11 +375,13 @@ export default function Contact() {
                                         {contactForm.fields.slice(0, 2).map((f) => renderField(f, genForm, setGenForm))}
                                     </div>
                                     {contactForm.fields.slice(2).map((f) => renderField(f, genForm, setGenForm))}
+                                    {genError && <p role='alert' className='text-sm text-red-700'>{genError}</p>}
                                     <button
                                         type='submit'
+                                        disabled={genSending}
                                         className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
                                     >
-                                        {contactForm.submitLabel}
+                                        {genSending ? 'Envoi en cours...' : contactForm.submitLabel}
                                     </button>
                                 </form>
                             )}

@@ -35,6 +35,34 @@ npm run typecheck
 npm run build
 ```
 
+## Envoi des formulaires avec Resend
+
+Le formulaire de partenariat utilise la fonction Vercel `api/partnership.ts`. Elle envoie la
+demande à `partenariats@heka.polymtl.ca`, puis un courriel de confirmation à l'adresse indiquée
+dans le formulaire.
+
+### Test local
+
+1. Copiez `.env.example` vers `.env` et renseignez `RESEND_API_KEY`.
+2. Pour un test sans domaine vérifié, utilisez `RESEND_FROM_EMAIL=onboarding@resend.dev` et
+  définissez temporairement `PARTNERSHIP_RECIPIENT` sur l'adresse courriel de votre compte Resend.
+  Resend n'autorise pas encore `partenariats@heka.polymtl.ca` dans ce mode. Pour un usage réel,
+  utilisez une adresse appartenant à un domaine vérifié dans Resend.
+3. Lancez le site avec `npm run dev:vercel`, puis ouvrez l'URL indiquée par Vercel.
+
+Le CLI Vercel peut demander une connexion lors de sa première utilisation. Pour ne jamais exposer
+la clé au navigateur, ne préfixez pas ces variables par `VITE_`.
+
+### Configuration Vercel
+
+Ajoutez `RESEND_API_KEY` et `RESEND_FROM_EMAIL` dans les variables d'environnement du projet Vercel,
+pour les environnements Preview et Production. `PARTNERSHIP_RECIPIENT` est facultative et vaut par
+défaut `partenariats@heka.polymtl.ca`.
+
+Dans Resend, ajoutez et vérifiez `heka.polymtl.ca`, puis utilisez par exemple
+`Héka <noreply@heka.polymtl.ca>` pour `RESEND_FROM_EMAIL` avant le déploiement. Tant que la liste
+des domaines vérifiés est vide, Resend renvoie `403` pour cette adresse d'expédition.
+
 Le dossier `dist/` produit par `npm run build` est la version de production.
 
 ---

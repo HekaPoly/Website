@@ -1,15 +1,53 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import type { IncomingMessage, ServerResponse } from 'node:http';
 import path from 'node:path';
+import partnershipHandler from './api/partnership.ts';
 
-export default defineConfig(() => {
-    const base = process.env.VITE_BASE_PATH || '/Website/';
+function localApiPlugin(): Plugin {
+    return {
+        name: 'local-api',
+        configureServer(server) {
+            server.middlewares.use('/api/partnership', async (req, res, next) => {
+                if (req.method !== 'POST') {
+                    next();
+                    return;
+                }
+
+                const chunks: Buffer[] = [];
+                for await (const chunk of req) {
+                    chunks.push(Buffer.from(chunk));
+                }
+
+                const request = req as IncomingMessage & { body?: unknown };
+                request.body = Buffer.concat(chunks).toString('utf8');
+
+                const response = res as unknown as Parameters<typeof partnershipHandler>[1];
+                response.status = (code) => {
+                    res.statusCode = code;
+                    return response;
+                };
+                response.json = (body) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(body));
+                };
+
+                await partnershipHandler(request, response);
+            });
+        },
+    };
+}
+
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), '');
+    Object.assign(process.env, env);
+    const base = env.VITE_BASE_PATH || '/Website/';
 
     return {
         base,
 
-        plugins: [react(), tailwindcss()],
+        plugins: [react(), tailwindcss(), localApiPlugin()],
 
         resolve: {
             alias: {

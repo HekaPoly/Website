@@ -8,10 +8,39 @@ import { asset } from '../utils/assets';
 export default function Partners() {
     const [form, setForm] = useState<Record<string, string>>({});
     const [sent, setSent] = useState(false);
+    const [sending, setSending] = useState(false);
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setSent(true);
+        setSending(true);
+        setError('');
+
+        try {
+            const response = await fetch('/api/partnership', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form),
+            });
+
+            const contentType = response.headers.get('content-type') ?? '';
+            const result = contentType.includes('application/json')
+                ? ((await response.json()) as { error?: string })
+                : { error: `Le serveur local n'a pas chargé l'API (HTTP ${response.status}).` };
+            if (!response.ok) {
+                throw new Error(result.error || "L'envoi a échoué.");
+            }
+
+            setSent(true);
+        } catch (submissionError) {
+            setError(
+                submissionError instanceof Error
+                    ? submissionError.message
+                    : "L'envoi a échoué. Veuillez réessayer.",
+            );
+        } finally {
+            setSending(false);
+        }
     };
 
     const inputClass =
@@ -308,11 +337,20 @@ export default function Partners() {
                                         )}
                                     </div>
                                 ))}
+                                {error && (
+                                    <p
+                                        role='alert'
+                                        className='text-sm text-red-700'
+                                    >
+                                        {error}
+                                    </p>
+                                )}
                                 <button
                                     type='submit'
+                                    disabled={sending}
                                     className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
                                 >
-                                    {partnershipForm.submitLabel}
+                                    {sending ? 'Envoi en cours...' : partnershipForm.submitLabel}
                                 </button>
                             </form>
                         )}

@@ -279,7 +279,7 @@ export default function Team() {
                                 className='text-2xl lg:text-3xl mt-2 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Exosquelette passif
+                                Exosquelette d'assistance
                             </h2>
                         </div>
                         <div className='flex flex-wrap justify-center gap-4'>

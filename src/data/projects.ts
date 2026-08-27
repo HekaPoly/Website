@@ -94,7 +94,7 @@ export const currentProjects: Project[] = [
             { value: '4–6 h', label: "Durée typique d'une intervention exigeante" },
         ],
 
-        solutionTitle: 'PODI — Un exosquelette mécanique passif.',
+        solutionTitle: "PODI — Un exosquelette d'assistance.",
         solutionBody: [
             "PODI est un exosquelette combinant des méthodes d'actuation actives et passives. Il est conçu pour redistribuer les charges pesant sur les membres inférieurs et le dos lors d'interventions.",
             'Le système utilise des mécanismes de transfert de force pour réduire les contraintes sur les articulations critiques, sans limiter la liberté de mouvement indispensable au travail des premiers répondants.',

@@ -24,48 +24,52 @@ import type { Project } from '../types/content';
 
 export const currentProjects: Project[] = [
     // ─────────────────────────────────────────────────────────────────────────
-    // PODI — Exosquelette passif pour les pompiers
+    // PODI — Exosquelette
     // ─────────────────────────────────────────────────────────────────────────
     {
         slug: 'podi',
         name: 'PODI',
-        category: 'Exosquelette passif',
+        category: "Exosquelette d'assistance",
         challenge: 'Soutenir les premiers répondants',
         title: 'Réduire les contraintes physiques vécues par les pompiers.',
         shortDescription:
-            "Un exosquelette mécanique passif destiné à assister les pompiers en réduisant la fatigue et les contraintes musculosquelettiques lors d'interventions.",
+            "Un exosquelette destiné à assister les pompiers en réduisant la fatigue et les contraintes musculosquelettiques lors d'interventions.",
         description:
-            'PODI est un exosquelette mécanique passif — sans moteur ni batterie — conçu pour redistribuer les charges et réduire la fatigue des pompiers sans limiter leur mobilité opérationnelle.',
-        status: 'Prototypage en cours',
+            'PODI est un exosquelette — sans moteur ni batterie — conçu pour redistribuer les charges et réduire la fatigue des pompiers sans limiter leur mobilité opérationnelle.',
+        status: 'Construction de la 4e itération',
         theme: 'podi',
         showProjectPage: true,
 
         disciplines: [
-            'Génie mécanique',
             'Biomécanique',
             'Ergonomie',
-            'Génie industriel',
             'Prototypage',
             'Fabrication additive',
             'Conception CAO',
+            'Fibre de Carbone',
+            'Usinage CNC',
             'Analyse structurale',
+            'Construction de PCB',
+            'Contrôle de moteurs',
+            'Machine Learning',
+            'Harnais électriques',
         ],
 
         problem:
             "Les pompiers portent jusqu'à 25 kg d'équipement lors d'interventions prolongées, entraînant fatigue et blessures musculosquelettiques.",
         objective:
-            "Concevoir un exosquelette passif léger, compatible avec l'équipement existant, réduisant significativement les contraintes physiques sans limiter la mobilité.",
+            "Concevoir un exosquelette léger, compatible avec l'équipement existant, réduisant significativement les contraintes physiques sans limiter la mobilité.",
 
         currentWork: [
-            'Amélioration du premier prototype',
+            'Amélioration du troisième prototype',
             'Réduction du poids du système',
-            'Tests mécaniques et validation fonctionnelle',
+            "Redesign des PCBs et du système d'éjection de batterie",
         ],
 
         nextSteps: [
-            'Affiner les critères de performance selon les retours des pompiers',
-            'Réaliser des essais avec des utilisateurs réels',
-            'Préparer la présentation pour la prochaine compétition',
+            'Fabrication de pièces en fibre de carbone',
+            'Expansion à une assistance du corps entier',
+            'Participation aux compétitions ACE2027 et ExoGames2027',
         ],
 
         achievements: ['ace-2026', 'ace-2025', 'anges-du-genie-2025'],
@@ -88,13 +92,13 @@ export const currentProjects: Project[] = [
             { value: '25 kg+', label: "Équipement porté lors d'une intervention" },
             { value: '↑ 40%', label: 'Des blessures liées aux contraintes physiques' },
             { value: '4–6 h', label: "Durée typique d'une intervention exigeante" },
-            { value: '100%', label: "Passif — aucune source d'énergie requise" },
         ],
 
-        solutionTitle: 'PODI — Un exosquelette mécanique passif.',
+        solutionTitle: "PODI — Un exosquelette d'assistance.",
         solutionBody: [
-            "PODI est un exosquelette mécanique passif — c'est-à-dire sans moteur ni batterie — conçu pour redistribuer les charges pesant sur les membres inférieurs et le dos lors d'interventions.",
+            "PODI est un exosquelette combinant des méthodes d'actuation actives et passives. Il est conçu pour redistribuer les charges pesant sur les membres inférieurs et le dos lors d'interventions.",
             'Le système utilise des mécanismes de transfert de force pour réduire les contraintes sur les articulations critiques, sans limiter la liberté de mouvement indispensable au travail des premiers répondants.',
+            "Des moteurs situés aux hanches permettent à l'utilisateur de ressentir une assistance puissante et adaptée, contrôlée par un algorithme de prédiction des mouvements efficace et fiable.",
             "La conception tient compte des contraintes réelles du terrain : chaleur, fumée, espaces restreints, compatibilité avec l'équipement existant et facilité d'enfilage.",
         ],
 
@@ -123,6 +127,10 @@ export const currentProjects: Project[] = [
                 title: "Facilité d'utilisation",
                 desc: 'Pouvoir être enfilé et retiré rapidement, sans assistance et sous stress.',
             },
+            {
+                title: "Assistance naturelle et confortable",
+                desc: 'Contrôler les moteurs en parfaite harmonie avec les mouvements humains.',
+            },
         ],
 
         roadmap: [
@@ -131,10 +139,12 @@ export const currentProjects: Project[] = [
             { label: 'Définition des exigences', status: 'Complété' },
             { label: 'Conception préliminaire', status: 'Complété' },
             { label: 'Premier prototype', status: 'Complété' },
-            { label: 'Tests fonctionnels', status: 'En cours' },
-            { label: 'Itérations et amélioration', status: 'À venir' },
+            { label: 'Tests fonctionnels', status: 'Complété' },
+            { label: 'Itérations et amélioration', status: 'En cours' },
             { label: 'Présentation en compétition', status: 'À venir' },
         ],
+
+        // Note de Marco: Cette section est un peu bizarre. Il faudrait que je m'y penche un peu plus mais c'est correct pour commencer
     },
 
     // ─────────────────────────────────────────────────────────────────────────

@@ -1,14 +1,27 @@
 import { asset } from '../utils/assets';
+import { currentProjects } from '../data/projects';
 
 interface Props {
     navigate: (page: string) => void;
 }
+
+// Tout le contenu de cette page provient de src/data/projects.ts (projet "podi").
+// Pour modifier les textes, les statistiques, les disciplines ou l'état du
+// developpement, editez ce fichier de donnees — pas cette page.
+const project = currentProjects.find((p) => p.slug === 'podi');
 
 export default function ProjectPODI({ navigate }: Props) {
     const handleNav = (page: string) => {
         navigate(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
+    if (!project) return null;
+
+    const problemStats = project.problemStats ?? [];
+    const technicalObjectives = project.technicalObjectives ?? [];
+    const roadmap = project.roadmap ?? [];
+    const gallery = project.images.gallery ?? [];
 
     return (
         <div className='pt-16'>
@@ -17,7 +30,7 @@ export default function ProjectPODI({ navigate }: Props) {
                 <div
                     className='absolute inset-0 bg-cover bg-center opacity-20'
                     style={{
-                        backgroundImage: `url('${asset('https://images.unsplash.com/photo-1504667290505-eee11f23905a?w=1600&h=900&fit=crop&auto=format')}')`,
+                        backgroundImage: `url('${asset(project.images.hero)}')`,
                     }}
                 />
                 <div className='relative max-w-7xl mx-auto px-6 lg:px-10'>
@@ -31,13 +44,13 @@ export default function ProjectPODI({ navigate }: Props) {
                         className='inline-block px-2.5 py-1 rounded-md bg-[#FEF0EF] text-[#C8281A] text-xs font-medium mb-4'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        PODI — Exosquelette passif d'assistance
+                        {project.name} — {project.category}
                     </div>
                     <h1
                         className='text-4xl lg:text-6xl text-white leading-tight max-w-3xl'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Réduire les contraintes physiques vécues par les pompiers.
+                        {project.title}
                     </h1>
                 </div>
             </section>
@@ -60,38 +73,13 @@ export default function ProjectPODI({ navigate }: Props) {
                                 Un métier physiquement éprouvant.
                             </h2>
                             <div className='space-y-4 text-[#7A7269] leading-relaxed text-sm'>
-                                <p>
-                                    Les pompiers interviennent dans des environnements hostiles tout en portant un
-                                    équipement de protection individuelle pouvant dépasser les 25 kilogrammes. Ces
-                                    interventions impliquent des mouvements répétitifs, des postures contraignantes et
-                                    des efforts soutenus sur de longues périodes.
-                                </p>
-                                <p>
-                                    Cette réalité entraîne une fatigue musculaire importante et des contraintes
-                                    musculosquelettiques qui augmentent le risque de blessures et réduisent l'efficacité
-                                    opérationnelle, notamment en fin d'intervention.
-                                </p>
+                                {(project.problemBody ?? [project.problem]).map((paragraph, i) => (
+                                    <p key={i}>{paragraph}</p>
+                                ))}
                             </div>
                         </div>
-                        <div className='grid grid-cols-2 gap-4'>
-                            {[
-                                {
-                                    value: '25 kg+',
-                                    label: "Équipement porté lors d'une intervention",
-                                },
-                                {
-                                    value: '↑ 40%',
-                                    label: 'Des blessures liées aux contraintes physiques',
-                                },
-                                {
-                                    value: '4–6 h',
-                                    label: "Durée typique d'une intervention exigeante",
-                                },
-                                {
-                                    value: '100%',
-                                    label: "Passif — aucune source d'énergie requise",
-                                },
-                            ].map((stat, i) => (
+                        <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+                            {problemStats.map((stat, i) => (
                                 <div
                                     key={i}
                                     className='p-6 rounded-2xl border border-[#E2DDD5] bg-[#F8F7F3]'
@@ -117,7 +105,7 @@ export default function ProjectPODI({ navigate }: Props) {
                         <div
                             className='rounded-2xl h-72 lg:h-96 bg-cover bg-center bg-[#FEF0EF]'
                             style={{
-                                backgroundImage: `url('${asset('https://images.unsplash.com/photo-1575507371089-cd0a12c5aae9?w=800&h=800&fit=crop&auto=format')}')`,
+                                backgroundImage: `url('${asset(project.images.solution ?? project.images.hero)}')`,
                             }}
                         />
                         <div>
@@ -131,24 +119,18 @@ export default function ProjectPODI({ navigate }: Props) {
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                PODI — Un exosquelette mécanique passif.
+                                {project.solutionTitle ?? project.name}
                             </h2>
                             <div className='space-y-4 text-[#7A7269] leading-relaxed text-sm'>
-                                <p>
-                                    PODI est un exosquelette mécanique passif — c'est-à-dire sans moteur ni batterie —
-                                    conçu pour redistribuer les charges pesant sur les membres inférieurs et le dos lors
-                                    d'interventions.
-                                </p>
-                                <p>
-                                    Le système utilise des mécanismes de transfert de force pour réduire les contraintes
-                                    sur les articulations critiques, sans limiter la liberté de mouvement indispensable
-                                    au travail des premiers répondants.
-                                </p>
-                                <p>
-                                    La conception tient compte des contraintes réelles du terrain : chaleur, fumée,
-                                    espaces restreints, compatibilité avec l'équipement existant et facilité d'enfilage.
-                                </p>
+                                {(project.solutionBody ?? [project.description ?? project.shortDescription]).map(
+                                    (paragraph, i) => (
+                                        <p key={i}>{paragraph}</p>
+                                    ),
+                                )}
                             </div>
+                            {project.solutionNote && (
+                                <p className='mt-6 text-xs text-[#7A7269] italic'>{project.solutionNote}</p>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -168,38 +150,13 @@ export default function ProjectPODI({ navigate }: Props) {
                             className='text-3xl lg:text-4xl mt-3 text-[#111110]'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Ce que PODI doit accomplir.
+                            Ce que {project.name} doit accomplir.
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                        {[
-                            {
-                                title: 'Réduction de la charge',
-                                desc: 'Redistribuer significativement la force exercée sur le dos et les membres inférieurs.',
-                            },
-                            {
-                                title: 'Légèreté',
-                                desc: "Maintenir un poids propre minimal afin de ne pas alourdir l'équipement du pompier.",
-                            },
-                            {
-                                title: 'Liberté de mouvement',
-                                desc: 'Permettre une plage de mouvement complète pour toutes les tâches opérationnelles.',
-                            },
-                            {
-                                title: 'Résistance aux conditions',
-                                desc: 'Fonctionner de manière fiable dans des environnements chauds, humides et poussiéreux.',
-                            },
-                            {
-                                title: 'Compatibilité',
-                                desc: "S'adapter à l'équipement de protection individuelle standard sans modification.",
-                            },
-                            {
-                                title: "Facilité d'utilisation",
-                                desc: 'Pouvoir être enfilé et retiré rapidement, sans assistance et sous stress.',
-                            },
-                        ].map((item, i) => (
+                        {technicalObjectives.map((item, i) => (
                             <div
-                                key={i}
+                                key={item.title}
                                 className='p-6 rounded-2xl border border-[#E2DDD5] hover:border-[#F5BCBA] transition-colors'
                             >
                                 <div className='w-7 h-7 rounded-full bg-[#FEF0EF] flex items-center justify-center mb-4'>
@@ -236,16 +193,7 @@ export default function ProjectPODI({ navigate }: Props) {
                                 Une équipe pluridisciplinaire.
                             </h2>
                             <div className='flex flex-wrap gap-2'>
-                                {[
-                                    'Génie mécanique',
-                                    'Biomécanique',
-                                    'Ergonomie',
-                                    'Génie industriel',
-                                    'Prototypage',
-                                    'Fabrication additive',
-                                    'Conception CAO',
-                                    'Analyse structurale',
-                                ].map((d) => (
+                                {project.disciplines.map((d) => (
                                     <span
                                         key={d}
                                         className='px-3 py-1.5 rounded-lg text-xs font-medium text-[#C8281A] bg-[#FEF0EF] border border-[#F5BCBA]'
@@ -270,16 +218,7 @@ export default function ProjectPODI({ navigate }: Props) {
                                 Où en sommes-nous?
                             </h2>
                             <div className='space-y-3'>
-                                {[
-                                    { label: 'Définition du problème', status: 'Complété' },
-                                    { label: 'Revue de littérature', status: 'Complété' },
-                                    { label: 'Définition des exigences', status: 'Complété' },
-                                    { label: 'Conception préliminaire', status: 'Complété' },
-                                    { label: 'Premier prototype', status: 'Complété' },
-                                    { label: 'Tests fonctionnels', status: 'En cours' },
-                                    { label: 'Itérations et amélioration', status: 'À venir' },
-                                    { label: 'Présentation en compétition', status: 'À venir' },
-                                ].map((step) => (
+                                {roadmap.map((step) => (
                                     <div
                                         key={step.label}
                                         className='flex items-center justify-between py-3 border-b border-[#E2DDD5] last:border-0'
@@ -305,14 +244,60 @@ export default function ProjectPODI({ navigate }: Props) {
                 </div>
             </section>
 
-            {/* Galerie placeholder */}
-            <section className='py-20 bg-white'>
+            {/* Travaux en cours & prochaines étapes */}
+            {(project.currentWork?.length || project.nextSteps?.length) && (
+                <section className='py-20 bg-white'>
+                    <div className='max-w-7xl mx-auto px-6 lg:px-10'>
+                        <span
+                            className='text-xs font-medium text-[#C8281A] uppercase tracking-widest'
+                            style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                            06 — Travaux en cours
+                        </span>
+                        <h2
+                            className='text-2xl mt-3 mb-8 text-[#111110]'
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            Sur quoi l'équipe travaille.
+                        </h2>
+                        <div className='grid md:grid-cols-2 gap-5'>
+                            {[
+                                { heading: 'En ce moment', items: project.currentWork ?? [] },
+                                { heading: 'Prochaines étapes', items: project.nextSteps ?? [] },
+                            ]
+                                .filter((block) => block.items.length > 0)
+                                .map((block) => (
+                                    <div
+                                        key={block.heading}
+                                        className='p-6 rounded-2xl border border-[#E2DDD5] bg-[#F8F7F3]'
+                                    >
+                                        <h3 className='font-semibold text-[#111110] mb-4 text-sm'>{block.heading}</h3>
+                                        <ul className='space-y-2.5'>
+                                            {block.items.map((item) => (
+                                                <li
+                                                    key={item}
+                                                    className='flex gap-3 text-sm text-[#7A7269] leading-relaxed'
+                                                >
+                                                    <span className='text-[#C8281A] mt-0.5'>—</span>
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Galerie */}
+            <section className='py-20 bg-[#F8F7F3]'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     <span
                         className='text-xs font-medium text-[#7A7269] uppercase tracking-widest'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        06 — Galerie
+                        07 — Galerie
                     </span>
                     <h2
                         className='text-2xl mt-3 mb-8 text-[#111110]'
@@ -321,16 +306,24 @@ export default function ProjectPODI({ navigate }: Props) {
                         Prototype en images.
                     </h2>
                     <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
-                        {[1, 2, 3, 4].map((i) => (
-                            <div
-                                key={i}
-                                className='aspect-square rounded-xl border border-dashed border-[#E2DDD5] bg-[#F8F7F3] flex items-center justify-center text-xs text-center text-[#C8C3BB] p-4'
-                                style={{ fontFamily: 'var(--font-mono)' }}
-                            >
-                                Photo prototype
-                                <br />à venir
-                            </div>
-                        ))}
+                        {gallery.length > 0
+                            ? gallery.map((image) => (
+                                  <div
+                                      key={image}
+                                      className='aspect-square rounded-xl bg-cover bg-center border border-[#E2DDD5]'
+                                      style={{ backgroundImage: `url('${asset(image)}')` }}
+                                  />
+                              ))
+                            : [1, 2, 3, 4].map((i) => (
+                                  <div
+                                      key={i}
+                                      className='aspect-square rounded-xl border border-dashed border-[#E2DDD5] bg-white flex items-center justify-center text-xs text-center text-[#C8C3BB] p-4'
+                                      style={{ fontFamily: 'var(--font-mono)' }}
+                                  >
+                                      Photo prototype
+                                      <br />à venir
+                                  </div>
+                              ))}
                     </div>
                 </div>
             </section>
@@ -342,7 +335,7 @@ export default function ProjectPODI({ navigate }: Props) {
                         className='text-2xl lg:text-3xl text-[#111110] mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Rejoindre l'équipe PODI?
+                        Rejoindre l'équipe {project.name}?
                     </h2>
                     <p className='text-[#7A7269] mb-8 text-sm'>
                         Nous cherchons des étudiants en génie mécanique, industriel et biomécanique.

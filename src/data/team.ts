@@ -117,7 +117,7 @@ export const team: TeamMember[] = [
         program: 'Génie biomédical',
         project: 'podi',
         group: ['podi'],
-        photo: 'public/images/team/members/CLUB-22.jpg',
+        photo: 'public/images/team/members/CLUB-23.jpg',
         linkedin: '',
         email: '',
     },
@@ -129,7 +129,7 @@ export const team: TeamMember[] = [
         project: 'podi',
         group: ['podi'],
         photo: 'images/team/members/CLUB-4.jpg',
-        linkedin: '',
+        linkedin: 'https://www.linkedin.com/in/vladislav-savciuc-95044633a/',
         email: '',
     },
     {

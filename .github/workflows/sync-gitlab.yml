@@ -1,0 +1,20 @@
+name: Sync GitLab and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-gitlab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger GitLab pipeline
+        run: |
+          curl --fail --request POST \
+            --form token="${{ secrets.GITLAB_TRIGGER_TOKEN }}" \
+            --form ref="main" \
+            --form "variables[GITHUB_REPO]=https://github.com/HekaPoly/Website.git" \
+            --form "variables[GITHUB_SHA]=${{ github.sha }}" \
+            "https://git.step.polymtl.ca/api/v4/projects/${{ vars.GITLAB_PROJECT_ID }}/trigger/pipeline"

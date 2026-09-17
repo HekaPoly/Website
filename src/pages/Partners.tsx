@@ -1,26 +1,13 @@
-import { useState } from 'react';
+import EmbeddedMicrosoftForm from '../components/EmbeddedMicrosoftForm';
+import { microsoftFormUrls } from '../data/forms';
 import { partners, PARTNERSHIP_REASONS } from '../data/partners';
-import { partnershipForm } from '../data/forms';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
 
-
 export default function Partners() {
-    const [form, setForm] = useState<Record<string, string>>({});
-    const [sent, setSent] = useState(false);
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        setSent(true);
-    };
-
-    const inputClass =
-        'w-full px-4 py-3 rounded-xl border border-[#E2DDD5] bg-[#F8F7F3] text-sm text-[#111110] focus:outline-none focus:border-[#41699d] transition-colors';
-
     return (
         <div className='pt-16'>
             <section className='relative py-20 lg:py-28 border-b border-border overflow-hidden'>
-                {/* Background image */}
                 <div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
@@ -28,11 +15,7 @@ export default function Partners() {
                         backgroundPosition: 'center 45%',
                     }}
                 />
-
-                {/* Overlay */}
                 <div className='absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.82)_0%,rgba(15,23,42,0.65)_38%,rgba(15,23,42,0.28)_68%,transparent_100%)]' />
-
-                {/* Content */}
                 <div className='relative z-10 max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='max-w-2xl'>
                         <span
@@ -41,14 +24,12 @@ export default function Partners() {
                         >
                             Partenaires
                         </span>
-
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
                             Construire l&apos;avenir de la technologie d&apos;assistance.
                         </h1>
-
                         <p className='text-white/80 leading-relaxed max-w-xl'>
                             Nous collaborons avec des entreprises, des organismes et des chercheurs qui partagent notre
                             volonté de développer des technologies utiles, responsables et accessibles.
@@ -57,7 +38,6 @@ export default function Partners() {
                 </div>
             </section>
 
-            {/* Pourquoi collaborer */}
             <section className='py-20 bg-white'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='mb-12'>
@@ -96,7 +76,6 @@ export default function Partners() {
                 </div>
             </section>
 
-            {/* Partenaires actuels */}
             <section className='py-20 bg-cream'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='mb-10'>
@@ -115,37 +94,39 @@ export default function Partners() {
                     </div>
                     {partners.length > 0 ? (
                         <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>
-                            {partners.map((p) => (
+                            {partners.map((partner) => (
                                 <a
-                                    key={p.id}
-                                    href={p.website || '#'}
+                                    key={partner.id}
+                                    href={partner.website || '#'}
                                     target='_blank'
                                     rel='noopener noreferrer'
                                     className='h-24 rounded-xl border border-border bg-white flex items-center justify-center hover:border-heka-mid transition-colors p-4'
                                 >
-                                    {p.logo ? (
+                                    {partner.logo ? (
                                         <img
-                                            src={asset(p.logo)}
-                                            alt={p.name}
+                                            src={asset(partner.logo)}
+                                            alt={partner.name}
                                             className='max-h-12 max-w-full object-contain'
                                         />
                                     ) : (
-                                        <span className='text-sm font-medium text-muted text-center'>{p.name}</span>
+                                        <span className='text-sm font-medium text-muted text-center'>
+                                            {partner.name}
+                                        </span>
                                     )}
                                 </a>
                             ))}
                         </div>
                     ) : (
                         <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>
-                            {[1, 2, 3, 4].map((i) => (
+                            {[1, 2, 3, 4].map((item) => (
                                 <div
-                                    key={i}
+                                    key={item}
                                     className='h-24 rounded-xl border border-dashed border-border bg-white flex items-center justify-center text-xs text-muted text-center p-4'
                                     style={{ fontFamily: 'var(--font-mono)' }}
                                 >
                                     Logo partenaire
                                     <br />
-                                    {i}
+                                    {item}
                                 </div>
                             ))}
                         </div>
@@ -159,7 +140,6 @@ export default function Partners() {
                 </div>
             </section>
 
-            {/* Formulaire */}
             <section className='py-20 bg-white'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='grid lg:grid-cols-2 gap-16'>
@@ -229,93 +209,11 @@ export default function Partners() {
                                 </div>
                             </div>
                         </div>
-
-                        {sent ? (
-                            <div className='flex items-center justify-center p-12 rounded-2xl bg-heka-light border border-heka-mid'>
-                                <div className='text-center'>
-                                    <div className='w-12 h-12 rounded-full bg-heka flex items-center justify-center mx-auto mb-4'>
-                                        <svg
-                                            className='w-6 h-6 text-white'
-                                            fill='none'
-                                            stroke='currentColor'
-                                            strokeWidth='2.5'
-                                            viewBox='0 0 24 24'
-                                        >
-                                            <path
-                                                strokeLinecap='round'
-                                                strokeLinejoin='round'
-                                                d='M5 13l4 4L19 7'
-                                            />
-                                        </svg>
-                                    </div>
-                                    <h3
-                                        className='text-lg font-semibold text-charcoal mb-2'
-                                        style={{ fontFamily: 'var(--font-display)' }}
-                                    >
-                                        Message envoyé
-                                    </h3>
-                                    <p className='text-sm text-muted'>
-                                        Nous vous répondrons dans les meilleurs délais.
-                                    </p>
-                                </div>
-                            </div>
-                        ) : (
-                            <form
-                                onSubmit={handleSubmit}
-                                className='space-y-5'
-                            >
-                                {partnershipForm.fields.map((field) => (
-                                    <div key={field.id}>
-                                        <label className='block text-xs font-medium text-charcoal mb-2'>
-                                            {field.label}
-                                            {field.required ? ' *' : ''}
-                                        </label>
-                                        {field.type === 'textarea' ? (
-                                            <textarea
-                                                required={field.required}
-                                                rows={field.rows ?? 4}
-                                                value={form[field.id] ?? ''}
-                                                onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
-                                                className={`${inputClass} resize-none`}
-                                                placeholder={field.placeholder}
-                                            />
-                                        ) : field.type === 'select' ? (
-                                            <select
-                                                required={field.required}
-                                                value={form[field.id] ?? ''}
-                                                onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
-                                                className={inputClass}
-                                            >
-                                                <option value=''>Sélectionner</option>
-                                                {field.options?.map((o) => (
-                                                    <option
-                                                        key={o.value}
-                                                        value={o.value}
-                                                    >
-                                                        {o.label}
-                                                    </option>
-                                                ))}
-                                            </select>
-                                        ) : (
-                                            <input
-                                                type={field.type}
-                                                required={field.required}
-                                                value={form[field.id] ?? ''}
-                                                onChange={(e) => setForm({ ...form, [field.id]: e.target.value })}
-                                                className={inputClass}
-                                                placeholder={field.placeholder}
-                                            />
-                                        )}
-                                    </div>
-                                ))}
-                                <button
-                                    type='submit'
-                                    className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
-                                >
-                                    {partnershipForm.submitLabel}
-                                </button>
-                            </form>
-                        )}
+                        <EmbeddedMicrosoftForm
+                            src={microsoftFormUrls.partnership}
+                            title='Formulaire de partenariat Héka'
+                            heightClassName='h-[800px] lg:h-[900px]'
+                        />
                     </div>
                 </div>
             </section>

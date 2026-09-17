@@ -1,84 +1,23 @@
 import { useState } from 'react';
-import { recruitmentForm, contactForm } from '../data/forms';
+import EmbeddedMicrosoftForm from '../components/EmbeddedMicrosoftForm';
+import { microsoftFormUrls } from '../data/forms';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
 
 export default function Contact() {
     const [tab, setTab] = useState<'recrutement' | 'general'>('recrutement');
-    const [recForm, setRecForm] = useState<Record<string, string>>({});
-    const [genForm, setGenForm] = useState<Record<string, string>>({});
-    const [recSent, setRecSent] = useState(false);
-    const [genSent, setGenSent] = useState(false);
-
-    const inputClass =
-        'w-full px-4 py-3 rounded-xl border border-[#E2DDD5] bg-[#F8F7F3] text-sm focus:outline-none focus:border-[#41699d] transition-colors';
-
-    const renderField = (
-        field: (typeof recruitmentForm.fields)[number],
-        formState: Record<string, string>,
-        setFormState: (s: Record<string, string>) => void,
-    ) => (
-        <div key={field.id}>
-            <label className='block text-xs font-medium text-charcoal mb-2'>
-                {field.label}
-                {field.required ? ' *' : ''}
-            </label>
-            {field.type === 'textarea' ? (
-                <textarea
-                    required={field.required}
-                    rows={field.rows ?? 3}
-                    value={formState[field.id] ?? ''}
-                    onChange={(e) => setFormState({ ...formState, [field.id]: e.target.value })}
-                    className={`${inputClass} resize-none`}
-                    placeholder={field.placeholder}
-                />
-            ) : field.type === 'select' ? (
-                <select
-                    required={field.required}
-                    value={formState[field.id] ?? ''}
-                    onChange={(e) => setFormState({ ...formState, [field.id]: e.target.value })}
-                    className={inputClass}
-                >
-                    <option value=''>Sélectionner</option>
-                    {field.options?.map((o) => (
-                        <option
-                            key={o.value}
-                            value={o.value}
-                        >
-                            {o.label}
-                        </option>
-                    ))}
-                </select>
-            ) : (
-                <input
-                    type={field.type}
-                    required={field.required}
-                    value={formState[field.id] ?? ''}
-                    onChange={(e) => setFormState({ ...formState, [field.id]: e.target.value })}
-                    className={inputClass}
-                    placeholder={field.placeholder}
-                />
-            )}
-        </div>
-    );
 
     return (
         <div className='pt-16'>
             <section className='relative py-20 lg:py-28 border-b border-border overflow-hidden'>
-                {/* Background image */}
                 <div
                     className='absolute inset-0 bg-cover bg-center'
                     style={{
-                        backgroundImage:
-                            `url('${asset('public/images/team/380406934_305135572284172_3382824170791790552_n-scaled.jpg')}')`,
+                        backgroundImage: `url('${asset('public/images/team/380406934_305135572284172_3382824170791790552_n-scaled.jpg')}')`,
                         backgroundPosition: 'center 45%',
                     }}
                 />
-
-                {/* Overlay */}
                 <div className='absolute inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.82)_0%,rgba(15,23,42,0.65)_38%,rgba(15,23,42,0.28)_68%,transparent_100%)]' />
-
-                {/* Content */}
                 <div className='relative z-10 max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='max-w-2xl'>
                         <span
@@ -87,14 +26,12 @@ export default function Contact() {
                         >
                             Nous joindre
                         </span>
-
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
                             Travaillons ensemble.
                         </h1>
-
                         <p className='text-white/80 leading-relaxed max-w-xl'>
                             Vous souhaitez rejoindre Héka ou simplement prendre contact? Choisissez la bonne section
                             ci-dessous.
@@ -120,7 +57,7 @@ export default function Contact() {
                         </button>
                     </div>
 
-                    {tab === 'recrutement' && (
+                    {tab === 'recrutement' ? (
                         <div className='grid lg:grid-cols-2 gap-16'>
                             <div>
                                 <h2
@@ -140,9 +77,9 @@ export default function Contact() {
                                         'Compétitions interuniversitaires',
                                         'Réseautage avec des partenaires industriels',
                                         'Responsabilités dès la première session',
-                                    ].map((item, i) => (
+                                    ].map((item) => (
                                         <div
-                                            key={i}
+                                            key={item}
                                             className='flex items-center gap-3 text-sm text-muted'
                                         >
                                             <span className='w-4 h-4 rounded-full bg-heka-light flex items-center justify-center shrink-0'>
@@ -167,67 +104,13 @@ export default function Contact() {
                                     </a>
                                 </div>
                             </div>
-
-                            {recSent ? (
-                                <div className='flex items-center justify-center p-12 rounded-2xl bg-heka-light border border-heka-mid'>
-                                    <div className='text-center'>
-                                        <div className='w-12 h-12 rounded-full bg-heka flex items-center justify-center mx-auto mb-4'>
-                                            <svg
-                                                className='w-6 h-6 text-white'
-                                                fill='none'
-                                                stroke='currentColor'
-                                                strokeWidth='2.5'
-                                                viewBox='0 0 24 24'
-                                            >
-                                                <path
-                                                    strokeLinecap='round'
-                                                    strokeLinejoin='round'
-                                                    d='M5 13l4 4L19 7'
-                                                />
-                                            </svg>
-                                        </div>
-                                        <h3
-                                            className='text-lg font-semibold text-charcoal mb-2'
-                                            style={{ fontFamily: 'var(--font-display)' }}
-                                        >
-                                            Candidature reçue
-                                        </h3>
-                                        <p className='text-sm text-muted'>
-                                            Nous vous répondrons dans les prochains jours.
-                                        </p>
-                                    </div>
-                                </div>
-                            ) : (
-                                <form
-                                    onSubmit={(e) => {
-                                        e.preventDefault();
-                                        setRecSent(true);
-                                    }}
-                                    className='space-y-5'
-                                >
-                                    <div className='grid sm:grid-cols-2 gap-5'>
-                                        {recruitmentForm.fields
-                                            .slice(0, 2)
-                                            .map((f) => renderField(f, recForm, setRecForm))}
-                                    </div>
-                                    <div className='grid sm:grid-cols-2 gap-5'>
-                                        {recruitmentForm.fields
-                                            .slice(2, 4)
-                                            .map((f) => renderField(f, recForm, setRecForm))}
-                                    </div>
-                                    {recruitmentForm.fields.slice(4).map((f) => renderField(f, recForm, setRecForm))}
-                                    <button
-                                        type='submit'
-                                        className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
-                                    >
-                                        {recruitmentForm.submitLabel}
-                                    </button>
-                                </form>
-                            )}
+                            <EmbeddedMicrosoftForm
+                                src={microsoftFormUrls.recruitment}
+                                title='Formulaire de recrutement Héka'
+                                heightClassName='h-[1100px] lg:h-[1200px]'
+                            />
                         </div>
-                    )}
-
-                    {tab === 'general' && (
+                    ) : (
                         <div className='grid lg:grid-cols-2 gap-16'>
                             <div>
                                 <h2
@@ -291,56 +174,11 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
-
-                            {genSent ? (
-                                <div className='flex items-center justify-center p-12 rounded-2xl bg-heka-light border border-heka-mid'>
-                                    <div className='text-center'>
-                                        <div className='w-12 h-12 rounded-full bg-heka flex items-center justify-center mx-auto mb-4'>
-                                            <svg
-                                                className='w-6 h-6 text-white'
-                                                fill='none'
-                                                stroke='currentColor'
-                                                strokeWidth='2.5'
-                                                viewBox='0 0 24 24'
-                                            >
-                                                <path
-                                                    strokeLinecap='round'
-                                                    strokeLinejoin='round'
-                                                    d='M5 13l4 4L19 7'
-                                                />
-                                            </svg>
-                                        </div>
-                                        <h3
-                                            className='text-lg font-semibold text-charcoal mb-2'
-                                            style={{ fontFamily: 'var(--font-display)' }}
-                                        >
-                                            Message envoyé
-                                        </h3>
-                                        <p className='text-sm text-muted'>
-                                            Nous vous répondrons dans les meilleurs délais.
-                                        </p>
-                                    </div>
-                                </div>
-                            ) : (
-                                <form
-                                    onSubmit={(e) => {
-                                        e.preventDefault();
-                                        setGenSent(true);
-                                    }}
-                                    className='space-y-5'
-                                >
-                                    <div className='grid sm:grid-cols-2 gap-5'>
-                                        {contactForm.fields.slice(0, 2).map((f) => renderField(f, genForm, setGenForm))}
-                                    </div>
-                                    {contactForm.fields.slice(2).map((f) => renderField(f, genForm, setGenForm))}
-                                    <button
-                                        type='submit'
-                                        className='w-full px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
-                                    >
-                                        {contactForm.submitLabel}
-                                    </button>
-                                </form>
-                            )}
+                            <EmbeddedMicrosoftForm
+                                src={microsoftFormUrls.generalContact}
+                                title='Formulaire de contact général Héka'
+                                heightClassName='h-[800px] lg:h-[900px]'
+                            />
                         </div>
                     )}
                 </div>

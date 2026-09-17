@@ -106,7 +106,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                     </h2>
                                     <p className='text-sm text-muted mb-5 font-medium'>{project.title}</p>
                                     <p className='text-muted leading-relaxed mb-8 text-sm'>{project.description}</p>
-                                    <div className='flex flex-wrap gap-2 mb-8'>
+                                    <div className='flex flex-wrap gap-2'>
                                         {project.disciplines.slice(0, 4).map((d) => (
                                             <span
                                                 key={d}

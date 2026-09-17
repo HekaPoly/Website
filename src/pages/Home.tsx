@@ -72,21 +72,18 @@ const PROJECT_THEME = {
         accent: '#C8281A',
         accentBg: '#FEF0EF',
         accentBorder: '#F5BCBA',
-        pageId: 'projet-podi',
     },
 
     bira: {
         accent: '#1B4F72',
         accentBg: '#E8F0F7',
         accentBorder: '#A8C5DC',
-        pageId: 'projet-bira',
     },
 
     default: {
         accent: '#6B7280',
         accentBg: '#F3F4F6',
         accentBorder: '#D1D5DB',
-        pageId: 'projets',
     },
 };
 export default function Home({ navigate }: HomeProps) {
@@ -224,11 +221,8 @@ export default function Home({ navigate }: HomeProps) {
                                         <h3 className='text-xl font-semibold text-charcoal mb-3'>
                                             {project.challenge}
                                         </h3>
-                                        <p className='text-muted text-sm leading-relaxed mb-6'>{project.problem}</p>
-                                        <p className='text-charcoal text-sm leading-relaxed mb-6'>
-                                            {project.shortDescription}
-                                        </p>
-                                        {
+                                        <p className='text-muted text-sm leading-relaxed'>{project.description}</p>
+                                        {project.showProjectPage && (
                                             <button
                                                 onClick={() => handleNav(`projet-${project.slug}`)}
                                                 className='inline-flex items-center gap-2 text-sm font-semibold hover:gap-3 transition-all'
@@ -236,7 +230,7 @@ export default function Home({ navigate }: HomeProps) {
                                             >
                                                 Découvrir le projet →
                                             </button>
-                                        }
+                                        )}
                                     </div>
                                 </div>
                             );
@@ -416,8 +410,8 @@ export default function Home({ navigate }: HomeProps) {
                                             </span>
                                         </div>
                                         <h3 className='text-xl font-semibold text-charcoal mb-3'>{project.title}</h3>
-                                        <p className='text-sm text-muted leading-relaxed mb-5'>{project.problem}</p>
-                                        <div className='flex flex-wrap gap-2 mb-6'>
+                                        <p className='text-sm text-muted leading-relaxed mb-6'>{project.description}</p>
+                                        <div className='flex flex-wrap gap-2'>
                                             {project.disciplines.slice(0, 3).map((d) => (
                                                 <span
                                                     key={d}
@@ -432,6 +426,7 @@ export default function Home({ navigate }: HomeProps) {
                                                 </span>
                                             )}
                                         </div>
+                                        {project.showProjectPage && (
                                         <button
                                             onClick={() => handleNav(`projet-${project.slug}`)}
                                             className='text-sm font-semibold hover:opacity-75 transition-opacity'
@@ -439,6 +434,7 @@ export default function Home({ navigate }: HomeProps) {
                                         >
                                             Voir le projet →
                                         </button>
+                                        )}
                                     </div>
                                 </div>
                             );

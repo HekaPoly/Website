@@ -1,5 +1,6 @@
 import { navigation } from '../data/navigation';
 import { site } from '../data/site';
+import { asset } from '../utils/assets';
 
 interface FooterProps {
     navigate: (page: string) => void;
@@ -17,13 +18,12 @@ export default function Footer({ navigate }: FooterProps) {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10'>
                     <div className='lg:col-span-2'>
                         <div className='flex items-center gap-2.5 mb-4'>
-                            <div className='w-8 h-8 rounded-full bg-heka flex items-center justify-center'>
-                                <span
-                                    className='text-white text-xs font-bold'
-                                    style={{ fontFamily: 'var(--font-mono)' }}
-                                >
-                                    H
-                                </span>
+                            <div className='w-8 h-8 rounded-full flex items-center justify-center overflow-hidden'>
+                                <img
+                                    src={asset('/images/Heka_Cercle_blanc.png')}
+                                    alt='Logo Héka'
+                                    className='w-full h-full object-cover'
+                                />
                             </div>
                             <span className='text-white font-semibold text-lg'>{site.name}</span>
                         </div>

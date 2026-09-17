@@ -35,10 +35,10 @@ export const currentProjects: Project[] = [
         shortDescription:
             "Un exosquelette destiné à assister les pompiers en réduisant la fatigue et les contraintes musculosquelettiques lors d'interventions.",
         description:
-            'PODI est un exosquelette — sans moteur ni batterie — conçu pour redistribuer les charges et réduire la fatigue des pompiers sans limiter leur mobilité opérationnelle.',
+            'PODI est un exosquelette conçu pour redistribuer les charges et réduire la fatigue des pompiers sans limiter leur mobilité opérationnelle.',
         status: 'Construction de la 4e itération',
         theme: 'podi',
-        showProjectPage: true,
+        showProjectPage: false,
 
         disciplines: [
             'Biomécanique',
@@ -128,7 +128,7 @@ export const currentProjects: Project[] = [
                 desc: 'Pouvoir être enfilé et retiré rapidement, sans assistance et sous stress.',
             },
             {
-                title: "Assistance naturelle et confortable",
+                title: 'Assistance naturelle et confortable',
                 desc: 'Contrôler les moteurs en parfaite harmonie avec les mouvements humains.',
             },
         ],
@@ -162,7 +162,7 @@ export const currentProjects: Project[] = [
             "BIRA interprète des commandes exprimées en langage naturel et les traduit en mouvements du bras robotique, rendant l'assistance accessible sans apprentissage technique.",
         status: 'Développement actif',
         theme: 'bira',
-        showProjectPage: true,
+        showProjectPage: false,
 
         disciplines: [
             'Intelligence artificielle',

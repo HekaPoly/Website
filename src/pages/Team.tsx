@@ -82,7 +82,7 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
 
     return (
         <div
-            className={`fixed inset-0 z-[60] flex bg-heka transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}
+            className={`fixed inset-0 z-60 flex bg-heka transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}
             role='dialog'
             aria-modal='true'
             aria-label={`Détails de ${member.name}`}
@@ -90,7 +90,9 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
                 if (event.target === event.currentTarget) onClose();
             }}
         >
-            <div className={`flex h-full w-full flex-col overflow-y-auto transition-transform duration-500 lg:flex-row ${visible ? 'translate-x-0' : 'translate-x-full'}`}>
+            <div
+                className={`flex h-full w-full flex-col overflow-y-auto transition-transform duration-500 lg:flex-row ${visible ? 'translate-x-0' : 'translate-x-full'}`}
+            >
                 <div className='relative min-h-[42vh] shrink-0 bg-charcoal lg:min-h-0 lg:w-[43%]'>
                     {member.photo ? (
                         <img
@@ -140,7 +142,10 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
                         <div className='mt-7 space-y-1.5 text-sm sm:text-base'>
                             {member.program && <p>Programme : {member.program}</p>}
                             {member.email && (
-                                <a className='block transition-colors hover:text-heka-yellow' href={`mailto:${member.email}`}>
+                                <a
+                                    className='block transition-colors hover:text-heka-yellow'
+                                    href={`mailto:${member.email}`}
+                                >
                                     Courriel : {member.email}
                                 </a>
                             )}
@@ -170,8 +175,11 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
                         </div>
 
                         <div className='mt-12 border-t border-white/30 pt-6'>
-                            <p className='text-lg leading-relaxed sm:text-xl' style={{ fontFamily: 'var(--font-display)' }}>
-                                “{member.message || 'Un petit mot du membre sera bientôt ajouté.'}”
+                            <p
+                                className='text-lg leading-relaxed sm:text-xl'
+                                style={{ fontFamily: 'var(--font-display)' }}
+                            >
+                                {member.message ? `“${member.message}”` : ''}
                             </p>
                         </div>
                     </div>
@@ -257,7 +265,10 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]'
                                 >
-                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
+                                    <MemberCard
+                                        member={m}
+                                        onOpen={() => setSelectedMember(m)}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -288,7 +299,10 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
                                 >
-                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
+                                    <MemberCard
+                                        member={m}
+                                        onOpen={() => setSelectedMember(m)}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -319,7 +333,10 @@ export default function Team() {
                                     key={m.id}
                                     className='w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.667rem)]'
                                 >
-                                    <MemberCard member={m} onOpen={() => setSelectedMember(m)} />
+                                    <MemberCard
+                                        member={m}
+                                        onOpen={() => setSelectedMember(m)}
+                                    />
                                 </div>
                             ))}
                         </div>

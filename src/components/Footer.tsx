@@ -1,12 +1,15 @@
 import { navigation } from '../data/navigation';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
+import { navigationKey, useLocale } from '../i18n';
 
 interface FooterProps {
     navigate: (page: string) => void;
 }
 
 export default function Footer({ navigate }: FooterProps) {
+    const { t, translateData } = useLocale();
+    const localizedSite = translateData(site, 'site');
     const handleNav = (pageId: string) => {
         navigate(pageId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -27,7 +30,7 @@ export default function Footer({ navigate }: FooterProps) {
                             </div>
                             <span className='text-white font-semibold text-lg'>{site.name}</span>
                         </div>
-                        <p className='text-white/60 text-sm leading-relaxed max-w-xs mb-6'>{site.description}</p>
+                        <p className='text-white/60 text-sm leading-relaxed max-w-xs mb-6'>{localizedSite.description}</p>
                         <div className='flex items-center gap-3'>
                             <div className='flex items-center gap-2'>
                                 {site.socialMedia.linkedin && (
@@ -128,7 +131,7 @@ export default function Footer({ navigate }: FooterProps) {
                             className='text-white font-semibold text-sm uppercase tracking-widest mb-4'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Navigation
+                            {t('common.navigation')}
                         </h3>
                         <ul className='space-y-2.5'>
                             {navigation.map((link) => (
@@ -137,7 +140,7 @@ export default function Footer({ navigate }: FooterProps) {
                                         onClick={() => handleNav(link.pageId)}
                                         className='text-white/60 hover:text-white text-sm transition-colors'
                                     >
-                                        {link.label}
+                                        {t(navigationKey(link.pageId))}
                                     </button>
                                 </li>
                             ))}
@@ -149,7 +152,7 @@ export default function Footer({ navigate }: FooterProps) {
                             className='text-white font-semibold text-sm uppercase tracking-widest mb-4'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Contact
+                            {t('common.contact')}
                         </h3>
                         <ul className='space-y-2.5 text-sm text-white/60'>
                             <li>
@@ -167,7 +170,7 @@ export default function Footer({ navigate }: FooterProps) {
                                 onClick={() => handleNav('contact')}
                                 className='inline-flex items-center gap-2 text-sm font-semibold text-heka hover:text-[#6B93C4] transition-colors'
                             >
-                                Rejoindre Héka →
+                                {t('action.join')} →
                             </button>
                         </div>
                     </div>
@@ -178,14 +181,14 @@ export default function Footer({ navigate }: FooterProps) {
                         className='text-white/40 text-xs'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        © {new Date().getFullYear()} {site.name} — {site.organization}. Tous droits réservés.
+                        © {new Date().getFullYear()} {site.name} — {site.organization}. {t('common.allRightsReserved')}
                     </p>
                     <div className='flex items-center gap-6'>
                         <a
                             href='#'
                             className='text-white/40 hover:text-white/60 text-xs transition-colors'
                         >
-                            Politique de confidentialité
+                            {t('common.privacy')}
                         </a>
                         <a
                             href='https://www.polymtl.ca'

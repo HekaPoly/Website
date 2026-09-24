@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { navigation } from '../data/navigation';
 import { asset } from '../utils/assets';
+import { navigationKey, useLocale } from '../i18n';
 
 interface NavProps {
     current: string;
@@ -8,6 +9,7 @@ interface NavProps {
 }
 
 export default function Nav({ current, navigate }: NavProps) {
+    const { locale, toggleLocale, t } = useLocale();
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -54,24 +56,31 @@ export default function Nav({ current, navigate }: NavProps) {
                                         : 'text-muted hover:text-charcoal hover:bg-border'
                                 }`}
                             >
-                                {link.label}
+                                {t(navigationKey(link.pageId))}
                             </button>
                         ))}
                     </nav>
 
                     <div className='hidden lg:flex items-center gap-3'>
                         <button
+                            onClick={toggleLocale}
+                            className='px-3 py-2 rounded-lg text-xs font-semibold text-muted hover:text-charcoal hover:bg-border transition-colors'
+                            aria-label={locale === 'fr' ? 'Switch to English' : 'Passer au français'}
+                        >
+                            {locale === 'fr' ? 'EN' : 'FR'}
+                        </button>
+                        <button
                             onClick={() => handleNav('contact')}
                             className='px-4 py-2 rounded-lg text-sm font-semibold bg-heka-yellow text-charcoal hover:bg-[#e8b84e] transition-colors duration-200'
                         >
-                            Rejoindre Héka
+                            {t('action.join')}
                         </button>
                     </div>
 
                     <button
                         onClick={() => setMobileOpen(!mobileOpen)}
                         className='lg:hidden p-2 rounded-lg text-charcoal hover:bg-[#F2EEE8] transition-colors'
-                        aria-label='Menu'
+                        aria-label={t('common.menu')}
                     >
                         <div className='w-5 flex flex-col gap-1'>
                             <span
@@ -105,15 +114,21 @@ export default function Nav({ current, navigate }: NavProps) {
                                         : 'text-charcoal hover:text-white hover:bg-charcoal'
                                 }`}
                             >
-                                {link.label}
+                                {t(navigationKey(link.pageId))}
                             </button>
                         ))}
                         <div className='mt-4 pt-4 border-t border-border'>
                             <button
+                                onClick={toggleLocale}
+                                className='w-full px-4 py-3 rounded-xl text-base font-semibold text-charcoal hover:bg-border transition-colors'
+                            >
+                                {locale === 'fr' ? 'English' : 'Français'}
+                            </button>
+                            <button
                                 onClick={() => handleNav('contact')}
                                 className='w-full px-4 py-3 rounded-xl text-base font-semibold bg-heka-yellow text-charcoal hover:bg-[#e8b84e] transition-colors'
                             >
-                                Rejoindre Héka
+                                {t('action.join')}
                             </button>
                         </div>
                     </div>

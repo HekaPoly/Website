@@ -1,10 +1,12 @@
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 interface Props {
     navigate: (page: string) => void;
 }
 
 export default function ProjectBIRA({ navigate }: Props) {
+    const { t } = useLocale();
     const handleNav = (page: string) => {
         navigate(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -25,19 +27,19 @@ export default function ProjectBIRA({ navigate }: Props) {
                         onClick={() => handleNav('projets')}
                         className='inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-10 transition-colors'
                     >
-                        ← Retour aux projets
+                        {t('bira.back')}
                     </button>
                     <div
                         className='inline-block px-2.5 py-1 rounded-md bg-[#E8F0F7] text-[#1B4F72] text-xs font-medium mb-4'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        BIRA — Bras robotique intelligent d'assistance
+                        BIRA — {t('project.bira.category')}
                     </div>
                     <h1
                         className='text-4xl lg:text-6xl text-white leading-tight max-w-3xl'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Rendre l'assistance robotique plus intuitive.
+                        {t('bira.title')}
                     </h1>
                 </div>
             </section>
@@ -51,47 +53,33 @@ export default function ProjectBIRA({ navigate }: Props) {
                                 className='text-xs font-medium text-[#1B4F72] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                01 — Le problème
+                                01 — {t('project.problem')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                L'accessibilité des outils d'assistance.
+                                {t('bira.problemTitle')}
                             </h2>
                             <div className='space-y-4 text-[#7A7269] leading-relaxed text-sm'>
-                                <p>
-                                    Plusieurs millions de personnes vivent avec des limitations motrices qui rendent
-                                    difficiles ou impossibles certaines tâches physiques du quotidien : saisir un objet,
-                                    déplacer quelque chose, interagir avec leur environnement immédiat.
-                                </p>
-                                <p>
-                                    Les systèmes d'assistance robotique existants sont souvent coûteux, difficiles à
-                                    prendre en main et nécessitent un apprentissage technique important, ce qui freine
-                                    leur adoption dans la vie réelle.
-                                </p>
-                                <p>
-                                    L'enjeu n'est pas uniquement technique. C'est aussi un enjeu d'accessibilité : un
-                                    système d'assistance n'a de valeur que s'il peut être utilisé confortablement, de
-                                    façon autonome, par la personne qui en a besoin.
-                                </p>
+                                {[0, 1, 2].map((index) => <p key={index}>{t(`bira.problem.${index}`)}</p>)}
                             </div>
                         </div>
                         <div className='grid grid-cols-2 gap-4'>
                             {[
                                 {
                                     value: 'NLP',
-                                    label: "Traitement automatique du langage naturel pour l'interaction",
+                                    label: 'bira.stat.nlp',
                                 },
                                 {
                                     value: 'IA',
-                                    label: "Modèles d'apprentissage pour interpréter les commandes",
+                                    label: 'bira.stat.ai',
                                 },
                                 {
-                                    value: 'Temps réel',
-                                    label: "Objectif d'exécution des commandes",
+                                    value: t('common.realTime'),
+                                    label: 'bira.stat.realtime',
                                 },
-                                { value: '6 DOF', label: 'Degrés de liberté ciblés pour le bras' },
+                                { value: '6 DOF', label: 'bira.stat.dof' },
                             ].map((stat, i) => (
                                 <div
                                     key={i}
@@ -120,35 +108,25 @@ export default function ProjectBIRA({ navigate }: Props) {
                                 className='text-xs font-medium text-[#1B4F72] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                02 — La solution
+                                02 — {t('project.solution')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                BIRA — Un bras robotique qui comprend le langage naturel.
+                                {t('bira.solutionTitle')}
                             </h2>
                             <div className='space-y-4 text-[#7A7269] leading-relaxed text-sm'>
-                                <p>
-                                    BIRA est un bras robotique intelligent conçu pour interpréter des commandes
-                                    exprimées en langage naturel. Plutôt que de forcer l'utilisateur à apprendre un
-                                    langage de commande rigide, BIRA s'adapte à la façon naturelle de communiquer.
-                                </p>
-                                <p>
-                                    Le système intègre un module de traitement du langage naturel (NLP) couplé à un
-                                    modèle d'IA capable d'interpréter les intentions de l'utilisateur et de les traduire
-                                    en actions du bras robotique.
-                                </p>
+                                <p>{t('bira.solution.0')}</p>
+                                <p>{t('bira.solution.1')}</p>
                                 <p>
                                     <strong className='text-[#111110]'>
-                                        Ce qui est actuellement en développement :
+                                        {t('bira.inDevelopment')}
                                     </strong>{' '}
-                                    le module d'interprétation des commandes vocales, le système de contrôle du bras et
-                                    l'interface de retour visuel à l'utilisateur.
+                                    {t('bira.solution.2')}
                                 </p>
                                 <p className='italic text-xs'>
-                                    Note : Les capacités cliniques et les applications thérapeutiques de BIRA n'ont pas
-                                    encore été validées. Le projet est actuellement en phase de développement.
+                                    {t('bira.note')}
                                 </p>
                             </div>
                         </div>
@@ -170,31 +148,31 @@ export default function ProjectBIRA({ navigate }: Props) {
                             className='text-xs font-medium text-[#1B4F72] uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            03 — Architecture du système
+                            03 — {t('bira.architecture')}
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-[#111110]'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Comment fonctionne BIRA?
+                            {t('bira.architectureTitle')}
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-3 gap-6'>
                         {[
                             {
                                 step: '01',
-                                title: 'Entrée utilisateur',
-                                desc: 'L\'utilisateur formule une commande vocale ou textuelle en langage naturel ("Passe-moi le verre sur la table à droite").',
+                                title: 'bira.arch.user',
+                                desc: 'bira.arch.userDesc',
                             },
                             {
                                 step: '02',
-                                title: 'Interprétation IA',
-                                desc: "Le module NLP analyse la commande, en extrait l'intention et les paramètres clés (objet, direction, action) et génère une instruction structurée.",
+                                title: 'bira.arch.ai',
+                                desc: 'bira.arch.aiDesc',
                             },
                             {
                                 step: '03',
-                                title: 'Exécution robotique',
-                                desc: "Le système de contrôle traduit l'instruction en mouvements du bras robotique, avec vérification de sécurité à chaque étape.",
+                                title: 'bira.arch.robot',
+                                desc: 'bira.arch.robotDesc',
                             },
                         ].map((item) => (
                             <div
@@ -207,8 +185,8 @@ export default function ProjectBIRA({ navigate }: Props) {
                                 >
                                     {item.step}
                                 </div>
-                                <h3 className='text-lg font-semibold text-[#111110] mb-3'>{item.title}</h3>
-                                <p className='text-sm text-[#7A7269] leading-relaxed'>{item.desc}</p>
+                                <h3 className='text-lg font-semibold text-[#111110] mb-3'>{t(item.title)}</h3>
+                                <p className='text-sm text-[#7A7269] leading-relaxed'>{t(item.desc)}</p>
                             </div>
                         ))}
                     </div>
@@ -224,13 +202,13 @@ export default function ProjectBIRA({ navigate }: Props) {
                                 className='text-xs font-medium text-[#1B4F72] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                04 — Disciplines mobilisées
+                                04 — {t('bira.disciplines')}
                             </span>
                             <h2
                                 className='text-2xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                À la croisée de plusieurs expertises.
+                                {t('bira.disciplinesTitle')}
                             </h2>
                             <div className='flex flex-wrap gap-2'>
                                 {[
@@ -242,12 +220,12 @@ export default function ProjectBIRA({ navigate }: Props) {
                                     'Systèmes embarqués',
                                     'Interface utilisateur',
                                     'Conception biomédicale',
-                                ].map((d) => (
+                                ].map((d, index) => (
                                     <span
                                         key={d}
                                         className='px-3 py-1.5 rounded-lg text-xs font-medium text-[#1B4F72] bg-[#E8F0F7] border border-[#A8C5DC]'
                                     >
-                                        {d}
+                                        {t(`bira.discipline.${index}`)}
                                     </span>
                                 ))}
                             </div>
@@ -258,30 +236,30 @@ export default function ProjectBIRA({ navigate }: Props) {
                                 className='text-xs font-medium text-[#1B4F72] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                05 — État du développement
+                                05 — {t('bira.development')}
                             </span>
                             <h2
                                 className='text-2xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Où en sommes-nous?
+                                {t('bira.developmentTitle')}
                             </h2>
                             <div className='space-y-3'>
                                 {[
-                                    { label: 'Définition du problème', status: 'Complété' },
-                                    { label: 'Revue de littérature', status: 'Complété' },
-                                    { label: 'Architecture du système', status: 'Complété' },
-                                    { label: 'Module NLP — prototype', status: 'En cours' },
-                                    { label: 'Contrôle du bras robotique', status: 'En cours' },
-                                    { label: 'Intégration des modules', status: 'À venir' },
-                                    { label: 'Tests fonctionnels', status: 'À venir' },
-                                    { label: 'Présentation en compétition', status: 'À venir' },
+                                    { label: 'bira.status.problem', status: 'Complété' },
+                                    { label: 'bira.status.literature', status: 'Complété' },
+                                    { label: 'bira.status.architecture', status: 'Complété' },
+                                    { label: 'bira.status.nlp', status: 'En cours' },
+                                    { label: 'bira.status.control', status: 'En cours' },
+                                    { label: 'bira.status.integration', status: 'À venir' },
+                                    { label: 'bira.status.tests', status: 'À venir' },
+                                    { label: 'bira.status.competition', status: 'À venir' },
                                 ].map((step) => (
                                     <div
                                         key={step.label}
                                         className='flex items-center justify-between py-3 border-b border-[#E2DDD5] last:border-0'
                                     >
-                                        <span className='text-sm text-[#111110]'>{step.label}</span>
+                                        <span className='text-sm text-[#111110]'>{t(step.label)}</span>
                                         <span
                                             className={`text-xs font-medium px-2.5 py-1 rounded-md ${
                                                 step.status === 'Complété'
@@ -292,7 +270,7 @@ export default function ProjectBIRA({ navigate }: Props) {
                                             }`}
                                             style={{ fontFamily: 'var(--font-mono)' }}
                                         >
-                                            {step.status}
+                                            {t(step.status === 'Complété' ? 'status.completed' : step.status === 'En cours' ? 'status.current' : 'status.upcoming')}
                                         </span>
                                     </div>
                                 ))}
@@ -309,16 +287,16 @@ export default function ProjectBIRA({ navigate }: Props) {
                         className='text-2xl lg:text-3xl text-[#111110] mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Rejoindre l'équipe BIRA?
+                        {t('bira.joinTitle')}
                     </h2>
                     <p className='text-[#7A7269] mb-8 text-sm'>
-                        Nous cherchons des étudiants en génie logiciel, électrique et en intelligence artificielle.
+                        {t('bira.joinText')}
                     </p>
                     <button
                         onClick={() => handleNav('contact')}
                         className='px-6 py-3.5 rounded-xl bg-[#1B4F72] text-white font-semibold text-sm hover:bg-[#163F5C] transition-colors'
                     >
-                        Soumettre ma candidature
+                        {t('common.apply')}
                     </button>
                 </div>
             </section>

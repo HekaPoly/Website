@@ -1,16 +1,14 @@
 import { asset } from '../utils/assets';
 import { currentProjects } from '../data/projects';
+import { useLocale } from '../i18n';
 
 interface Props {
     navigate: (page: string) => void;
 }
 
-// Tout le contenu de cette page provient de src/data/projects.ts (projet "podi").
-// Pour modifier les textes, les statistiques, les disciplines ou l'état du
-// developpement, editez ce fichier de donnees — pas cette page.
-const project = currentProjects.find((p) => p.slug === 'podi');
-
 export default function ProjectPODI({ navigate }: Props) {
+    const { t, translateData } = useLocale();
+    const project = translateData(currentProjects, 'project').find((p) => p.slug === 'podi');
     const handleNav = (page: string) => {
         navigate(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -38,7 +36,7 @@ export default function ProjectPODI({ navigate }: Props) {
                         onClick={() => handleNav('projets')}
                         className='inline-flex items-center gap-2 text-white/60 hover:text-white text-sm mb-10 transition-colors'
                     >
-                        ← Retour aux projets
+                        {t('project.back')}
                     </button>
                     <div
                         className='inline-block px-2.5 py-1 rounded-md bg-[#FEF0EF] text-[#C8281A] text-xs font-medium mb-4'
@@ -64,13 +62,13 @@ export default function ProjectPODI({ navigate }: Props) {
                                 className='text-xs font-medium text-[#C8281A] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                01 — Le problème
+                                01 — {t('project.problem')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Un métier physiquement éprouvant.
+                                {t('project.problemPodiTitle')}
                             </h2>
                             <div className='space-y-4 text-[#7A7269] leading-relaxed text-sm'>
                                 {(project.problemBody ?? [project.problem]).map((paragraph, i) => (
@@ -150,7 +148,7 @@ export default function ProjectPODI({ navigate }: Props) {
                             className='text-3xl lg:text-4xl mt-3 text-[#111110]'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Ce que {project.name} doit accomplir.
+                            {t('project.podiObjectiveTitle')}
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -184,13 +182,13 @@ export default function ProjectPODI({ navigate }: Props) {
                                 className='text-xs font-medium text-[#C8281A] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                04 — Disciplines mobilisées
+                                04 — {t('project.disciplines')}
                             </span>
                             <h2
                                 className='text-2xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Une équipe pluridisciplinaire.
+                                {t('project.multidisciplinary')}
                             </h2>
                             <div className='flex flex-wrap gap-2'>
                                 {project.disciplines.map((d) => (
@@ -209,13 +207,13 @@ export default function ProjectPODI({ navigate }: Props) {
                                 className='text-xs font-medium text-[#C8281A] uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                05 — État du développement
+                                05 — {t('project.development')}
                             </span>
                             <h2
                                 className='text-2xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Où en sommes-nous?
+                                {t('project.roadmapTitle')}
                             </h2>
                             <div className='space-y-3'>
                                 {roadmap.map((step) => (
@@ -258,12 +256,12 @@ export default function ProjectPODI({ navigate }: Props) {
                             className='text-2xl mt-3 mb-8 text-[#111110]'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Sur quoi l'équipe travaille.
+                                {t('project.currentHeading')}
                         </h2>
                         <div className='grid md:grid-cols-2 gap-5'>
                             {[
-                                { heading: 'En ce moment', items: project.currentWork ?? [] },
-                                { heading: 'Prochaines étapes', items: project.nextSteps ?? [] },
+                                { heading: t('project.current'), items: project.currentWork ?? [] },
+                                { heading: t('project.next'), items: project.nextSteps ?? [] },
                             ]
                                 .filter((block) => block.items.length > 0)
                                 .map((block) => (
@@ -297,13 +295,13 @@ export default function ProjectPODI({ navigate }: Props) {
                         className='text-xs font-medium text-[#7A7269] uppercase tracking-widest'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        07 — Galerie
+                        07 — {t('project.gallery')}
                     </span>
                     <h2
                         className='text-2xl mt-3 mb-8 text-[#111110]'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Prototype en images.
+                        {t('project.prototype')}
                     </h2>
                     <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
                         {gallery.length > 0
@@ -321,7 +319,7 @@ export default function ProjectPODI({ navigate }: Props) {
                                       style={{ fontFamily: 'var(--font-mono)' }}
                                   >
                                       Photo prototype
-                                      <br />à venir
+                                      <br />{t('project.photoComing').split('\n')[1]}
                                   </div>
                               ))}
                     </div>
@@ -335,10 +333,10 @@ export default function ProjectPODI({ navigate }: Props) {
                         className='text-2xl lg:text-3xl text-[#111110] mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Rejoindre l'équipe {project.name}?
+                        {t('project.joinTitle')} {project.name}?
                     </h2>
                     <p className='text-[#7A7269] mb-8 text-sm'>
-                        Nous cherchons des étudiants en génie mécanique, industriel et biomécanique.
+                        {t('project.joinText')}
                     </p>
                     <button
                         onClick={() => handleNav('contact')}

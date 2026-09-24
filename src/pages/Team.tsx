@@ -3,8 +3,11 @@ import { getTeamMembersByGroup, getMemberInitials } from '../utils/content';
 import type { TeamMember } from '../types/content';
 import { useEffect, useState } from 'react';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 function MemberCard({ member, onOpen }: { member: TeamMember; onOpen: () => void }) {
+    const { translateData } = useLocale();
+    const localizedMember = translateData(member, 'member');
     const initials = member.photo ? null : getMemberInitials(member.name);
 
     return (
@@ -38,11 +41,11 @@ function MemberCard({ member, onOpen }: { member: TeamMember; onOpen: () => void
                 >
                     {member.name}
                 </h3>
-                <p className='text-sm text-white/90'>{member.role}</p>
+                <p className='text-sm text-white/90'>{localizedMember.role}</p>
                 <div className='mt-3 flex flex-wrap gap-2'>
-                    {member.program && member.program !== 'À confirmer' && (
+                    {localizedMember.program && localizedMember.program !== 'À confirmer' && (
                         <span className='rounded-full bg-white/15 px-2 py-1 text-[11px] backdrop-blur-sm'>
-                            {member.program}
+                            {localizedMember.program}
                         </span>
                     )}
                     {member.project && (
@@ -63,6 +66,7 @@ function MemberCard({ member, onOpen }: { member: TeamMember; onOpen: () => void
 }
 
 function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => void }) {
+    const { t } = useLocale();
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -85,7 +89,7 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
             className={`fixed inset-0 z-60 flex bg-heka transition-opacity duration-500 ${visible ? 'opacity-100' : 'opacity-0'}`}
             role='dialog'
             aria-modal='true'
-            aria-label={`Détails de ${member.name}`}
+                            aria-label={`${t('team.details')} ${member.name}`}
             onMouseDown={(event) => {
                 if (event.target === event.currentTarget) onClose();
             }}
@@ -118,7 +122,7 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
                         type='button'
                         onClick={onClose}
                         className='absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full bg-white text-3xl font-light leading-none text-heka transition-transform hover:scale-105 sm:right-8 sm:top-8'
-                        aria-label='Fermer les détails'
+                        aria-label={t('team.close')}
                     >
                         ×
                     </button>
@@ -140,13 +144,13 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
                         <p className='mt-4 text-base font-semibold leading-relaxed sm:text-lg'>{member.role}</p>
 
                         <div className='mt-7 space-y-1.5 text-sm sm:text-base'>
-                            {member.program && <p>Programme : {member.program}</p>}
+                            {member.program && <p>{t('team.program')} : {member.program}</p>}
                             {member.email && (
                                 <a
                                     className='block transition-colors hover:text-heka-yellow'
                                     href={`mailto:${member.email}`}
                                 >
-                                    Courriel : {member.email}
+                                    {t('team.email')} : {member.email}
                                 </a>
                             )}
                         </div>
@@ -190,8 +194,10 @@ function MemberModal({ member, onClose }: { member: TeamMember; onClose: () => v
 }
 
 export default function Team() {
+    const { t, translateData } = useLocale();
+    const localizedTeam = translateData(team, 'member');
     const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
-    const exec = getTeamMembersByGroup('direction').sort((a, b) => {
+    const exec = translateData(getTeamMembersByGroup('direction'), 'member').sort((a, b) => {
         const aIsDirecteur = a.id.includes('directeur');
         const bIsDirecteur = b.id.includes('directeur');
 
@@ -199,8 +205,8 @@ export default function Team() {
 
         return aIsDirecteur ? -1 : 1;
     });
-    const podi = getTeamMembersByGroup('podi');
-    const bira = getTeamMembersByGroup('bira');
+    const podi = translateData(getTeamMembersByGroup('podi'), 'member');
+    const bira = translateData(getTeamMembersByGroup('bira'), 'member');
 
     return (
         <div className='pt-16'>
@@ -224,19 +230,18 @@ export default function Team() {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Équipe
+                            {t('nav.team')}
                         </span>
 
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Des étudiants de toutes les disciplines.
+                            {t('team.heroTitle')}
                         </h1>
 
                         <p className='text-white/80 leading-relaxed max-w-xl'>
-                            Héka réunit des membres issus du génie mécanique, logiciel, électrique, biomédical,
-                            logiciel, physique, médecine et plus encore autour de projets concrets.
+                            {t('team.heroText')}
                         </p>
                     </div>
                 </div>
@@ -250,13 +255,13 @@ export default function Team() {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Conseil exécutif
+                                {t('team.executive')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-2 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Direction de l'organisation
+                                {t('team.leadership')}
                             </h2>
                         </div>
                         <div className='flex flex-wrap justify-center gap-4'>
@@ -284,13 +289,13 @@ export default function Team() {
                                 className='text-xs font-medium text-podi uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Équipe PODI
+                                {t('team.podiLabel')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-2 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Exosquelette d'assistance
+                                {t('team.podiTitle')}
                             </h2>
                         </div>
                         <div className='flex flex-wrap justify-center gap-4'>
@@ -318,13 +323,13 @@ export default function Team() {
                                 className='text-xs font-medium text-bira uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Équipe BIRA
+                                {t('team.biraLabel')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-2 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Bras robotique intelligent
+                                {t('team.biraTitle')}
                             </h2>
                         </div>
                         <div className='flex flex-wrap justify-center gap-4'>
@@ -344,14 +349,14 @@ export default function Team() {
                 </section>
             )}
 
-            {team.length === 0 && (
+            {localizedTeam.length === 0 && (
                 <section className='py-20 bg-white'>
                     <div className='max-w-7xl mx-auto px-6 lg:px-10 text-center'>
                         <p
                             className='text-[#C8C3BB]'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Ajoutez les membres de l'équipe dans src/data/team.ts.
+                            {t('team.empty')}
                         </p>
                     </div>
                 </section>

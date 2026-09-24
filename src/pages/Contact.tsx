@@ -3,8 +3,11 @@ import EmbeddedMicrosoftForm from '../components/EmbeddedMicrosoftForm';
 import { microsoftFormUrls } from '../data/forms';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 export default function Contact() {
+    const { t, translateData } = useLocale();
+    const localizedSite = translateData(site, 'site');
     const [tab, setTab] = useState<'recrutement' | 'general'>('recrutement');
 
     return (
@@ -24,17 +27,16 @@ export default function Contact() {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Nous joindre
+                            {t('nav.contact')}
                         </span>
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Travaillons ensemble.
+                            {t('contact.heroTitle')}
                         </h1>
                         <p className='text-white/80 leading-relaxed max-w-xl'>
-                            Vous souhaitez rejoindre Héka ou simplement prendre contact? Choisissez la bonne section
-                            ci-dessous.
+                            {t('contact.heroText')}
                         </p>
                     </div>
                 </div>
@@ -47,13 +49,13 @@ export default function Contact() {
                             onClick={() => setTab('recrutement')}
                             className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'recrutement' ? 'bg-white text-charcoal shadow-sm' : 'text-muted hover:text-charcoal'}`}
                         >
-                            Recrutement
+                            {t('contact.recruitment')}
                         </button>
                         <button
                             onClick={() => setTab('general')}
                             className={`px-6 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === 'general' ? 'bg-white text-charcoal shadow-sm' : 'text-muted hover:text-charcoal'}`}
                         >
-                            Contact général
+                            {t('contact.general')}
                         </button>
                     </div>
 
@@ -64,11 +66,10 @@ export default function Contact() {
                                     className='text-2xl lg:text-3xl text-charcoal mb-4'
                                     style={{ fontFamily: 'var(--font-display)' }}
                                 >
-                                    Rejoindre Héka.
+                                    {t('contact.joinTitle')}
                                 </h2>
                                 <p className='text-muted text-sm leading-relaxed mb-6'>
-                                    Nous cherchons des étudiants motivés, rigoureux et prêts à travailler en équipe sur
-                                    des projets qui ont un impact réel.
+                                    {t('contact.joinText')}
                                 </p>
                                 <div className='space-y-3'>
                                     {[
@@ -77,7 +78,7 @@ export default function Contact() {
                                         'Compétitions interuniversitaires',
                                         'Réseautage avec des partenaires industriels',
                                         'Responsabilités dès la première session',
-                                    ].map((item) => (
+                                    ].map((item, index) => (
                                         <div
                                             key={item}
                                             className='flex items-center gap-3 text-sm text-muted'
@@ -85,7 +86,7 @@ export default function Contact() {
                                             <span className='w-4 h-4 rounded-full bg-heka-light flex items-center justify-center shrink-0'>
                                                 <span className='w-1.5 h-1.5 rounded-full bg-heka' />
                                             </span>
-                                            {item}
+                                            {t(`contact.benefit.${index}`)}
                                         </div>
                                     ))}
                                 </div>
@@ -94,19 +95,19 @@ export default function Contact() {
                                         className='text-xs font-medium text-heka mb-2'
                                         style={{ fontFamily: 'var(--font-mono)' }}
                                     >
-                                        Contact recrutement
+                                        {t('contact.recruitmentContact')}
                                     </div>
                                     <a
                                         href={`mailto:${site.emailRecruitment}`}
                                         className='text-sm text-heka hover:underline'
                                     >
-                                        {site.emailRecruitment}
+                                        {localizedSite.emailRecruitment}
                                     </a>
                                 </div>
                             </div>
                             <EmbeddedMicrosoftForm
                                 src={microsoftFormUrls.recruitment}
-                                title='Formulaire de recrutement Héka'
+                                title={t('forms.recruitmentTitle')}
                                 heightClassName='h-[1100px] lg:h-[1200px]'
                             />
                         </div>
@@ -117,11 +118,10 @@ export default function Contact() {
                                     className='text-2xl lg:text-3xl text-charcoal mb-4'
                                     style={{ fontFamily: 'var(--font-display)' }}
                                 >
-                                    Prendre contact.
+                                    {t('contact.generalTitle')}
                                 </h2>
                                 <p className='text-muted text-sm leading-relaxed mb-8'>
-                                    Pour toute question, demande de collaboration, de partenariat ou de couverture
-                                    médiatique.
+                                    {t('contact.generalText')}
                                 </p>
                                 <div className='space-y-4'>
                                     <div className='flex items-center gap-3'>
@@ -144,7 +144,7 @@ export default function Contact() {
                                             href={`mailto:${site.email}`}
                                             className='text-sm text-heka hover:underline'
                                         >
-                                            {site.email}
+                                            {localizedSite.email}
                                         </a>
                                     </div>
                                     <div className='flex items-start gap-3'>
@@ -169,14 +169,14 @@ export default function Contact() {
                                             </svg>
                                         </div>
                                         <span className='text-sm text-muted leading-relaxed whitespace-pre-line'>
-                                            {site.address}
+                                            {localizedSite.address}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                             <EmbeddedMicrosoftForm
                                 src={microsoftFormUrls.generalContact}
-                                title='Formulaire de contact général Héka'
+                                title={t('forms.generalTitle')}
                                 heightClassName='h-[800px] lg:h-[900px]'
                             />
                         </div>

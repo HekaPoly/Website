@@ -34,6 +34,50 @@ export default function Partners() {
                             Nous collaborons avec des entreprises, des organismes et des chercheurs qui partagent notre
                             volonté de développer des technologies utiles, responsables et accessibles.
                         </p>
+                        <div className='flex flex-wrap justify-start gap-3 mt-8'>
+                            <a
+                                href={asset('public/documents/HEKA_2026-2027.pdf')}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='inline-flex items-center gap-2 rounded-lg bg-heka-yellow px-5 py-3 text-sm font-semibold text-charcoal shadow-lg hover:bg-[#f6d27e] transition-colors'
+                            >
+                                <svg
+                                    className='w-4 h-4'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    strokeWidth='2'
+                                    viewBox='0 0 24 24'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
+                                    />
+                                </svg>
+                                Présentation Héka (FR)
+                            </a>
+                            <a
+                                href={asset('public/documents/HEKA_2026-2027_EN.pdf')}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='inline-flex items-center gap-2 rounded-lg border border-white/70 bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/20 transition-colors'
+                            >
+                                <svg
+                                    className='w-4 h-4'
+                                    fill='none'
+                                    stroke='currentColor'
+                                    strokeWidth='2'
+                                    viewBox='0 0 24 24'
+                                >
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
+                                    />
+                                </svg>
+                                Présentation Héka (EN)
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -91,50 +135,6 @@ export default function Partners() {
                         >
                             Ils soutiennent Héka.
                         </h2>
-                        <div className='flex flex-wrap gap-3 mt-6'>
-                            <a
-                                href={asset('public/documents/HEKA_2026-2027.pdf')}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className='inline-flex items-center gap-2 rounded-lg bg-heka px-4 py-2.5 text-xs font-medium text-white hover:bg-[#345883] transition-colors'
-                            >
-                                <svg
-                                    className='w-4 h-4'
-                                    fill='none'
-                                    stroke='currentColor'
-                                    strokeWidth='2'
-                                    viewBox='0 0 24 24'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
-                                    />
-                                </svg>
-                                Présentation Héka (FR)
-                            </a>
-                            <a
-                                href={asset('public/documents/HEKA_2026-2027_EN.pdf')}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                className='inline-flex items-center gap-2 rounded-lg border border-heka text-heka px-4 py-2.5 text-xs font-medium hover:bg-heka-light transition-colors'
-                            >
-                                <svg
-                                    className='w-4 h-4'
-                                    fill='none'
-                                    stroke='currentColor'
-                                    strokeWidth='2'
-                                    viewBox='0 0 24 24'
-                                >
-                                    <path
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
-                                        d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
-                                    />
-                                </svg>
-                                Présentation Héka (EN)
-                            </a>
-                        </div>
                     </div>
                     {partners.length > 0 ? (
                         <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>

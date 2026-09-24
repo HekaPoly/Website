@@ -57,7 +57,7 @@ export const site: SiteConfiguration = {
     ],
 
     statistics: [
-        { value: '30+', label: 'Membres actifs' },
+        { value: '100+', label: 'Membres actifs' },
         { value: '5+', label: 'Disciplines représentées' },
         { value: '2', label: 'Projets actifs' },
         { value: '3+', label: 'Prototypes réalisés' },

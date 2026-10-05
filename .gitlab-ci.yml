@@ -8,6 +8,8 @@ create-pages:
   script:
     - npm ci
     - npm run build
+    - du -sh dist
+    - du -ah dist | sort -rh | head -20
 
   pages:
     publish: dist

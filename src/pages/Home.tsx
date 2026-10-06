@@ -10,6 +10,7 @@ import {
     getProjectBadgeStyle,
     ACHIEVEMENT_TYPE_LABELS,
 } from '../utils/content';
+import { useLocale } from '../i18n';
 
 interface HomeProps {
     navigate: (page: string) => void;
@@ -87,12 +88,15 @@ const PROJECT_THEME = {
     },
 };
 export default function Home({ navigate }: HomeProps) {
+    const { t, translateData } = useLocale();
+    const localizedSite = translateData(site, 'site');
+    const localizedProjects = translateData(currentProjects, 'project');
+    const localizedPartners = translateData(partners, 'partner');
+    const recentAchievements = translateData(getLatestAchievements(3), 'achievement');
     const handleNav = (page: string) => {
         navigate(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-
-    const recentAchievements = getLatestAchievements(3);
 
     return (
         <div>
@@ -128,7 +132,7 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-white/90'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Société technique — {site.organization}
+                                {t('common.technicalSociety')} — {localizedSite.organization}
                             </span>
                         </div>
 
@@ -136,11 +140,11 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] leading-[1.02] tracking-tight text-white mb-7 font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            {site.tagline}
+                            {localizedSite.tagline}
                         </h1>
 
                         <p className='text-base sm:text-lg lg:text-xl text-white/80 leading-relaxed mb-10 max-w-2xl'>
-                            {site.description}
+                            {localizedSite.description}
                         </p>
 
                         <div className='flex flex-col sm:flex-row gap-3'>
@@ -148,14 +152,14 @@ export default function Home({ navigate }: HomeProps) {
                                 onClick={() => handleNav('projets')}
                                 className='px-7 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] hover:-translate-y-0.5 transition-all'
                             >
-                                Découvrir nos projets
+                                {t('action.discoverProjects')}
                             </button>
 
                             <button
                                 onClick={() => handleNav('contact')}
                                 className='px-7 py-3.5 rounded-xl bg-white text-charcoal font-semibold text-sm hover:bg-white/90 hover:-translate-y-0.5 transition-all'
                             >
-                                Rejoindre Héka
+                                {t('action.join')}
                             </button>
                         </div>
 
@@ -163,8 +167,8 @@ export default function Home({ navigate }: HomeProps) {
                             onClick={() => handleNav('partenaires')}
                             className='mt-7 text-sm text-white/65 hover:text-white transition-colors'
                         >
-                            Vous êtes une organisation ?{' '}
-                            <span className='underline underline-offset-4'>Collaborer avec nous</span>
+                            {t('action.organizationPrompt')}{' '}
+                            <span className='underline underline-offset-4'>{t('action.workWithUs')}</span>
                         </button>
                     </div>
                 </div>
@@ -178,18 +182,18 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Les défis auxquels nous répondons
+                            {t('home.challenges.label')}
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-charcoal'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Deux problèmes humains concrets. Deux équipes en action.
+                            {t('home.challenges.title')}
                         </h2>
                     </div>
                     <div className='grid lg:grid-cols-2 gap-8'>
-                        {currentProjects.map((project) => {
-                            const t = PROJECT_THEME[project.theme] ?? PROJECT_THEME.default;
+                        {localizedProjects.map((project) => {
+                            const theme = PROJECT_THEME[project.theme] ?? PROJECT_THEME.default;
                             return (
                                 <div
                                     key={project.slug}
@@ -198,7 +202,7 @@ export default function Home({ navigate }: HomeProps) {
                                     <div
                                         className='h-56 bg-cover bg-center'
                                         style={{
-                                            backgroundColor: t.accent,
+                                            backgroundColor: theme.accent,
                                             backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     >
@@ -211,8 +215,8 @@ export default function Home({ navigate }: HomeProps) {
                                         <div
                                             className='inline-block px-2.5 py-1 rounded-md text-xs font-medium mb-4'
                                             style={{
-                                                backgroundColor: t.accentBg,
-                                                color: t.accent,
+                                                backgroundColor: theme.accentBg,
+                                                color: theme.accent,
                                                 fontFamily: 'var(--font-mono)',
                                             }}
                                         >
@@ -226,9 +230,9 @@ export default function Home({ navigate }: HomeProps) {
                                             <button
                                                 onClick={() => handleNav(`projet-${project.slug}`)}
                                                 className='inline-flex items-center gap-2 text-sm font-semibold hover:gap-3 transition-all'
-                                                style={{ color: t.accent }}
+                                                style={{ color: theme.accent }}
                                             >
-                                                Découvrir le projet →
+                                                {t('home.discoverProject')}
                                             </button>
                                         )}
                                     </div>
@@ -247,17 +251,17 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-xs font-medium text-white/40 uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Notre mission
+                            {t('home.mission')}
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-white'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            {site.mission.map((p) => p.title).join('. ')}.
+                            {localizedSite.mission.map((p) => p.title).join('. ')}.
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-3 gap-6'>
-                        {site.mission.map((pillar, i) => (
+                        {localizedSite.mission.map((pillar, i) => (
                             <div
                                 key={i}
                                 className='p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/8 transition-colors'
@@ -290,21 +294,20 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Notre approche
+                                {t('home.approach')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Une démarche d'ingénierie rigoureuse.
+                                {t('home.approachTitle')}
                             </h2>
                             <p className='text-muted leading-relaxed'>
-                                Nos projets ne sont pas de simples concepts. Chaque solution passe par un processus
-                                structuré, de la compréhension du problème réel jusqu'à la validation auprès d'experts.
+                                {t('home.approachText')}
                             </p>
                         </div>
                         <div className='space-y-0'>
-                            {site.processSteps.map((step, i) => (
+                            {localizedSite.processSteps.map((step, i) => (
                                 <div
                                     key={i}
                                     className='flex gap-5 group'
@@ -318,7 +321,7 @@ export default function Home({ navigate }: HomeProps) {
                                                 {String(i + 1).padStart(2, '0')}
                                             </span>
                                         </div>
-                                        {i < site.processSteps.length - 1 && (
+                                        {i < localizedSite.processSteps.length - 1 && (
                                             <div className='w-px flex-1 bg-border my-1 min-h-8' />
                                         )}
                                     </div>
@@ -338,7 +341,7 @@ export default function Home({ navigate }: HomeProps) {
             <section className='py-20 bg-heka-light'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10'>
                     <div className='grid grid-cols-2 lg:grid-cols-4 gap-10'>
-                        {site.statistics.map((stat, i) => (
+                        {localizedSite.statistics.map((stat, i) => (
                             <StatCard
                                 key={i}
                                 raw={stat.value}
@@ -358,25 +361,25 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Projets vedettes
+                                {t('home.featured.label')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Ce que nous construisons.
+                                {t('home.featured.title')}
                             </h2>
                         </div>
                         <button
                             onClick={() => handleNav('projets')}
                             className='text-sm font-medium text-heka hover:text-[#2D5585] transition-colors shrink-0'
                         >
-                            Voir tous les projets →
+                            {t('home.featured.all')}
                         </button>
                     </div>
                     <div className='grid lg:grid-cols-2 gap-8'>
-                        {currentProjects.map((project) => {
-                            const t = PROJECT_THEME[project.theme] ?? PROJECT_THEME.default;
+                        {localizedProjects.map((project) => {
+                            const theme = PROJECT_THEME[project.theme] ?? PROJECT_THEME.default;
                             return (
                                 <div
                                     key={project.slug}
@@ -385,7 +388,7 @@ export default function Home({ navigate }: HomeProps) {
                                     <div
                                         className='h-52 bg-cover bg-center'
                                         style={{
-                                            backgroundColor: t.accentBg,
+                                            backgroundColor: theme.accentBg,
                                             backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
@@ -394,9 +397,9 @@ export default function Home({ navigate }: HomeProps) {
                                             <span
                                                 className='px-2.5 py-1 rounded-md text-xs font-medium border'
                                                 style={{
-                                                    backgroundColor: t.accentBg,
-                                                    color: t.accent,
-                                                    borderColor: t.accentBorder,
+                                                    backgroundColor: theme.accentBg,
+                                                    color: theme.accent,
+                                                    borderColor: theme.accentBorder,
                                                     fontFamily: 'var(--font-mono)',
                                                 }}
                                             >
@@ -430,9 +433,9 @@ export default function Home({ navigate }: HomeProps) {
                                         <button
                                             onClick={() => handleNav(`projet-${project.slug}`)}
                                             className='text-sm font-semibold hover:opacity-75 transition-opacity'
-                                            style={{ color: t.accent }}
+                                            style={{ color: theme.accent }}
                                         >
-                                            Voir le projet →
+                                            {t('home.viewProject')}
                                         </button>
                                         )}
                                     </div>
@@ -453,20 +456,20 @@ export default function Home({ navigate }: HomeProps) {
                                     className='text-xs font-medium text-muted uppercase tracking-widest'
                                     style={{ fontFamily: 'var(--font-mono)' }}
                                 >
-                                    Réalisations récentes
+                                    {t('home.recent.label')}
                                 </span>
                                 <h2
                                     className='text-3xl lg:text-4xl mt-3 text-charcoal'
                                     style={{ fontFamily: 'var(--font-display)' }}
                                 >
-                                    Notre parcours jusqu'ici.
+                                    {t('home.recent.title')}
                                 </h2>
                             </div>
                             <button
                                 onClick={() => handleNav('realisations')}
                                 className='text-sm font-medium text-heka hover:text-[#2D5585] transition-colors shrink-0'
                             >
-                                Toutes les réalisations →
+                                {t('home.recent.all')}
                             </button>
                         </div>
                         <div className='space-y-4'>
@@ -527,21 +530,19 @@ export default function Home({ navigate }: HomeProps) {
                                 className='text-xs font-medium text-white/60 uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Rejoindre Héka
+                                {t('home.recruitment.label')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-white'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Construis la prochaine version de Héka.
+                                {t('home.recruitment.title')}
                             </h2>
                             <p className='text-white/80 leading-relaxed mb-8'>
-                                Que tu sois en génie mécanique, électrique, logiciel ou dans une autre discipline, Héka
-                                t'offre l'opportunité de travailler sur de vrais prototypes et de représenter
-                                Polytechnique en compétition.
+                                {t('home.recruitment.text')}
                             </p>
                             <ul className='space-y-3 mb-10'>
-                                {site.recruitmentBenefits.map((b, i) => (
+                                {localizedSite.recruitmentBenefits.map((b, i) => (
                                     <li
                                         key={i}
                                         className='flex items-start gap-3 text-sm text-white/80'
@@ -557,7 +558,7 @@ export default function Home({ navigate }: HomeProps) {
                                 onClick={() => handleNav('contact')}
                                 className='px-6 py-3.5 rounded-xl bg-heka-yellow text-charcoal font-semibold text-sm hover:bg-[#e8b84e] transition-colors shrink-0'
                             >
-                                Soumettre ma candidature
+                                {t('common.apply')}
                             </button>
                         </div>
                         <div
@@ -584,17 +585,16 @@ export default function Home({ navigate }: HomeProps) {
                             className='text-3xl lg:text-4xl mt-3 mb-4 text-charcoal'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Construire ensemble.
+                            {t('home.partners.title')}
                         </h2>
                         <p className='text-muted max-w-xl mx-auto text-sm leading-relaxed'>
-                            Nos partenaires contribuent au développement de Héka par du financement, de l'équipement, du
-                            mentorat, de l'expertise et des occasions de validation.
+                            {t('home.partners.text')}
                         </p>
                     </div>
 
                     {partners.length > 0 ? (
                         <div className='grid grid-cols-2 md:grid-cols-4 gap-8 mb-10 items-center'>
-                            {partners.map((p) => (
+                            {localizedPartners.map((p) => (
                                 <a
                                     key={p.id}
                                     href={p.website || '#'}
@@ -622,7 +622,7 @@ export default function Home({ navigate }: HomeProps) {
                                     className='h-20 rounded-xl border border-dashed border-border flex items-center justify-center text-xs text-muted text-center p-4'
                                     style={{ fontFamily: 'var(--font-mono)' }}
                                 >
-                                    Logo partenaire {i}
+                                    {t('home.partnerLogo')} {i}
                                 </div>
                             ))}
                         </div>
@@ -633,7 +633,7 @@ export default function Home({ navigate }: HomeProps) {
                             onClick={() => handleNav('partenaires')}
                             className='px-6 py-3.5 rounded-xl border border-border text-charcoal font-semibold text-sm hover:bg-[#F2EEE8] transition-colors'
                         >
-                            Devenir partenaire
+                            {t('home.becomePartner')}
                         </button>
                     </div>
                 </div>
@@ -646,21 +646,21 @@ export default function Home({ navigate }: HomeProps) {
                         className='text-3xl lg:text-4xl text-charcoal mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Vous souhaitez rejoindre, soutenir ou collaborer avec {site.name}?
+                        {t('home.finalTitle')}
                     </h2>
-                    <p className='text-muted mb-10'>Parlons-en.</p>
+                    <p className='text-muted mb-10'>{t('home.finalText')}</p>
                     <div className='flex flex-col sm:flex-row gap-3 justify-center'>
                         <button
                             onClick={() => handleNav('contact')}
                             className='px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
                         >
-                            Recrutement
+                            {t('contact.recruitment')}
                         </button>
                         <button
                             onClick={() => handleNav('partenaires')}
                             className='px-6 py-3.5 rounded-xl border border-border text-charcoal font-semibold text-sm hover:bg-[#F2EEE8] transition-colors'
                         >
-                            Partenariats et collaborations
+                            {t('partners.collaborations')}
                         </button>
                     </div>
                 </div>

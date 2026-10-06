@@ -1,5 +1,6 @@
 import { allProjects } from '../data/projects';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 interface ProjectsProps {
     navigate: (page: string) => void;
@@ -12,6 +13,8 @@ const THEME_MAP = {
 };
 
 export default function Projects({ navigate }: ProjectsProps) {
+    const locale = useLocale();
+    const localizedProjects = locale.translateData(allProjects, 'project');
     const handleNav = (page: string) => {
         navigate(page);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -40,19 +43,18 @@ export default function Projects({ navigate }: ProjectsProps) {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Projets
+                            {locale.t('nav.projects')}
                         </span>
 
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Des solutions ancrées dans des besoins réels.
+                            {locale.t('projects.heroTitle')}
                         </h1>
 
                         <p className='text-white/80 leading-relaxed max-w-xl'>
-                            Chaque projet de Héka commence par un problème humain concret. Voici les projets
-                            actuellement en développement par nos équipes.
+                            {locale.t('projects.heroText')}
                         </p>
                     </div>
                 </div>
@@ -60,8 +62,8 @@ export default function Projects({ navigate }: ProjectsProps) {
 
             <section className='py-20 bg-white'>
                 <div className='max-w-7xl mx-auto px-6 lg:px-10 space-y-8'>
-                    {allProjects.map((project, i) => {
-                        const t = THEME_MAP[project.theme] ?? THEME_MAP.default;
+                    {localizedProjects.map((project, i) => {
+                        const theme = THEME_MAP[project.theme] ?? THEME_MAP.default;
                         const imageLeft = i % 2 === 0;
 
                         return (
@@ -73,7 +75,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                     <div
                                         className='h-72 lg:h-auto bg-cover bg-center min-h-64'
                                         style={{
-                                            backgroundColor: t.accent,
+                                            backgroundColor: theme.accent,
                                             backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
@@ -83,9 +85,9 @@ export default function Projects({ navigate }: ProjectsProps) {
                                         <span
                                             className='px-2.5 py-1 rounded-md text-xs font-medium border'
                                             style={{
-                                                backgroundColor: t.accentBg,
-                                                color: t.accent,
-                                                borderColor: t.accentBorder,
+                                                backgroundColor: theme.accentBg,
+                                                color: theme.accent,
+                                                borderColor: theme.accentBorder,
                                                 fontFamily: 'var(--font-mono)',
                                             }}
                                         >
@@ -107,7 +109,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                     <p className='text-sm text-muted mb-5 font-medium'>{project.title}</p>
                                     <p className='text-muted leading-relaxed mb-8 text-sm'>{project.description}</p>
                                     <div className='flex flex-wrap gap-2'>
-                                        {project.disciplines.slice(0, 4).map((d) => (
+                                        {locale.translateData(project.disciplines.slice(0, 4), `project.${project.slug}.disciplines`).map((d) => (
                                             <span
                                                 key={d}
                                                 className='px-2.5 py-1 rounded-md text-xs text-muted bg-white border border-border'
@@ -125,11 +127,11 @@ export default function Projects({ navigate }: ProjectsProps) {
                                         <button
                                             onClick={() => handleNav(`projet-${project.slug}`)}
                                             className='px-6 py-3.5 rounded-xl text-white font-semibold text-sm transition-colors'
-                                            style={{ backgroundColor: t.accent }}
-                                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = t.hover)}
-                                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = t.accent)}
+                                            style={{ backgroundColor: theme.accent }}
+                                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = theme.hover)}
+                                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = theme.accent)}
                                         >
-                                            Voir le projet {project.name} →
+                                            {locale.t('projects.view')} {project.name} →
                                         </button>
                                     )}
                                 </div>
@@ -137,7 +139,7 @@ export default function Projects({ navigate }: ProjectsProps) {
                                     <div
                                         className='h-72 lg:h-auto bg-cover bg-center min-h-64 order-1 lg:order-2'
                                         style={{
-                                            backgroundColor: t.accent,
+                                            backgroundColor: theme.accent,
                                             backgroundImage: `url('${asset(project.images.hero)}')`,
                                         }}
                                     />
@@ -154,16 +156,16 @@ export default function Projects({ navigate }: ProjectsProps) {
                         className='text-2xl lg:text-3xl text-charcoal mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Tu veux contribuer à ces projets?
+                        {locale.t('projects.ctaTitle')}
                     </h2>
                     <p className='text-muted mb-8 text-sm'>
-                        Héka recrute des étudiants motivés de toutes les disciplines du génie.
+                        {locale.t('projects.ctaText')}
                     </p>
                     <button
                         onClick={() => handleNav('contact')}
                         className='px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-[#2D5585] transition-colors'
                     >
-                        Rejoindre Héka
+                        {locale.t('action.join')}
                     </button>
                 </div>
             </section>

@@ -8,14 +8,20 @@ import {
     getProjectBadgeStyle,
 } from '../utils/content';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 export default function Achievements() {
+    const { t, translateData } = useLocale();
     const [active, setActive] = useState('Tous');
 
     const types = getAchievementTypes();
+    const localizedAchievements = translateData(achievements, 'achievement');
+    const localizedTypeLabels = translateData(ACHIEVEMENT_TYPE_LABELS);
 
     const filtered =
-        active === 'Tous' ? achievements : achievements.filter((a) => ACHIEVEMENT_TYPE_LABELS[a.type] === active);
+        active === 'Tous'
+            ? localizedAchievements
+            : localizedAchievements.filter((a) => localizedTypeLabels[a.type] === active);
 
     const sorted = [...filtered].sort((a, b) => String(b.date).localeCompare(String(a.date)));
 
@@ -41,19 +47,18 @@ export default function Achievements() {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Réalisations
+                            {t('nav.achievements')}
                         </span>
 
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Notre parcours en chiffres et en faits.
+                            {t('achievements.title')}
                         </h1>
 
                         <p className='text-white/80 leading-relaxed max-w-xl'>
-                            Compétitions, prototypes, événements, prix — voici l&apos;historique des réalisations de
-                            Héka, du plus récent au plus ancien.
+                            {t('achievements.intro')}
                         </p>
                     </div>
                 </div>
@@ -64,7 +69,7 @@ export default function Achievements() {
                     {/* Filters */}
                     <div className='max-w-6xl mx-auto'>
                         <div className='flex flex-wrap gap-2 mb-12'>
-                            {['Tous', ...types.map((t) => ACHIEVEMENT_TYPE_LABELS[t] ?? t)].map((label) => (
+                            {['Tous', ...types.map((type) => localizedTypeLabels[type] ?? type)].map((label) => (
                                 <button
                                     key={label}
                                     onClick={() => setActive(label)}
@@ -137,7 +142,7 @@ export default function Achievements() {
                                                                     fontFamily: 'var(--font-mono)',
                                                                 }}
                                                             >
-                                                                {ACHIEVEMENT_TYPE_LABELS[item.type] ?? item.type}
+                                                                {localizedTypeLabels[item.type] ?? item.type}
                                                             </span>
 
                                                             {item.project && (
@@ -186,7 +191,7 @@ export default function Achievements() {
                                 className='text-center py-20 text-[#C8C3BB]'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Aucune réalisation dans cette catégorie pour le moment.
+                                {t('achievements.empty')}
                             </div>
                         )}
                     </div>

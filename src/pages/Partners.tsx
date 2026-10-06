@@ -3,8 +3,13 @@ import { microsoftFormUrls } from '../data/forms';
 import { partners, PARTNERSHIP_REASONS } from '../data/partners';
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 export default function Partners() {
+    const { t, translateData } = useLocale();
+    const localizedPartners = translateData(partners, 'partner');
+    const localizedReasons = translateData(PARTNERSHIP_REASONS, 'partnerReason');
+    const localizedSite = translateData(site, 'site');
     return (
         <div className='pt-16'>
             <section className='relative py-20 lg:py-28 border-b border-border overflow-hidden'>
@@ -22,17 +27,16 @@ export default function Partners() {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Partenaires
+                            {t('nav.partners')}
                         </span>
                         <h1
                             className='text-4xl lg:text-6xl mt-4 mb-6 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Construire l&apos;avenir de la technologie d&apos;assistance.
+                            {t('partners.heroTitle')}
                         </h1>
                         <p className='text-white/80 leading-relaxed max-w-xl'>
-                            Nous collaborons avec des entreprises, des organismes et des chercheurs qui partagent notre
-                            volonté de développer des technologies utiles, responsables et accessibles.
+                            {t('partners.heroText')}
                         </p>
                         <div className='flex flex-wrap justify-start gap-3 mt-8'>
                             <a
@@ -54,7 +58,7 @@ export default function Partners() {
                                         d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
                                     />
                                 </svg>
-                                Présentation Héka (FR)
+                                {t('partners.presentationFr')}
                             </a>
                             <a
                                 href={asset('public/documents/HEKA_2026-2027_EN.pdf')}
@@ -75,7 +79,7 @@ export default function Partners() {
                                         d='M12 16V4m0 12l-4-4m4 4l4-4M5 20h14'
                                     />
                                 </svg>
-                                Présentation Héka (EN)
+                                {t('partners.presentationEn')}
                             </a>
                         </div>
                     </div>
@@ -89,17 +93,17 @@ export default function Partners() {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Pourquoi collaborer avec Héka
+                            {t('partners.why')}
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-charcoal'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Ce que votre collaboration rend possible.
+                            {t('partners.whyTitle')}
                         </h2>
                     </div>
                     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-5'>
-                        {PARTNERSHIP_REASONS.map((item, i) => (
+                        {localizedReasons.map((item, i) => (
                             <div
                                 key={i}
                                 className='p-7 rounded-2xl border border-border hover:border-heka-mid transition-colors'
@@ -112,8 +116,8 @@ export default function Partners() {
                                         {String(i + 1).padStart(2, '0')}
                                     </span>
                                 </div>
-                                <h3 className='font-semibold text-charcoal mb-2 text-sm'>{item.title}</h3>
-                                <p className='text-xs text-muted leading-relaxed'>{item.desc}</p>
+                                <h3 className='font-semibold text-charcoal mb-2 text-sm'>{t(`partnerReason.${i}.title`)}</h3>
+                                <p className='text-xs text-muted leading-relaxed'>{t(`partnerReason.${i}.desc`)}</p>
                             </div>
                         ))}
                     </div>
@@ -127,18 +131,18 @@ export default function Partners() {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Partenaires actuels
+                            {t('partners.current')}
                         </span>
                         <h2
                             className='text-2xl lg:text-3xl mt-2 text-charcoal'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Ils soutiennent Héka.
+                            {t('partners.currentTitle')}
                         </h2>
                     </div>
                     {partners.length > 0 ? (
                         <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>
-                            {partners.map((partner) => (
+                            {localizedPartners.map((partner) => (
                                 <a
                                     key={partner.id}
                                     href={partner.website || '#'}
@@ -179,7 +183,7 @@ export default function Partners() {
                         className='text-xs text-[#C8C3BB]'
                         style={{ fontFamily: 'var(--font-mono)' }}
                     >
-                        * Les logos partenaires seront ajoutés avec leur autorisation.
+                        {t('partners.logoNote')}
                     </p>
                 </div>
             </section>
@@ -192,17 +196,16 @@ export default function Partners() {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Nous contacter
+                                {t('partners.contact')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Commencer une collaboration.
+                                {t('partners.contactTitle')}
                             </h2>
                             <p className='text-muted leading-relaxed mb-8 text-sm'>
-                                Que vous souhaitiez commanditer un projet, offrir du matériel, partager votre expertise
-                                ou simplement en savoir plus, nous sommes ouverts à toute forme de collaboration.
+                                {t('partners.contactText')}
                             </p>
                             <div className='space-y-4 text-sm'>
                                 <div className='flex items-center gap-3'>
@@ -222,10 +225,10 @@ export default function Partners() {
                                         </svg>
                                     </div>
                                     <a
-                                        href={`mailto:${site.emailPartnership}`}
+                                        href={`mailto:${localizedSite.emailPartnership}`}
                                         className='text-heka hover:underline'
                                     >
-                                        {site.emailPartnership}
+                                        {localizedSite.emailPartnership}
                                     </a>
                                 </div>
                                 <div className='flex items-center gap-3'>
@@ -255,7 +258,7 @@ export default function Partners() {
                         </div>
                         <EmbeddedMicrosoftForm
                             src={microsoftFormUrls.partnership}
-                            title='Formulaire de partenariat Héka'
+                            title={t('forms.partnershipTitle')}
                             heightClassName='h-[800px] lg:h-[900px]'
                         />
                     </div>

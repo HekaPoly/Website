@@ -1,6 +1,7 @@
 import { getAchievementsByProject, getTeamMembersByProject, getMemberInitials } from '../utils/content';
 import type { Project } from '../types/content';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 const THEME_MAP = {
     podi: {
@@ -40,10 +41,12 @@ interface Props {
     navigate: (page: string) => void;
 }
 
-export default function ProjectPage({ project, navigate }: Props) {
+export default function ProjectPage({ project: sourceProject, navigate }: Props) {
+    const { t: translate, translateData } = useLocale();
+    const project = translateData(sourceProject, 'project');
     const t = THEME_MAP[project.theme] ?? THEME_MAP.default;
-    const achievements = getAchievementsByProject(project.slug);
-    const teamMembers = getTeamMembersByProject(project.slug);
+    const achievements = translateData(getAchievementsByProject(project.slug), 'achievement');
+    const teamMembers = translateData(getTeamMembersByProject(project.slug), 'member');
 
     const handleNav = (page: string) => {
         navigate(page);
@@ -66,7 +69,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                         onClick={() => handleNav('projets')}
                         className='flex items-center gap-2 text-white/60 hover:text-white text-sm mb-10 transition-colors'
                     >
-                        ← Retour aux projets
+                        {translate('project.back')}
                     </button>
                     <div
                         className='inline-block px-2.5 py-1 rounded-md text-xs font-medium mb-4'
@@ -106,7 +109,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                01 — Le problème
+                                01 — {translate('project.problem')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
@@ -172,7 +175,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                02 — La solution
+                                02 — {translate('project.solution')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
@@ -212,7 +215,7 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                Architecture du système
+                                {translate('project.architecture')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 text-charcoal'
@@ -270,13 +273,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                03 — Objectifs techniques
+                                03 — {translate('project.objectives')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Ce que nous cherchons à atteindre.
+                                {translate('project.objectivesTitle')}
                             </h2>
                         </div>
                         <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -317,13 +320,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium text-white/40 uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                04 — Feuille de route
+                                04 — {translate('project.roadmap')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 text-white'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Où en sommes-nous.
+                                {translate('project.roadmapTitle')}
                             </h2>
                         </div>
                         <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-4'>
@@ -374,13 +377,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                Travaux en cours
+                                {translate('project.currentWork')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Ce sur quoi nous travaillons.
+                                {translate('project.currentWorkTitle')}
                             </h2>
                             <ul className='space-y-3'>
                                 {project.currentWork?.map((item, i) => (
@@ -407,13 +410,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                Prochaines étapes
+                                {translate('project.nextSteps')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-3 mb-6 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Ce qui arrive ensuite.
+                                {translate('project.nextStepsTitle')}
                             </h2>
                             <ul className='space-y-3'>
                                 {project.nextSteps?.map((item, i) => (
@@ -445,13 +448,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                Réalisations
+                                {translate('project.achievements')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-3 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Ce que nous avons accompli.
+                                {translate('project.achievementsTitle')}
                             </h2>
                         </div>
                         <div className='space-y-4'>
@@ -499,13 +502,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                                 className='text-xs font-medium uppercase tracking-widest'
                                 style={{ color: t.accent, fontFamily: 'var(--font-mono)' }}
                             >
-                                L'équipe
+                                {translate('project.team')}
                             </span>
                             <h2
                                 className='text-2xl lg:text-3xl mt-3 text-[#111110]'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Qui travaille sur {project.name}.
+                                {translate('project.teamTitle')} {project.name}.
                             </h2>
                         </div>
                         <div className='grid sm:grid-cols-3 lg:grid-cols-4 gap-4'>
@@ -552,10 +555,10 @@ export default function ProjectPage({ project, navigate }: Props) {
                         className='text-2xl lg:text-3xl text-[#111110] mb-4'
                         style={{ fontFamily: 'var(--font-display)' }}
                     >
-                        Intéressé·e par {project.name}?
+                        {translate('project.interested')} {project.name}?
                     </h2>
                     <p className='text-[#7A7269] mb-8 text-sm'>
-                        Rejoignez l'équipe ou contactez-nous pour en savoir plus.
+                        {translate('project.joinTeam')}
                     </p>
                     <div className='flex flex-col sm:flex-row gap-3 justify-center'>
                         <button
@@ -563,13 +566,13 @@ export default function ProjectPage({ project, navigate }: Props) {
                             className='px-6 py-3.5 rounded-xl text-white font-semibold text-sm transition-colors'
                             style={{ backgroundColor: t.accent }}
                         >
-                            Rejoindre {project.name}
+                            {translate('project.join')} {project.name}
                         </button>
                         <button
                             onClick={() => handleNav('projets')}
                             className='px-6 py-3.5 rounded-xl border border-[#E2DDD5] text-[#111110] font-semibold text-sm hover:bg-[#F2EEE8] transition-colors'
                         >
-                            Voir tous les projets
+                            {translate('project.all')}
                         </button>
                     </div>
                 </div>

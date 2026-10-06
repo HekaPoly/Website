@@ -1,11 +1,14 @@
 import { site } from '../data/site';
 import { asset } from '../utils/assets';
+import { useLocale } from '../i18n';
 
 interface AboutProps {
     navigate: (page: string) => void;
 }
 
 export default function About({ navigate }: AboutProps) {
+    const { t, translateData } = useLocale();
+    const localizedSite = translateData(site, 'site');
     return (
         <div className='pt-16'>
             {/* Header */}
@@ -24,14 +27,14 @@ export default function About({ navigate }: AboutProps) {
                             className='text-xs font-medium text-heka-yellow uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            À propos
+                            {t('nav.about')}
                         </span>
 
                         <h1
                             className='text-4xl lg:text-6xl mt-4 text-white leading-tight font-bold'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Une organisation étudiante bâtie autour de l&apos;impact humain.
+                            {t('about.heroTitle')}
                         </h1>
                     </div>
                 </div>
@@ -46,37 +49,17 @@ export default function About({ navigate }: AboutProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest '
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Notre histoire
+                                {t('about.history.label')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-4 mb-6 text-charcoal font-bold'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                De Métis à Héka.
+                                {t('about.history.title')}
                             </h2>
                         </div>
                         <div className='space-y-5 text-muted leading-relaxed'>
-                            <p>
-                                L'organisation a vu le jour sous le nom <strong className='text-charcoal'>Métis</strong>{' '}
-                                en 2013, un comité technique réunissant des étudiants de Polytechnique Montréal autour
-                                de projets multidisciplinaires.
-                            </p>
-                            <p>
-                                Au fil du développement de ses projets, l'organisation a évolué vers une mission plus
-                                ciblée — celle de concevoir des technologies répondant à des enjeux concrets en santé,
-                                en assistance humaine et en sécurité physique.
-                            </p>
-                            <p>
-                                Ce changement de cap a mené à une transformation de l'identité :{' '}
-                                <strong className='text-charcoal'>Héka</strong>, en référence à la divinité égyptienne
-                                de la guérison et de la magie, représente mieux la mission biomédicale et l'ambition de
-                                l'organisation.
-                            </p>
-                            <p>
-                                Aujourd'hui, Héka compte des membres issus de plusieurs disciplines du génie et mène
-                                deux projets principaux — PODI et BIRA — avec une démarche rigoureuse allant du problème
-                                jusqu'au prototype.
-                            </p>
+                            {[0, 1, 2, 3].map((index) => <p key={index}>{t(`about.history.${index}`)}</p>)}
                         </div>
                     </div>
                 </div>
@@ -97,9 +80,7 @@ export default function About({ navigate }: AboutProps) {
                                 className='text-white text-xl leading-relaxed'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Réunir des étudiants de différentes disciplines afin de concevoir des solutions
-                                d'ingénierie innovantes répondant à des enjeux concrets en santé, en assistance humaine
-                                et en sécurité physique.
+                                {t('about.mission')}
                             </p>
                         </div>
                         <div className='p-10 rounded-2xl border border-white/10 bg-white/5'>
@@ -113,8 +94,7 @@ export default function About({ navigate }: AboutProps) {
                                 className='text-white text-xl leading-relaxed'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Faire de Héka un environnement de référence où les étudiants peuvent transformer des
-                                besoins humains réels en technologies utiles, responsables et accessibles.
+                                {t('about.vision')}
                             </p>
                         </div>
                     </div>
@@ -129,18 +109,18 @@ export default function About({ navigate }: AboutProps) {
                             className='text-xs font-medium text-muted uppercase tracking-widest'
                             style={{ fontFamily: 'var(--font-mono)' }}
                         >
-                            Nos valeurs
+                            {t('about.values.label')}
                         </span>
                         <h2
                             className='text-3xl lg:text-4xl mt-3 text-charcoal'
                             style={{ fontFamily: 'var(--font-display)' }}
                         >
-                            Ce qui guide nos décisions.
+                            {t('about.values.title')}
                         </h2>
                     </div>
 
                     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                        {site.values.map((v, i) => (
+                        {localizedSite.values.map((v, i) => (
                             <div
                                 key={i}
                                 className='p-7 rounded-2xl bg-white border border-border hover:border-heka-mid transition-colors'
@@ -176,13 +156,13 @@ export default function About({ navigate }: AboutProps) {
                                 className='text-xs font-medium text-muted uppercase tracking-widest'
                                 style={{ fontFamily: 'var(--font-mono)' }}
                             >
-                                Notre différence
+                                {t('about.difference.label')}
                             </span>
                             <h2
                                 className='text-3xl lg:text-4xl mt-3 mb-6 text-charcoal'
                                 style={{ fontFamily: 'var(--font-display)' }}
                             >
-                                Pas un simple club. Une organisation d'innovation.
+                                {t('about.difference.title')}
                             </h2>
                             <ul className='space-y-4'>
                                 {[
@@ -211,7 +191,7 @@ export default function About({ navigate }: AboutProps) {
                                                 />
                                             </svg>
                                         </span>
-                                        {item}
+                                        {t(`about.difference.${i}`)}
                                     </li>
                                 ))}
                             </ul>
@@ -222,7 +202,7 @@ export default function About({ navigate }: AboutProps) {
                                 }}
                                 className='mt-8 px-6 py-3.5 rounded-xl bg-heka text-white font-semibold text-sm hover:bg-heka-mid transition-colors'
                             >
-                                Découvrir nos projets
+                                {t('about.projectsCta')}
                             </button>
                         </div>
                     </div>
